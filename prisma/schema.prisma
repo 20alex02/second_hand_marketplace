@@ -1,10 +1,3 @@
-//
-// IMPORTANT: do NOT modify this file, unless you implement
-//            the JWT/Cookie auth bonus!!!
-//
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -14,35 +7,68 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Employee {
-  id        String       @id @default(uuid())
-  name      String
-  surname   String
-  createdAt DateTime     @default(now())
+model User {
+  id  String @id @default(uuid())
+  createdAt DateTime @default(now())
   deletedAt DateTime?
-  timetable Attendance[]
+  email String
+  phoneNumber String
+  hashedPassword String
+  salt String
+  role Role @default(USER)
+  participants Participant[]
+  advertisements Advertisement[]
 }
 
-model Attendance {
-  id         String         @id @default(uuid())
-  employeeId String
-  employee   Employee       @relation(fields: [employeeId], references: [id])
-  createdAt  DateTime       @default(now())
-  deletedAt  DateTime?
-  from       DateTime
-  to         DateTime
-  // the type would be an enum, but SQLite does not suppport enums
-  // so we solved this by creating a custom table for creating types
-  // types cannot be created by the REST API or the database layer
-  // - they are pre-defined (check the iteration Issue for pre-defined values)
-  typeRef    AttendanceType @relation(fields: [type], references: [type])
-  type       String
+enum Role {
+  USER
+  ADMIN
 }
 
-model AttendanceType {
-  type    String       @id
-  records Attendance[]
+model Participant {
+  id  String @id @default(uuid())
+  phoneNumber String
+  joinTime DateTime
+  leftTime DateTime?
+  userId String?
+  user User? @relation(fields: [userId], references: [id])
+  advertisements Advertisement[]
 }
 
-// IF you implement the bonus, you are allowed to create new models
-// to add auth to the REST API:
+model Advertisement {
+  id  String @id @default(uuid())
+  createdAt DateTime @default(now())
+  deletedAt DateTime?
+  title String
+  type AdvertisementType
+  description String
+  estimatedPrice Int? // TODO type of price? what currency? are multiple currencies allowed or just czk?
+  hidden Boolean @default(false)
+  creatorId String
+  creator User @relation(fields: [creatorId], references: [id])
+  participants Participant[]
+  images AdvertisementImage[]
+  categories Category[]
+}
+
+enum AdvertisementType {
+  OFFER
+  REQUEST
+}
+
+model AdvertisementImage {
+  id  String @id @default(uuid())
+  path String
+  advertisementId String
+  advertisement Advertisement @relation(fields: [advertisementId], references: [id])
+}
+
+model Category {
+  id  String @id @default(uuid())
+  name String
+  isLeaf Boolean
+  parentId String?
+  parent Category? @relation("parentId", fields: [parentId], references: [id])
+  subcategories Category[] @relation("parentId")
+  advertisements Advertisement[]
+}
