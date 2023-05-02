@@ -32,7 +32,8 @@ model Participant {
   leftTime DateTime?
   userId String?
   user User? @relation(fields: [userId], references: [id])
-  advertisements Advertisement[]
+  advertisementId String
+  advertisement Advertisement @relation(fields: [advertisementId], references: [id])
 }
 
 model Advertisement {
@@ -42,7 +43,7 @@ model Advertisement {
   title String
   type AdvertisementType
   description String
-  estimatedPrice Int? // TODO type of price? what currency? are multiple currencies allowed or just czk?
+  estimatedPrice Int?
   hidden Boolean @default(false)
   creatorId String
   creator User @relation(fields: [creatorId], references: [id])
