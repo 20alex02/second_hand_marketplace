@@ -36,7 +36,7 @@ export type AdvertisementCreateData = {
   //   hidden?: boolean;
   creatorId: string;
   images: AdvertisementImageCreateData[];
-  categories: { id: string }[];
+  categories: { id: string }[]; // how to get ids? maybe get by names of categories
 };
 
 export type AdvertisementReadData = {};
@@ -48,7 +48,8 @@ export type AdvertisementDeleteData = {};
 // ADVERTISEMENT IMAGE
 export type AdvertisementImageCreateData = {
   path: string;
-  advertisementId: string;
+  // TODO is id necessary for nested create?
+  // advertisementId: string;
 };
 
 export type AdvertisementImageReadData = {};
