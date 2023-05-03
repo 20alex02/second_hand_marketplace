@@ -28,8 +28,8 @@ enum Role {
 model Participant {
   id  String @id @default(uuid())
   phoneNumber String
-  joinTime DateTime
-  leftTime DateTime?
+  createdAt DateTime @default(now())
+  deletedAt DateTime?
   userId String?
   user User? @relation(fields: [userId], references: [id])
   advertisementId String
