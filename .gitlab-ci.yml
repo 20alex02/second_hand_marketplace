@@ -8,4 +8,5 @@ lint-job:       # This job runs in the lint stage, which runs first.
     - shared-fi
   script:
     - npm install
+    - npm instaill -g eslint
     - eslint --ignore-path .gitignore .
