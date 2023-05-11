@@ -19,7 +19,7 @@ const prismaBinary = join(
   '..',
   'node_modules',
   '.bin',
-  'prisma',
+  'prisma'
 );
 
 const testPath = join(__dirname, '..', '..', '..', 'prisma', `${schemaId}.db`);
