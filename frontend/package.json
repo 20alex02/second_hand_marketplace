@@ -1,0 +1,44 @@
+{
+  "name": "bazos",
+  "version": "0.1.0",
+  "description": "PB138 - Project: Bazos",
+  "source": "public/index.html",
+  "scripts": {
+    "build": "parcel build",
+    "clean": "rm -rf .parcel-cache dist",
+    "start": "parcel --open",
+    "tsc": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "17.4.4",
+    "@commitlint/config-conventional": "17.4.4",
+    "@emotion/react": "11.10.6",
+    "@emotion/styled": "11.10.6",
+    "@fontsource/roboto": "4.5.8",
+    "@mui/icons-material": "5.11.11",
+    "@mui/material": "5.11.12",
+    "@oplaner4/smart-sticky": "^1.0.7",
+    "@parcel/packager-raw-url": "2.8.3",
+    "@parcel/transformer-sass": "^2.8.3",
+    "@parcel/transformer-webmanifest": "2.8.3",
+    "@types/react": "18.0.28",
+    "@types/react-dom": "18.0.11",
+    "@typescript-eslint/eslint-plugin": "5.54.1",
+    "@typescript-eslint/parser": "5.54.1",
+    "buffer": "^5.7.1",
+    "eslint": "8.36.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "eslint-plugin-tsdoc": "0.2.17",
+    "parcel": "2.8.3",
+    "prettier": "2.8.4",
+    "process": "0.11.10",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "typescript": "4.9.5"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^4.29.5",
+    "axios": "^1.4.0",
+    "recoil": "^0.7.7"
+  }
+}
