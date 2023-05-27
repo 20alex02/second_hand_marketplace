@@ -1,6 +1,7 @@
 image: node
 stages:          # List of stages for jobs, and their order of execution
   - lint
+  - test
 
 lint-job:       # This job runs in the lint stage, which runs first.
   stage: lint
@@ -10,3 +11,10 @@ lint-job:       # This job runs in the lint stage, which runs first.
     - npm install
     - npm install -g eslint
     - eslint --ignore-path .gitignore .
+test-job:       # This job runs in the test stage, which runs second.
+  stage: test
+  tags:
+    - shared-fi
+  script:
+    - npm install
+    - vitest
