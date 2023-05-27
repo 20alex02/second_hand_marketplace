@@ -17,14 +17,13 @@ app.use(express.json());
 // parse URL encoded strings
 app.use(express.urlencoded({ extended: true }));
 
-
 app.get('/api/data', (_req, res) => {
   const response: ApiResponse<object> = {
     status: 'success',
     data: {
-      greeting: 'Hello from the API!'
+      greeting: 'Hello from the API!',
     },
-    message: 'Data fetched successfully.'
+    message: 'Data fetched successfully.',
   };
 
   return res.status(200).send(response);

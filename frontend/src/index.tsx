@@ -2,16 +2,15 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { useEffect, useState } from 'react';
 
-
 const BASE_URL = 'http://localhost:3001';
 function App() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     fetch(`${BASE_URL}/api/data`)
-      .then(response => response.json())
-      .then(data => setData(data))
-      .catch(error => console.error('Error:', error));
+      .then((response) => response.json())
+      .then((data) => setData(data))
+      .catch((error) => console.error('Error:', error));
   }, []);
 
   return (
@@ -22,9 +21,8 @@ function App() {
   );
 }
 
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-  <App/>
+    <App />
   </StrictMode>
 );
