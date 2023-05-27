@@ -1,6 +1,7 @@
 image: node
 stages:          # List of stages for jobs, and their order of execution
   - lint
+  - test
 
 lint-job:       # This job runs in the lint stage, which runs first.
   stage: lint
