@@ -17,5 +17,5 @@ test-job:       # This job runs in the test stage, which runs second.
     - shared-fi
   script:
     - npm install
-    - npm install -g vitest@0.30.1
+    - npm install -g vitest@0.27.3
     - vitest
