@@ -8,11 +8,11 @@ export type UserCreateData = {
   salt: string;
 };
 
-export type UserReadData = {};
+export type UserReadData = object;
 
-export type UserUpdateData = {};
+export type UserUpdateData = object;
 
-export type UserDeleteData = {};
+export type UserDeleteData = object;
 
 // PARTICIPANT
 export type ParticipantCreateData = {
@@ -21,11 +21,11 @@ export type ParticipantCreateData = {
   advertisementId: string;
 };
 
-export type ParticipantReadData = {};
+export type ParticipantReadData = object;
 
-export type ParticipantUpdateData = {};
+export type ParticipantUpdateData = object;
 
-export type ParticipantDeleteData = {};
+export type ParticipantDeleteData = object;
 
 // ADVERTISEMENT
 export type AdvertisementCreateData = {
@@ -39,11 +39,11 @@ export type AdvertisementCreateData = {
   categories: { id: string }[]; // how to get ids? maybe get by names of categories
 };
 
-export type AdvertisementReadData = {};
+export type AdvertisementReadData = object;
 
-export type AdvertisementUpdateData = {};
+export type AdvertisementUpdateData = object;
 
-export type AdvertisementDeleteData = {};
+export type AdvertisementDeleteData = object;
 
 // ADVERTISEMENT IMAGE
 export type AdvertisementImageCreateData = {
@@ -52,11 +52,11 @@ export type AdvertisementImageCreateData = {
   // advertisementId: string;
 };
 
-export type AdvertisementImageReadData = {};
+export type AdvertisementImageReadData = object;
 
-export type AdvertisementImageUpdateData = {};
+export type AdvertisementImageUpdateData = object;
 
-export type AdvertisementImageDeleteData = {};
+export type AdvertisementImageDeleteData = object;
 
 // CATEGORY
 export type CategoryCreateData = {
@@ -65,8 +65,8 @@ export type CategoryCreateData = {
   parentId?: string;
 };
 
-export type CategoryReadData = {};
+export type CategoryReadData = object;
 
-export type CategoryUpdateData = {};
+export type CategoryUpdateData = object;
 
-export type CategoryDeleteData = {};
+export type CategoryDeleteData = object;

@@ -5,17 +5,17 @@ import data from './data';
 const seed = async () => {
   console.log(`[${new Date().toISOString()}] Seed started`);
   await client.$transaction(async (transaction) => {
-    data.users.map((user) => (
+    data.users.map((user) =>
       transaction.user.create({
         data: { ...user },
       })
-    ));
+    );
 
-    data.categories.map((category) => (
+    data.categories.map((category) =>
       transaction.category.create({
         data: { ...category },
       })
-    ));
+    );
   });
 };
 
