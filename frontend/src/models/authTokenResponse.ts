@@ -1,5 +1,3 @@
-
-
 export interface authTokenResponse {
-    token: string
+  token: string;
 }

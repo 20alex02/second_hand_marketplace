@@ -1,6 +1,6 @@
-import {atom} from 'recoil'
+import { atom } from 'recoil';
 
 export const AuthToken = atom<string>({
-    key: 'token',
-    default: '',
-  });
+  key: 'token',
+  default: '',
+});
