@@ -15,13 +15,13 @@ function Login () {
             const data = await LoginApi.login(values.email, values.password);
 
         if (data.token == '') {
-            setErrorMsg("Unable to login")
+            setErrorMsg("Invalid email or password")
             return;
         }
         setToken(data.token);
         navigate('/Home');
         }catch {
-            setErrorMsg("Error during login occured");
+            setErrorMsg("Error occured during login");
         }
     };
 

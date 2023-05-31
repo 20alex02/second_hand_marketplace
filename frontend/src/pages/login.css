@@ -20,10 +20,6 @@
     background-color: #098cae;
 }
 
-.login-card__button::after {
-    background-color: #098cae;
-}
-
 .login-card__button:first-of-type {
     margin-bottom: 2em;
     margin-right: 5em;
