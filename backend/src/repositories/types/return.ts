@@ -3,55 +3,102 @@ import type {
   Advertisement,
   Participant,
   Category,
+  AdvertisementImage,
 } from '@prisma/client';
-// import type { Result } from '@badrap/result';
 import type DbResult from '../types';
 
-// TODO return types, what fields to include?
-
 // USER
+type UserAdditionalData = {
+  participants: Participant[];
+  advertisements: Advertisement[];
+};
+
 export type UserCreateResult = DbResult<User>;
 
-export type UserReadResult = {};
+export type UserReadOneResult = DbResult<User & UserAdditionalData>;
 
-export type UserUpdateResult = {};
+export type UserReadAllResult = DbResult<User[]>;
 
-export type UserDeleteResult = {};
+export type UserUpdateResult = DbResult<User>;
+
+export type UserDeleteResult = DbResult<User & UserAdditionalData>;
 
 // PARTICIPANT
+type ParticipantAdditionalData = {
+  user: User | null;
+  advertisement: Advertisement;
+};
+
 export type ParticipantCreateResult = DbResult<Participant>;
 
-export type ParticipantReadResult = {};
+export type ParticipantReadOneResult = DbResult<
+  Participant & ParticipantAdditionalData
+>;
 
-export type ParticipantUpdateResult = {};
+export type ParticipantReadAllResult = DbResult<Participant[]>;
 
-export type ParticipantDeleteResult = {};
+export type ParticipantUpdateResult = DbResult<Participant>;
+
+export type ParticipantDeleteResult = DbResult<Participant>;
 
 // ADVERTISEMENT
+type AdvertisementAdditionalData = {
+  creator: User;
+  participants: Participant[];
+  images: AdvertisementImage[];
+  categories: Category[];
+};
 
-// TODO return participants, images, creator?
-export type AdvertisementCreateResult = DbResult<Advertisement>;
+export type AdvertisementCreateResult = DbResult<
+  Advertisement & AdvertisementAdditionalData
+>;
 
-export type AdvertisementReadResult = {};
+export type AdvertisementReadOneResult = DbResult<
+  Advertisement & AdvertisementAdditionalData
+>;
 
-export type AdvertisementUpdateResult = {};
+export type AdvertisementReadAllResult = DbResult<Advertisement[]>;
 
-export type AdvertisementDeleteResult = {};
+export type AdvertisementUpdateResult = DbResult<
+  Advertisement & AdvertisementAdditionalData
+>;
+
+export type AdvertisementDeleteResult = DbResult<Advertisement>;
 
 // ADVERTISEMENT IMAGE
-export type AdvertisementImageCreateResult = {};
+type AdvertisementImageAdditionalData = {
+  advertisement: Advertisement;
+};
 
-export type AdvertisementImageReadResult = {};
+export type AdvertisementImageCreateResult = DbResult<
+  AdvertisementImage & AdvertisementImageAdditionalData
+>;
 
-export type AdvertisementImageUpdateResult = {};
+export type AdvertisementImageReadOneResult = DbResult<
+  AdvertisementImage & AdvertisementImageAdditionalData
+>;
 
-export type AdvertisementImageDeleteResult = {};
+export type AdvertisementImageReadAllResult = DbResult<AdvertisementImage[]>;
+
+export type AdvertisementImageUpdateResult = DbResult<AdvertisementImage>;
+
+export type AdvertisementImageDeleteResult = DbResult<AdvertisementImage>;
 
 // CATEGORY
+type Subcategories = {
+  subcategories: Category[];
+};
+
+type Advertisements = {
+  advertisements: Advertisement[];
+};
+
 export type CategoryCreateResult = DbResult<Category>;
 
-export type CategoryReadResult = {};
+export type CategoryReadOneResult = DbResult<Category & Advertisements>;
 
-export type CategoryUpdateResult = {};
+export type CategoryReadAllResult = DbResult<Category[]>;
 
-export type CategoryDeleteResult = {};
+export type CategoryUpdateResult = DbResult<Category>;
+
+export type CategoryDeleteResult = DbResult<Category & Subcategories>;

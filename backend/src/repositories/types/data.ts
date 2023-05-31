@@ -1,6 +1,6 @@
-import type { AdvertisementType } from '@prisma/client';
+import type { AdvertisementType, Role } from '@prisma/client';
 
-// USER
+/* USER */
 export type UserCreateData = {
   email: string;
   phoneNumber: string;
@@ -8,65 +8,135 @@ export type UserCreateData = {
   salt: string;
 };
 
-export type UserReadData = object;
+export type UserReadOneData = {
+  id: string;
+};
 
-export type UserUpdateData = object;
+export type UserReadAllData = {
+  role: Role;
+  // TODO filters
+};
 
-export type UserDeleteData = object;
+export type UserUpdateData = {
+  id: string;
+  email?: string;
+  phoneNumber?: string;
+  hashedPassword?: string;
+  salt?: string;
+};
 
-// PARTICIPANT
+export type UserDeleteData = {
+  id: string;
+};
+
+/* PARTICIPANT */
 export type ParticipantCreateData = {
   phoneNumber: string;
   userId?: string;
   advertisementId: string;
 };
 
-export type ParticipantReadData = object;
+export type ParticipantReadOneData = {
+  id: string;
+};
 
-export type ParticipantUpdateData = object;
+export type ParticipantReadAllData = {
+  // TODO filters
+  advertisementId: string;
+};
 
-export type ParticipantDeleteData = object;
+export type ParticipantUpdateData = {
+  id: string;
+  phoneNumber: string;
+};
 
-// ADVERTISEMENT
+export type ParticipantDeleteData = {
+  id: string;
+};
+
+/* ADVERTISEMENT */
 export type AdvertisementCreateData = {
   title: string;
   type: AdvertisementType;
   description: string;
   estimatedPrice?: number;
-  //   hidden?: boolean;
+  hidden?: boolean;
   creatorId: string;
   images: AdvertisementImageCreateData[];
-  categories: { id: string }[]; // how to get ids? maybe get by names of categories
+  categories: { id: string }[];
 };
 
-export type AdvertisementReadData = object;
+export type AdvertisementReadOneData = {
+  id: string;
+};
 
-export type AdvertisementUpdateData = object;
+export type AdvertisementReadAllData = {
+  type?: AdvertisementType;
+  hidden?: boolean;
+  creatorId?: string;
+  categories?: string[];
+  // TODO filters
+};
 
-export type AdvertisementDeleteData = object;
+export type AdvertisementUpdateData = {
+  id: string;
+  title?: string;
+  type?: AdvertisementType;
+  description?: string;
+  estimatedPrice?: number;
+  hidden?: boolean;
+  connectCategories: { id: string }[];
+  disconnectCategories: { id: string }[];
+};
 
-// ADVERTISEMENT IMAGE
+export type AdvertisementDeleteData = {
+  id: string;
+};
+
+/* ADVERTISEMENT IMAGE */
 export type AdvertisementImageCreateData = {
   path: string;
-  // TODO is id necessary for nested create?
-  // advertisementId: string;
+  advertisementId: string;
 };
 
-export type AdvertisementImageReadData = object;
+export type AdvertisementImageReadOneData = {
+  id: string;
+};
 
-export type AdvertisementImageUpdateData = object;
+export type AdvertisementImageReadAllData = {
+  id: string;
+};
 
-export type AdvertisementImageDeleteData = object;
+export type AdvertisementImageUpdateData = {
+  id: string;
+  path: string;
+};
 
-// CATEGORY
+export type AdvertisementImageDeleteData = {
+  id: string;
+};
+
+/* CATEGORY */
 export type CategoryCreateData = {
   name: string;
-  isLeaf: boolean;
   parentId?: string;
 };
 
-export type CategoryReadData = object;
+export type CategoryReadOneData = {
+  id: string;
+};
 
-export type CategoryUpdateData = object;
+export type CategoryReadAllData = {
+  // TODO filters
+  id: string;
+};
 
-export type CategoryDeleteData = object;
+export type CategoryUpdateData = {
+  id: string;
+  name?: string;
+  parentId?: string;
+};
+
+export type CategoryDeleteData = {
+  id: string;
+};
