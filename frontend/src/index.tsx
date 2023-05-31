@@ -1,28 +1,19 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { useEffect, useState } from 'react';
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { App } from './App';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { BrowserRouter } from 'react-router-dom';
 
-const BASE_URL = 'http://localhost:3001';
-function App() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    fetch(`${BASE_URL}/api/data`)
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error('Error:', error));
-  }, []);
-
-  return (
-    <div>
-      <h1>Data from API:</h1>
-      {data ? <pre>{JSON.stringify(data, null, 2)}</pre> : 'Loading...'}
-    </div>
-  );
-}
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>
+const client = new QueryClient();
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
+    <QueryClientProvider client={client}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </QueryClientProvider>
+  </React.StrictMode>
 );
