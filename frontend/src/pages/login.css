@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+
+.login-card {
+    max-width: 20em;
+    left: 0;
+    right: 0;
+    margin: 3em auto;
+    margin-bottom: 1em;
+    font-family: 'Montserrat';
+    background-color: #e7f8fd;
+    position: relative;
+}
+
+.login-card__title {
+    margin-top: 0;
+}
+
+.login-card__button {
+    background-color: #098cae;
+}
+
+.login-card__button:first-of-type {
+    margin-bottom: 2em;
+    margin-right: 5em;
+}
+
+
+@media (min-width: 285px) {
+    .login-card__button:first-of-type {
+        margin-right: 5em;
+        margin-bottom: 0em;
+    }
+}
+
+
