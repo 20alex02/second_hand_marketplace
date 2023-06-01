@@ -12,7 +12,7 @@ export type PrismaTransactionHandle = Omit<
   '$connect' | '$disconnect' | '$on' | '$transaction' | '$use'
 >;
 
-export type TransactionCheckOperationResult = Promise<Result<{}>>;
+//export type TransactionCheckOperationResult = Promise<Result<{}>>;
 
 export const genericError = Result.err(
   new Error('Sorry. Some error has occured.')
