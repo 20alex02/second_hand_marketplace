@@ -1,20 +1,28 @@
-import { loginUser } from "../services/authService";
-import MissingRequiredField from "../exceptions/MissingRequiredField";
-import type { ApiResponse } from "./types";
-import type { Request, Response } from "express";
-import { createErrorResponse, getRequiredField, handleMissingField } from "./common";
-import WrongPassword from "../exceptions/WrongPassword";
+import { loginUser } from '../services/authService';
+import MissingRequiredField from '../exceptions/MissingRequiredField';
+import type { ApiResponse } from './types';
+import type { Request, Response } from 'express';
+import {
+  createErrorResponse,
+  getRequiredField,
+  handleMissingField,
+} from './common';
+import WrongPassword from '../exceptions/WrongPassword';
 
-export const actionCreateSecret = async (req: Request, res: Response, secretKey: string) => {
+export const actionCreateSecret = async (
+  req: Request,
+  res: Response,
+  secretKey: string
+) => {
   try {
     const data = req.body;
-    const email = getRequiredField(data, "email");
-    const password = getRequiredField(data, "password");
+    const email = getRequiredField(data, 'email');
+    const password = getRequiredField(data, 'password');
     const bearer = await loginUser(email, password, secretKey as string);
     const response: ApiResponse<object> = {
       status: 'success',
       data: {
-        token: bearer
+        token: bearer,
       },
       message: 'Token created successfully.',
     };
@@ -28,4 +36,4 @@ export const actionCreateSecret = async (req: Request, res: Response, secretKey:
     }
     return res.status(500).send(createErrorResponse('Error occurred.'));
   }
-}
+};

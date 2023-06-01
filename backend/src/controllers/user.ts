@@ -1,12 +1,15 @@
-import type { Request, Response } from "express";
-import { createUserService } from "../services/userService";
-import { ConflictingRecordError } from "../repositories/types/errors";
-import MissingRequiredField from "../exceptions/MissingRequiredField";
-import type { ApiResponse } from "./types";
-import { createErrorResponse, getRequiredField, handleMissingField } from "./common";
-import isEmailValid from "../services/validatorService";
-import EmailIsNotValid from "../exceptions/EmailIsNotValid";
-
+import type { Request, Response } from 'express';
+import { createUserService } from '../services/userService';
+import { ConflictingRecordError } from '../repositories/types/errors';
+import MissingRequiredField from '../exceptions/MissingRequiredField';
+import type { ApiResponse } from './types';
+import {
+  createErrorResponse,
+  getRequiredField,
+  handleMissingField,
+} from './common';
+import isEmailValid from '../services/validatorService';
+import EmailIsNotValid from '../exceptions/EmailIsNotValid';
 
 export const actionCreateUser = async (req: Request, res: Response) => {
   try {
@@ -39,4 +42,4 @@ export const actionCreateUser = async (req: Request, res: Response) => {
     }
     return res.status(500).send(createErrorResponse('Error occurred'));
   }
-}
+};

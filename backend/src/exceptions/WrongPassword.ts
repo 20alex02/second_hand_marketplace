@@ -1,6 +1,6 @@
 class WrongPassword extends Error {
   constructor() {
-    super("Wrong password");
+    super('Wrong password');
     this.name = 'WrongPassword';
   }
 }

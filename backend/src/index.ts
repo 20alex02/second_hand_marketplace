@@ -1,11 +1,11 @@
-import express from "express";
+import express from 'express';
 import cors from 'cors';
 import { config as configEnvVariables } from 'dotenv';
 import { env } from 'process';
 import type { ApiResponse } from './controllers/types';
-import authenticateToken from "./middleware/authMiddleware";
-import { actionCreateSecret } from "./controllers/secret";
-import { actionCreateUser } from "./controllers/user";
+import authenticateToken from './middleware/authMiddleware';
+import { actionCreateSecret } from './controllers/secret';
+import { actionCreateUser } from './controllers/user';
 
 configEnvVariables();
 const app = express();
@@ -22,7 +22,6 @@ app.use(express.json());
 // parse URL encoded strings
 app.use(express.urlencoded({ extended: true }));
 
-
 app.get('/api/data', authenticateToken, (_req, res) => {
   res.setHeader('Cache-Control', 'no-store');
   const response: ApiResponse<object> = {
@@ -32,7 +31,6 @@ app.get('/api/data', authenticateToken, (_req, res) => {
     },
     message: 'Data fetched successfully.',
   };
-
 
   return res.status(200).send(response);
 });
