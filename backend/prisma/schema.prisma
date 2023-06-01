@@ -11,7 +11,7 @@ model User {
   id  String @id @default(uuid())
   createdAt DateTime @default(now())
   deletedAt DateTime?
-  email String
+  email String @unique
   phoneNumber String
   hashedPassword String
   salt String
@@ -59,6 +59,8 @@ enum AdvertisementType {
 
 model AdvertisementImage {
   id  String @id @default(uuid())
+  createdAt DateTime @default(now())
+  deletedAt DateTime?
   path String
   advertisementId String
   advertisement Advertisement @relation(fields: [advertisementId], references: [id])
@@ -66,8 +68,9 @@ model AdvertisementImage {
 
 model Category {
   id  String @id @default(uuid())
+  createdAt DateTime @default(now())
+  deletedAt DateTime?
   name String
-  isLeaf Boolean
   parentId String?
   parent Category? @relation("parentId", fields: [parentId], references: [id])
   subcategories Category[] @relation("parentId")
