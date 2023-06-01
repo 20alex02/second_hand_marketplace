@@ -1,0 +1,20 @@
+.navbar {
+    justify-content: right;
+    font-size: 20px;
+    background-color: #9ee3f6;
+}
+.navbar > li:nth-last-of-type(2){
+    margin-right: 0 !important;
+}
+
+.navbar > li {
+    margin-right: 1em !important;
+    text-decoration: none !important;
+}
+
+.ant-menu > .ant-menu-item-selected,
+.ant-menu > .ant-menu-item-active::after {
+  color: black !important;
+  background-color: #0cbae8 !important;
+  border-bottom-width: 0px !important;
+}
