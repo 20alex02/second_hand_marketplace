@@ -12,6 +12,10 @@ export type UserReadOneData = {
   id: string;
 };
 
+export type UserReadOneUserByEmail = {
+  email: string;
+};
+
 export type UserReadAllData = {
   role: Role;
   // TODO filters

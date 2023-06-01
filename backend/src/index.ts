@@ -3,10 +3,15 @@ import cors from 'cors';
 import { config as configEnvVariables } from 'dotenv';
 import { env } from 'process';
 import type { ApiResponse } from './controllers/types';
+import authenticateToken from './middleware/authMiddleware';
+import { actionCreateSecret } from './controllers/secret';
+import { actionCreateUser } from './controllers/user';
 
 configEnvVariables();
 const app = express();
+app.disable('etag');
 const port = env['PORT'] ?? 3000;
+const secretKey = env['SECRET_KEY'];
 
 // CORS middlware
 app.use(cors());
@@ -17,7 +22,8 @@ app.use(express.json());
 // parse URL encoded strings
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/api/data', (_req, res) => {
+app.get('/api/data', authenticateToken, (_req, res) => {
+  res.setHeader('Cache-Control', 'no-store');
   const response: ApiResponse<object> = {
     status: 'success',
     data: {
@@ -27,6 +33,12 @@ app.get('/api/data', (_req, res) => {
   };
 
   return res.status(200).send(response);
+});
+
+app.post('/api/user', actionCreateUser);
+
+app.post('/api/secret', (_req, res) => {
+  return actionCreateSecret(_req, res, secretKey as string);
 });
 
 // DO NOT MODIFY THE PRECEDING code ^^
