@@ -66,7 +66,7 @@ export type AdvertisementCreateData = {
   estimatedPrice?: number;
   hidden?: boolean;
   creatorId: string;
-  images: AdvertisementImageCreateData[];
+  images: { path: string }[];
   categories: { id: string }[];
 };
 
