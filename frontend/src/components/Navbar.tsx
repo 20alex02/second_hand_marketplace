@@ -8,11 +8,7 @@ function Navbar() {
 
   const items: MenuProps['items'] = [
     {
-      label: (
-        <a href="#" rel="noopener noreferrer">
-          Adverts
-        </a>
-      ),
+      label: <NavLink to="/Adverts">Adverts</NavLink>,
       key: 'adverts',
     },
     {
