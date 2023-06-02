@@ -20,7 +20,7 @@ function Login() {
         navigate('/Adverts');
       },
       onError: (error: any) => {
-        setErrorMsg(error.response.message);
+        setErrorMsg(error.response.data.error);
       },
     }
   );
