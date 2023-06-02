@@ -19,8 +19,8 @@ function Login() {
         setToken(data.token);
         navigate('/Adverts');
       },
-      onError: (error: Error) => {
-        setErrorMsg(error.message);
+      onError: (error: any) => {
+        setErrorMsg(error.response.message);
       },
     }
   );
