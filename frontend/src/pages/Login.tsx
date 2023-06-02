@@ -1,33 +1,32 @@
 import { Card, Typography, Form, Input, Button, Alert } from 'antd';
 import './login.css';
-import { LoginApi } from '../services/index';
 import { AuthToken } from '../state/atom';
 import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-
-type LoginForm = {
-  email: string;
-  password: string;
-};
+import { useMutation } from '@tanstack/react-query';
+import { LoginData } from '../models/login';
+import { loginUserFn } from '../services/loginApi';
 
 function Login() {
   const setToken = useSetRecoilState(AuthToken);
   const navigate = useNavigate();
   const [errorMsg, setErrorMsg] = useState<string>('');
-  const onFinish = async (values: LoginForm) => {
-    try {
-      const data = await LoginApi.login(values.email, values.password);
-
-      if (data.token == '') {
-        setErrorMsg('Invalid email or password');
-        return;
-      }
-      setToken(data.token);
-      navigate('/Home');
-    } catch {
-      setErrorMsg('Error occured during login');
+  const { mutate: loginUser } = useMutation(
+    (data: LoginData) => loginUserFn(data),
+    {
+      onSuccess: (data) => {
+        setToken(data.token);
+        navigate('/Adverts');
+      },
+      onError: (error: Error) => {
+        setErrorMsg(error.message);
+      },
     }
+  );
+
+  const onFinish = (values: LoginData) => {
+    loginUser(values);
   };
 
   return (
