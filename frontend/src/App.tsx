@@ -10,7 +10,7 @@ export const App: FC = () => {
       <Navbar />
       <Routes>
         <Route path="/" />
-        <Route path="/login" element={<Login />} />
+        <Route path="/Login" element={<Login />} />
       </Routes>
     </>
   );
