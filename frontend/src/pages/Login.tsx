@@ -81,7 +81,16 @@ function Login() {
           </Form.Item>
         </Form>
       </Card>
-      {errorMsg && <Alert message={errorMsg} type="error" showIcon></Alert>}
+      {errorMsg && (
+        <div className="errorMsg">
+          <Alert
+            message={errorMsg}
+            type="error"
+            showIcon
+            closable={true}
+          ></Alert>
+        </div>
+      )}
     </div>
   );
 }
