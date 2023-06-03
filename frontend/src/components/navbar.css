@@ -1,3 +1,13 @@
+.navbar {
+    justify-content: right;
+    font-size: 20px;
+    background-color: #9ee3f6;
+}
+
+.navbar > li {
+    margin-left: 1em !important;
+    text-decoration: none !important;
+}
 
 @media (min-width: 500px) {
   .navbar__menu {
