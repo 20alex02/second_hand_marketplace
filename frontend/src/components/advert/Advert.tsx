@@ -1,8 +1,21 @@
 import './advert.css';
-import { MutableRefObject, useRef, useState } from 'react';
+import React, { MutableRefObject, useRef, useState } from 'react';
+import { UserOutlined } from '@ant-design/icons';
+import { COUNT, STATE } from './states';
+
+const HIDDEN = ' advert-stats--none';
+
+const ParticipantState = (props: { count: number }) => {
+  return (
+    <div className="advert-stats__count">
+      <UserOutlined rev />
+      {props.count}
+    </div>
+  );
+};
 
 const Advert = (props: { advert: Advert; state: string }) => {
-  const stats = 'advert__stats--none';
+  const stats = getStatsModifier(props.state, props.advert.participants.length);
   const imageCount = props.advert.images.length;
 
   let index = 0;
@@ -25,8 +38,8 @@ const Advert = (props: { advert: Advert; state: string }) => {
 
   return (
     <section className="advert">
-      <div className={`advert__stats ${stats}`}>
-        {props.advert.participants.length} aaaaaaaa
+      <div className={`advert__state advert-stats${stats}`}>
+        {switchStats(props.state, props.advert)}
       </div>
       <img
         onMouseEnter={imageOnHover}
@@ -43,6 +56,28 @@ const Advert = (props: { advert: Advert; state: string }) => {
       </div>
     </section>
   );
+};
+
+const switchStats = (state: string, advert: Advert) => {
+  switch (state) {
+    case COUNT:
+      return <ParticipantState count={advert.participants.length} />;
+    case STATE:
+      return <div />;
+    default:
+      return <div />;
+  }
+};
+
+const getStatsModifier = (state: string, participantCount: number) => {
+  switch (state) {
+    case COUNT:
+      return participantCount != 0 ? '' : HIDDEN;
+    case STATE:
+      return '';
+    default:
+      return HIDDEN;
+  }
 };
 
 const formatPrice = (price?: number) =>

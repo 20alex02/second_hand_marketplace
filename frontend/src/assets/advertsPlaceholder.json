@@ -6,7 +6,6 @@
     "title": "kittyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy1",
     "type": "WIP",
     "description": "Kitty not for sale, just look at her/him/they/whatever",
-    "estimatedPrice": 20000,
     "hidden": false,
     "creatorId": "2bd6264d-0de2-4a54-b0b5-dce321d23cbc",
     "participants": [],
@@ -73,7 +72,14 @@
     "estimatedPrice": 20000000000000,
     "hidden": false,
     "creatorId": "2bd6264d-0de2-4a54-b0b5-dce321d23cbc",
-    "participants": [],
+    "participants": [
+      {
+        "id": "74a335c0-aefa-5454-bea0-15d2a03d5870",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "advertId": "bda335c0-aefa-443b-bea0-15d2a03d5870"
+      }
+    ],
     "images": [
       {
         "id": "046a0ab5-6ebb-41e1-af4c-62f4780491e1",
