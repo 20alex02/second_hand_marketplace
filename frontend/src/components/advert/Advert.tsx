@@ -1,15 +1,23 @@
 import './advert.css';
 import React, { MutableRefObject, useRef, useState } from 'react';
-import { UserOutlined } from '@ant-design/icons';
-import { COUNT, STATE } from './states';
+import { CheckOutlined, StopOutlined, UserOutlined } from '@ant-design/icons';
+import { COUNT, STATUS } from './states';
 
-const HIDDEN = ' advert-stats--none';
+const NONE_MODIFIER = ' advert-stats--none';
 
 const ParticipantState = (props: { count: number }) => {
   return (
     <div className="advert-stats__count">
       <UserOutlined rev />
       {props.count}
+    </div>
+  );
+};
+
+const AdvertState = (props: { hidden: boolean }) => {
+  return (
+    <div className="advert-stats__status">
+      {props.hidden ? <CheckOutlined rev /> : <StopOutlined rotate={270} rev />}
     </div>
   );
 };
@@ -62,8 +70,8 @@ const switchStats = (state: string, advert: Advert) => {
   switch (state) {
     case COUNT:
       return <ParticipantState count={advert.participants.length} />;
-    case STATE:
-      return <div />;
+    case STATUS:
+      return <AdvertState hidden={advert.hidden} />;
     default:
       return <div />;
   }
@@ -72,11 +80,11 @@ const switchStats = (state: string, advert: Advert) => {
 const getStatsModifier = (state: string, participantCount: number) => {
   switch (state) {
     case COUNT:
-      return participantCount != 0 ? '' : HIDDEN;
-    case STATE:
+      return participantCount != 0 ? '' : NONE_MODIFIER;
+    case STATUS:
       return '';
     default:
-      return HIDDEN;
+      return NONE_MODIFIER;
   }
 };
 

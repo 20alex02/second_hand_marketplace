@@ -20,7 +20,6 @@
     background-color: var(--primary-color);
     border-radius: 2rem;
     margin: 0.75rem;
-    padding: 0.5rem 0.75rem;
     opacity: 1;
     transition: opacity 0.5s ease-in-out;
 }
@@ -30,9 +29,15 @@
 }
 
 .advert-stats__count {
+    padding: 0.5rem 0.75rem;
     display: flex;
     column-gap: 0.5rem;
     align-items: center;
+}
+
+.advert-stats__status {
+    padding: 0.6rem 0.75rem;
+    font-size: 1.25rem;
 }
 
 .advert__image {

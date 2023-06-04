@@ -1,3 +1,3 @@
 export const NONE = 'NONE';
 export const COUNT = 'COUNT';
-export const STATE = 'STATE';
+export const STATUS = 'STATUS';
