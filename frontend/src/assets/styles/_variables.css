@@ -1,5 +1,10 @@
 :root {
     --primary-color: #0CBAE8;
+    --white: #F1F1F1;
 
     --font-family-montserrat: 'Montserrat', sans-serif;
+
+    --advert-height: 19rem;
+    --advert-info-height: 17rem;
+    --advert-info-margin-top: 15rem;
 }
