@@ -4,7 +4,25 @@
 
     --font-family-montserrat: 'Montserrat', sans-serif;
 
-    --advert-height: 19rem;
-    --advert-info-height: 17rem;
-    --advert-info-margin-top: 15rem;
+    --advert-width: 100%;
+    --advert-height: 15rem;
+    --advert-info-height: 13rem;
+    --advert-info-margin-top: 11rem;
+    --advert-title-max-height: 9.5rem;
+}
+
+@media only screen and (min-width: 562px) {
+    :root {
+        --advert-width: 15rem;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    :root {
+        --advert-width: 19rem;
+        --advert-height: 19rem;
+        --advert-info-height: 17rem;
+        --advert-info-margin-top: 15rem;
+        --advert-title-max-height: 13.5rem;
+    }
 }
