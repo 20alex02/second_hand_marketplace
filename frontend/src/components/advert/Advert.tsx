@@ -22,8 +22,8 @@ const AdvertState = (props: { hidden: boolean }) => {
   );
 };
 
-const Advert = (props: { advert: Advert; state: string }) => {
-  const stats = getStatsModifier(props.state, props.advert.participants.length);
+const Advert = (props: { advert: Advert; state?: string }) => {
+  const stats = getStatsModifier(props.advert.participants.length, props.state);
   const imageCount = props.advert.images.length;
 
   let index = 0;
@@ -47,7 +47,7 @@ const Advert = (props: { advert: Advert; state: string }) => {
   return (
     <section className="advert">
       <div className={`advert__state advert-stats${stats}`}>
-        {switchStats(props.state, props.advert)}
+        {switchStats(props.advert, props.state)}
       </div>
       <img
         onMouseEnter={imageOnHover}
@@ -66,7 +66,7 @@ const Advert = (props: { advert: Advert; state: string }) => {
   );
 };
 
-const switchStats = (state: string, advert: Advert) => {
+const switchStats = (advert: Advert, state?: string) => {
   switch (state) {
     case COUNT:
       return <ParticipantState count={advert.participants.length} />;
@@ -77,7 +77,7 @@ const switchStats = (state: string, advert: Advert) => {
   }
 };
 
-const getStatsModifier = (state: string, participantCount: number) => {
+const getStatsModifier = (participantCount: number, state?: string) => {
   switch (state) {
     case COUNT:
       return participantCount != 0 ? '' : NONE_MODIFIER;
