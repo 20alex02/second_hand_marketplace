@@ -1,13 +1,20 @@
 import advertList from '../../assets/advertsPlaceholder.json';
+import './adverts.css';
 
+import Filters from '../../components/filters/Filters';
 import Advert from '../../components/advert/Advert';
 
 const Adverts = () => {
   return (
-    <div>
-      {advertList.map((item: Advert) => (
-        <Advert key={item.title} advert={item} state={'ALL'} />
-      ))}
+    <div className="container">
+      <aside className="filters-bar">
+        <Filters />
+      </aside>
+      <main className="adverts">
+        {advertList.map((item: Advert) => (
+          <Advert key={item.title} advert={item} />
+        ))}
+      </main>
     </div>
   );
 };

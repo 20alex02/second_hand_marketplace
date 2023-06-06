@@ -196,5 +196,261 @@
         "adverts": []
       }
     ]
+  },
+  {
+    "id": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+    "createdAt": "<valid date>",
+    "deletedAt": "<valid date>",
+    "title": "kitty4",
+    "type": "WIP",
+    "description": "Kitty not for sale, just look at her/him/they/whatever",
+    "estimatedPrice": 20000,
+    "hidden": false,
+    "creatorId": "2bd6264d-0de2-4a54-b0b5-dce321d23cbc",
+    "participants": [],
+    "images": [
+      {
+        "id": "046a0ab5-6ebb-41e1-af4c-62f4780491e1",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "advertId": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+        "path": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Stray_kitten_Rambo002.jpg/1200px-Stray_kitten_Rambo002.jpg"
+      },
+      {
+        "id": "e977708c-992b-4719-801d-2d8acdba64cf",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "advertId": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+        "path": "https://www.marthastewart.com/thmb/g-FunKfdiZombJQ7pB4wb8BF4C8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/cat-kitten-138468381-4cd82b91d7be45cb9f9aa8366e10bce4.jpg"
+      },
+      {
+        "id": "9ee125ef-0f05-4138-bb07-27cdb893e894",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "advertId": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+        "path": "https://icatcare.org/app/uploads/2018/07/Helping-your-new-cat-or-kitten-settle-in-1.png"
+      }
+    ],
+    "categories": [
+      {
+        "id": "75287e4b-fed1-4f71-920e-6eca154a55af",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "name": "Animals",
+        "subcategories": [
+          {
+            "id": "78b176c3-27d0-4e3a-a396-e57e0a61e448",
+            "createdAt": "<valid date>",
+            "deletedAt": "<valid date>",
+            "name": "Cats",
+            "parentId": "75287e4b-fed1-4f71-920e-6eca154a55af",
+            "subcategories": [],
+            "adverts": []
+          }
+        ],
+        "adverts": []
+      },
+      {
+        "id": "78b176c3-27d0-4e3a-a396-e57e0a61e448",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "name": "Cats",
+        "parentId": "75287e4b-fed1-4f71-920e-6eca154a55af",
+        "subcategories": [],
+        "adverts": []
+      }
+    ]
+  },
+  {
+    "id": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+    "createdAt": "<valid date>",
+    "deletedAt": "<valid date>",
+    "title": "kitty5",
+    "type": "WIP",
+    "description": "Kitty not for sale, just look at her/him/they/whatever",
+    "estimatedPrice": 20000,
+    "hidden": false,
+    "creatorId": "2bd6264d-0de2-4a54-b0b5-dce321d23cbc",
+    "participants": [],
+    "images": [
+      {
+        "id": "046a0ab5-6ebb-41e1-af4c-62f4780491e1",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "advertId": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+        "path": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Stray_kitten_Rambo002.jpg/1200px-Stray_kitten_Rambo002.jpg"
+      },
+      {
+        "id": "e977708c-992b-4719-801d-2d8acdba64cf",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "advertId": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+        "path": "https://www.marthastewart.com/thmb/g-FunKfdiZombJQ7pB4wb8BF4C8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/cat-kitten-138468381-4cd82b91d7be45cb9f9aa8366e10bce4.jpg"
+      },
+      {
+        "id": "9ee125ef-0f05-4138-bb07-27cdb893e894",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "advertId": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+        "path": "https://icatcare.org/app/uploads/2018/07/Helping-your-new-cat-or-kitten-settle-in-1.png"
+      }
+    ],
+    "categories": [
+      {
+        "id": "75287e4b-fed1-4f71-920e-6eca154a55af",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "name": "Animals",
+        "subcategories": [
+          {
+            "id": "78b176c3-27d0-4e3a-a396-e57e0a61e448",
+            "createdAt": "<valid date>",
+            "deletedAt": "<valid date>",
+            "name": "Cats",
+            "parentId": "75287e4b-fed1-4f71-920e-6eca154a55af",
+            "subcategories": [],
+            "adverts": []
+          }
+        ],
+        "adverts": []
+      },
+      {
+        "id": "78b176c3-27d0-4e3a-a396-e57e0a61e448",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "name": "Cats",
+        "parentId": "75287e4b-fed1-4f71-920e-6eca154a55af",
+        "subcategories": [],
+        "adverts": []
+      }
+    ]
+  },
+  {
+    "id": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+    "createdAt": "<valid date>",
+    "deletedAt": "<valid date>",
+    "title": "kitty6",
+    "type": "WIP",
+    "description": "Kitty not for sale, just look at her/him/they/whatever",
+    "estimatedPrice": 20000,
+    "hidden": false,
+    "creatorId": "2bd6264d-0de2-4a54-b0b5-dce321d23cbc",
+    "participants": [],
+    "images": [
+      {
+        "id": "046a0ab5-6ebb-41e1-af4c-62f4780491e1",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "advertId": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+        "path": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Stray_kitten_Rambo002.jpg/1200px-Stray_kitten_Rambo002.jpg"
+      },
+      {
+        "id": "e977708c-992b-4719-801d-2d8acdba64cf",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "advertId": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+        "path": "https://www.marthastewart.com/thmb/g-FunKfdiZombJQ7pB4wb8BF4C8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/cat-kitten-138468381-4cd82b91d7be45cb9f9aa8366e10bce4.jpg"
+      },
+      {
+        "id": "9ee125ef-0f05-4138-bb07-27cdb893e894",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "advertId": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+        "path": "https://icatcare.org/app/uploads/2018/07/Helping-your-new-cat-or-kitten-settle-in-1.png"
+      }
+    ],
+    "categories": [
+      {
+        "id": "75287e4b-fed1-4f71-920e-6eca154a55af",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "name": "Animals",
+        "subcategories": [
+          {
+            "id": "78b176c3-27d0-4e3a-a396-e57e0a61e448",
+            "createdAt": "<valid date>",
+            "deletedAt": "<valid date>",
+            "name": "Cats",
+            "parentId": "75287e4b-fed1-4f71-920e-6eca154a55af",
+            "subcategories": [],
+            "adverts": []
+          }
+        ],
+        "adverts": []
+      },
+      {
+        "id": "78b176c3-27d0-4e3a-a396-e57e0a61e448",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "name": "Cats",
+        "parentId": "75287e4b-fed1-4f71-920e-6eca154a55af",
+        "subcategories": [],
+        "adverts": []
+      }
+    ]
+  },
+  {
+    "id": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+    "createdAt": "<valid date>",
+    "deletedAt": "<valid date>",
+    "title": "kitty7",
+    "type": "WIP",
+    "description": "Kitty not for sale, just look at her/him/they/whatever",
+    "estimatedPrice": 20000,
+    "hidden": false,
+    "creatorId": "2bd6264d-0de2-4a54-b0b5-dce321d23cbc",
+    "participants": [],
+    "images": [
+      {
+        "id": "046a0ab5-6ebb-41e1-af4c-62f4780491e1",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "advertId": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+        "path": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Stray_kitten_Rambo002.jpg/1200px-Stray_kitten_Rambo002.jpg"
+      },
+      {
+        "id": "e977708c-992b-4719-801d-2d8acdba64cf",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "advertId": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+        "path": "https://www.marthastewart.com/thmb/g-FunKfdiZombJQ7pB4wb8BF4C8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/cat-kitten-138468381-4cd82b91d7be45cb9f9aa8366e10bce4.jpg"
+      },
+      {
+        "id": "9ee125ef-0f05-4138-bb07-27cdb893e894",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "advertId": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+        "path": "https://icatcare.org/app/uploads/2018/07/Helping-your-new-cat-or-kitten-settle-in-1.png"
+      }
+    ],
+    "categories": [
+      {
+        "id": "75287e4b-fed1-4f71-920e-6eca154a55af",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "name": "Animals",
+        "subcategories": [
+          {
+            "id": "78b176c3-27d0-4e3a-a396-e57e0a61e448",
+            "createdAt": "<valid date>",
+            "deletedAt": "<valid date>",
+            "name": "Cats",
+            "parentId": "75287e4b-fed1-4f71-920e-6eca154a55af",
+            "subcategories": [],
+            "adverts": []
+          }
+        ],
+        "adverts": []
+      },
+      {
+        "id": "78b176c3-27d0-4e3a-a396-e57e0a61e448",
+        "createdAt": "<valid date>",
+        "deletedAt": "<valid date>",
+        "name": "Cats",
+        "parentId": "75287e4b-fed1-4f71-920e-6eca154a55af",
+        "subcategories": [],
+        "adverts": []
+      }
+    ]
   }
 ]
