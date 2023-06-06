@@ -1,17 +1,54 @@
 @import url('../../assets/styles/_variables.css');
 
 .filters {
-    height: 100%;
     background-color: var(--primary-color);
     box-shadow: 0 0 0.2rem 0.1rem rgb(0 0 0 / 10%);
     font-size: 1.25rem;
     color: var(--white);
-    display: flex;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 100%;
+}
+
+.filters__button {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+    margin: 0.9rem;
+}
+
+.filters__button:has(~ .filter-list--visible) {
+    color: var(--primary-color);
 }
 
 .filter-list {
-    visibility: hidden;
-    list-style-type: none;
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    justify-self: center;
     padding: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    margin-top: 8vh;
+}
+
+.filter-list--invisible {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.filter-list--visible {
+    opacity: 1;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.filters:has(.filter-list--visible) {
+    max-height: 60vh;
+    transition: max-height 0.5s ease-in-out;
+}
+
+.filters:has(.filter-list--invisible) {
+    max-height: 8vh;
+    transition: max-height 0.5s ease-in-out;
 }
