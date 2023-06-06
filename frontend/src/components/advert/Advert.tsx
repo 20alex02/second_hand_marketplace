@@ -45,7 +45,7 @@ const Advert = (props: { advert: Advert; state?: string }) => {
   };
 
   return (
-    <section className="advert">
+    <article className="advert">
       <div className={`advert__state advert-stats${stats}`}>
         {switchStats(props.advert, props.state)}
       </div>
@@ -62,7 +62,7 @@ const Advert = (props: { advert: Advert; state?: string }) => {
           {formatPrice(props.advert.estimatedPrice)}
         </span>
       </div>
-    </section>
+    </article>
   );
 };
 
