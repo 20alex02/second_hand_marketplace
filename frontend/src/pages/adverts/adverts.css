@@ -16,5 +16,22 @@
     padding: 1rem;
     overflow-y: scroll;
     gap: 1.2rem;
+}
 
+.adverts::-webkit-scrollbar {
+    width: 1rem;
+}
+
+.adverts::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.adverts::-webkit-scrollbar-thumb {
+    background: var(--primary-color-light);
+    border-radius: 1rem;
+    border: 0.25rem solid var(--white);
+}
+
+.adverts::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
 }
