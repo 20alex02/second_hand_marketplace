@@ -18,13 +18,24 @@ export const handleMissingField = (
   return createErrorResponse('Required field is missing.', missingField);
 };
 
-export const getRequiredField = (
-  data: { [x: string]: string },
+export const getRequiredField = <T>(
+  data: { [x: string]: T },
   field: string
 ) => {
   const curField = data[field];
   if (curField === null || curField === undefined) {
     throw new MissingRequiredField(field);
+  }
+  return curField;
+};
+
+export const getOptionalField = <T>(
+  data: { [x: string]: T | null },
+  field: string
+) => {
+  const curField = data[field];
+  if (curField === null || curField === undefined) {
+    return null;
   }
   return curField;
 };
