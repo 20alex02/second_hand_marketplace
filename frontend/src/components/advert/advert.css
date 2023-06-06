@@ -7,7 +7,7 @@
     display: grid;
     overflow: hidden;
     border-radius: 2rem;
-    box-shadow: 0 0.1rem 0.2rem 0.1rem rgb(0 0 0 / 30%);
+    box-shadow: var(--default-shadow);
 }
 
 .advert__state {

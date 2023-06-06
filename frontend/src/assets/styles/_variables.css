@@ -23,7 +23,7 @@
     }
 }
 
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 992px) {
     :root {
         --advert-width: 19rem;
         --advert-height: 19rem;
