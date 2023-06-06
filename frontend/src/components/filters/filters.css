@@ -32,7 +32,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 8vh;
+    margin-top: var(--sidebar-mobile-height);
     width: 100vw;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .filters:has(.filter-list--invisible) {
-    max-height: 8vh;
+    max-height: var(--sidebar-mobile-height);
     transition: max-height 0.5s ease-in-out;
     overflow-y: clip;
 }
@@ -78,4 +78,29 @@
 
 .filters::-webkit-scrollbar-thumb:hover {
     background: var(--white);
+}
+
+@media only screen and (min-width: 600px) {
+    .filters {
+        box-shadow: var(--default-shadow);
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        margin: 1rem;
+    }
+
+    .filters:has(.filter-list--visible) {
+        max-height: 95vh;
+        overflow-y: scroll;
+    }
+
+    .filters__button {
+        display: none;
+    }
+
+    .filter-list {
+        width: 100%;
+        margin-top: 0;
+        padding: 1.5rem;
+    }
 }

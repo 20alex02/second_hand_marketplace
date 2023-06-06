@@ -10,6 +10,11 @@
     --advert-info-height: 13rem;
     --advert-info-margin-top: 11rem;
     --advert-title-max-height: 9.5rem;
+
+    --default-shadow: 0 0.1rem 0.2rem 0.1rem rgb(0 0 0 / 30%);
+
+    --sidebar-mobile-height: 8vh;
+    --sidebar-width: 19rem;
 }
 
 @media only screen and (min-width: 562px) {
