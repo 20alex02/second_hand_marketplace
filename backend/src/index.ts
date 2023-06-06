@@ -6,6 +6,7 @@ import type { ApiResponse } from './controllers/types';
 import authenticateToken from './middleware/authMiddleware';
 import { actionCreateSecret } from './controllers/secret';
 import { actionCreateUser } from './controllers/user';
+import { actionCreateAdvertisement } from './controllers/advertisement';
 
 configEnvVariables();
 const app = express();
@@ -39,6 +40,10 @@ app.post('/api/user', actionCreateUser);
 
 app.post('/api/secret', (_req, res) => {
   return actionCreateSecret(_req, res, secretKey as string);
+});
+
+app.post('/api/advertisement', authenticateToken, (_req, res) => {
+  return actionCreateAdvertisement(_req, res, secretKey as string);
 });
 
 // DO NOT MODIFY THE PRECEDING code ^^

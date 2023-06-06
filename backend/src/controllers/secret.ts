@@ -16,8 +16,8 @@ export const actionCreateSecret = async (
 ) => {
   try {
     const data = req.body;
-    const email = getRequiredField(data, 'email');
-    const password = getRequiredField(data, 'password');
+    const email: string = getRequiredField(data, 'email');
+    const password: string = getRequiredField(data, 'password');
     const bearer = await loginUser(email, password, secretKey as string);
     const response: ApiResponse<object> = {
       status: 'success',

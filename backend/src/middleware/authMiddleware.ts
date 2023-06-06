@@ -1,8 +1,10 @@
 import type { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import { env } from 'process';
+import dotenv from 'dotenv';
+import path from 'path';
 
-const secretKey = env['SECRET_KEY'];
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
+const secretKey = process.env['SECRET_KEY'];
 const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];

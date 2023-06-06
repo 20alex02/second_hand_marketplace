@@ -8,20 +8,20 @@ import {
   getRequiredField,
   handleMissingField,
 } from './common';
-import isEmailValid from '../services/validatorService';
 import EmailIsNotValid from '../exceptions/EmailIsNotValid';
+import { isEmailValid } from '../services/validatorService';
 
 export const actionCreateUser = async (req: Request, res: Response) => {
   try {
     const data = req.body;
-    const email = getRequiredField(data, 'email');
+    const email: string = getRequiredField(data, 'email');
     if (!isEmailValid(email)) {
       throw new EmailIsNotValid();
     }
-    const phoneNumber = getRequiredField(data, 'phoneNumber');
-    const password = getRequiredField(data, 'password');
+    const phoneNumber: string = getRequiredField(data, 'phoneNumber');
+    const password: string = getRequiredField(data, 'password');
 
-    const id = await createUserService(email, phoneNumber, password);
+    const id: string = await createUserService(email, phoneNumber, password);
     const response: ApiResponse<object> = {
       status: 'success',
       data: {

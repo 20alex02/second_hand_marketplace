@@ -63,7 +63,7 @@ export type AdvertisementCreateData = {
   title: string;
   type: AdvertisementType;
   description: string;
-  estimatedPrice?: number;
+  estimatedPrice?: number | null;
   hidden?: boolean;
   creatorId: string;
   images: { path: string }[];

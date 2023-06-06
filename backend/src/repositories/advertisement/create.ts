@@ -49,6 +49,7 @@ const createAdvertisement = async (
       return Result.ok(advertisement);
     });
   } catch (e) {
+    console.log(e);
     return genericError;
   }
 };
