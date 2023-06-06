@@ -4,7 +4,6 @@
     background-color: var(--primary-color);
     width: var(--advert-width);
     height: var(--advert-height);
-    margin: 1rem;
     display: grid;
     overflow: hidden;
     border-radius: 2rem;
