@@ -30,6 +30,13 @@ const Filters = () => {
         <li className="filter-list__item">Placeholder</li>
         <li className="filter-list__item">Placeholder</li>
         <li className="filter-list__item">Placeholder</li>
+        <li className="filter-list__item">Placeholder</li>
+        <li className="filter-list__item">Placeholder</li>
+        <li className="filter-list__item">Placeholder</li>
+        <li className="filter-list__item">Placeholder</li>
+        <li className="filter-list__item">Placeholder</li>
+        <li className="filter-list__item">Placeholder</li>
+        <li className="filter-list__item">Placeholder</li>
       </ul>
     </section>
   );

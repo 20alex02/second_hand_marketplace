@@ -8,6 +8,7 @@
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: 100%;
+    overflow-x: clip;
 }
 
 .filters__button {
@@ -15,6 +16,7 @@
     grid-row: 1;
     align-self: start;
     margin: 0.9rem;
+    position: fixed;
 }
 
 .filters__button:has(~ .filter-list--visible) {
@@ -29,8 +31,13 @@
     list-style-type: none;
     display: flex;
     flex-direction: column;
-    row-gap: 1rem;
+    align-items: center;
     margin-top: 8vh;
+    width: 100vw;
+}
+
+.filter-list__item {
+    padding-bottom: 1rem;
 }
 
 .filter-list--invisible {
@@ -46,9 +53,29 @@
 .filters:has(.filter-list--visible) {
     max-height: 60vh;
     transition: max-height 0.5s ease-in-out;
+    overflow-y: scroll;
 }
 
 .filters:has(.filter-list--invisible) {
     max-height: 8vh;
     transition: max-height 0.5s ease-in-out;
+    overflow-y: clip;
+}
+
+.filters::-webkit-scrollbar {
+    width: 1rem;
+}
+
+.filters::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.filters::-webkit-scrollbar-thumb {
+    background: rgb(249 249 249 / 95%) ;
+    border-radius: 1rem;
+    border: 0.25rem solid var(--primary-color);
+}
+
+.filters::-webkit-scrollbar-thumb:hover {
+    background: var(--white);
 }
