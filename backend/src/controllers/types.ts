@@ -18,4 +18,5 @@ export type AdvertisementFilter = {
   type: string | null;
   estimatedPrice: { from: number | null; to: number | null } | null;
   hidden: boolean | null;
+  creatorId: string | null;
 };

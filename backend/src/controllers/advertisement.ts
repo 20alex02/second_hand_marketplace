@@ -99,6 +99,7 @@ export const actionAdvertisementSearch = async (
     const estimatedPrice: { from: number | null; to: number | null } | null =
       getOptionalField(data, 'estimatedPrice');
     const hidden: boolean | null = getOptionalField(data, 'hidden');
+    const creatorId: string | null = getOptionalField(data, 'creatorId');
 
     const advertisements = await searchAdvertisementService({
       pageNum,
@@ -108,6 +109,7 @@ export const actionAdvertisementSearch = async (
       type,
       estimatedPrice,
       hidden,
+      creatorId,
     });
 
     console.log(advertisements);
