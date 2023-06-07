@@ -28,6 +28,10 @@
     margin: 0 auto;
     max-width: fit-content;
 }
+.ant-drawer-header-title {
+    justify-content: right !important;
+}
+
 @media (min-width: 285px) {
     .login-card__button:first-of-type {
         margin-right: 5em;
