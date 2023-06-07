@@ -56,6 +56,10 @@
   height: 100%;
 }
 
+.ant-drawer-header-title {
+  justify-content: right !important;
+}
+
 @media only screen and (min-width: 600px) {
   .navbar {
     box-shadow: var(--light-shadow);
