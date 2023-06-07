@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat');
+@import url('../../assets/styles/_variables.css');
 
 .login-card {
     max-width: 20em;
@@ -6,8 +6,8 @@
     right: 0;
     margin: 3em auto;
     margin-bottom: 1em;
-    font-family: 'Montserrat';
-    background-color: #e7f8fd;
+    font-family: var(--font-family-montserrat);
+    background-color: var(--primary-color-light-100);
     position: relative;
 }
 
@@ -16,7 +16,7 @@
 }
 
 .login-card__button {
-    background-color: #098cae;
+    background-color: var(--primary-color-dark);
 }
 
 .login-card__button:first-of-type {

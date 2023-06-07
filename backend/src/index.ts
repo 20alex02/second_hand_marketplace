@@ -6,7 +6,11 @@ import type { ApiResponse } from './controllers/types';
 import authenticateToken from './middleware/authMiddleware';
 import { actionCreateSecret } from './controllers/secret';
 import { actionCreateUser } from './controllers/user';
-import { actionCreateAdvertisement } from './controllers/advertisement';
+import {
+  actionAdvertisementSearch,
+  actionCreateAdvertisement,
+  actionListTypes,
+} from './controllers/advertisement';
 
 configEnvVariables();
 const app = express();
@@ -23,20 +27,11 @@ app.use(express.json());
 // parse URL encoded strings
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/api/data', authenticateToken, (_req, res) => {
-  res.setHeader('Cache-Control', 'no-store');
-  const response: ApiResponse<object> = {
-    status: 'success',
-    data: {
-      greeting: 'Hello from the API!',
-    },
-    message: 'Data fetched successfully.',
-  };
-
-  return res.status(200).send(response);
-});
-
 app.post('/api/user', actionCreateUser);
+
+app.get('/api/advertisement/types', (_req, res) => {
+  return actionListTypes(res);
+});
 
 app.post('/api/secret', (_req, res) => {
   return actionCreateSecret(_req, res, secretKey as string);
@@ -45,6 +40,8 @@ app.post('/api/secret', (_req, res) => {
 app.post('/api/advertisement', authenticateToken, (_req, res) => {
   return actionCreateAdvertisement(_req, res, secretKey as string);
 });
+
+app.post('/api/advertisements', actionAdvertisementSearch);
 
 // DO NOT MODIFY THE PRECEDING code ^^
 

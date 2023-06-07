@@ -1,5 +1,6 @@
 import createAdvertisement from '../repositories/advertisement/create';
 import type { AdvertisementType } from '@prisma/client';
+import type { AdvertisementFilter } from '../controllers/types';
 
 export const createAdvertisementService = async (
   title: string,
@@ -27,4 +28,15 @@ export const createAdvertisementService = async (
     return advertisement.value.id;
   }
   throw advertisement.error;
+};
+
+export const searchAdvertisementService = async (
+  filter: AdvertisementFilter
+) => {
+  console.log(filter);
+  // const advertisement ;
+  // if (advertisement.isOk) {
+  //   return advertisement.value.id;
+  // }
+  // throw advertisement.error;
 };
