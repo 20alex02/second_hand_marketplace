@@ -90,7 +90,7 @@
     }
 
     .filters:has(.filter-list--visible) {
-        max-height: 95vh;
+        max-height: 88vh;
         overflow-y: scroll;
     }
 
