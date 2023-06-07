@@ -18,7 +18,9 @@
     --default-shadow: 0 0.1rem 0.2rem 0.1rem rgb(0 0 0 / 30%);
     --light-shadow: 0 0 0.2rem 0.1rem rgb(0 0 0 / 10%);
 
-    --sidebar-mobile-height: 8vh;
+    --navbar-height: 4rem;
+    --content-height: auto;
+
     --sidebar-width: 19rem;
 }
 

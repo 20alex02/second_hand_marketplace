@@ -32,7 +32,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: var(--sidebar-mobile-height);
+    margin-top: var(--navbar-height);
     width: 100vw;
 }
 
@@ -57,7 +57,7 @@
 }
 
 .filters:has(.filter-list--invisible) {
-    max-height: var(--sidebar-mobile-height);
+    max-height: var(--navbar-height);
     transition: max-height 0.5s ease-in-out;
     overflow-y: clip;
 }
@@ -90,7 +90,7 @@
     }
 
     .filters:has(.filter-list--visible) {
-        max-height: 88vh;
+        max-height: calc(100vh - var(--navbar-height) - 2rem);
         overflow-y: scroll;
     }
 

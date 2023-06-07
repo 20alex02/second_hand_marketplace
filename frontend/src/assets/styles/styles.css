@@ -11,7 +11,7 @@ body {
 #root {
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: var(--sidebar-mobile-height) 92vh;
+    grid-template-rows: var(--navbar-height) var(--content-height);
     background-color: var(--primary-color);
 }
 
