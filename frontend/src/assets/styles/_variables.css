@@ -11,9 +11,9 @@
 
     --advert-width: 100%;
     --advert-height: 15rem;
-    --advert-info-height: 13rem;
-    --advert-info-margin-top: 11rem;
-    --advert-title-max-height: 9.5rem;
+    --advert-info-height: calc(var(--advert-height) - 2rem);
+    --advert-info-margin-top: calc(var(--advert-height) - 4rem);
+    --advert-title-max-height: calc(var(--advert-height) - 5.5rem);
 
     --default-shadow: 0 0.1rem 0.2rem 0.1rem rgb(0 0 0 / 30%);
     --light-shadow: 0 0 0.2rem 0.1rem rgb(0 0 0 / 10%);
@@ -34,8 +34,5 @@
     :root {
         --advert-width: 19rem;
         --advert-height: 19rem;
-        --advert-info-height: 17rem;
-        --advert-info-margin-top: 15rem;
-        --advert-title-max-height: 13.5rem;
     }
 }
