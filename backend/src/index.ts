@@ -7,6 +7,7 @@ import authenticateToken from './middleware/authMiddleware';
 import { actionCreateSecret } from './controllers/secret';
 import { actionCreateUser } from './controllers/user';
 import {
+  actionAdvertisementSearch,
   actionCreateAdvertisement,
   actionListTypes,
 } from './controllers/advertisement';
@@ -39,6 +40,8 @@ app.post('/api/secret', (_req, res) => {
 app.post('/api/advertisement', authenticateToken, (_req, res) => {
   return actionCreateAdvertisement(_req, res, secretKey as string);
 });
+
+app.post('/api/advertisements', actionAdvertisementSearch);
 
 // DO NOT MODIFY THE PRECEDING code ^^
 
