@@ -10,7 +10,7 @@ import MissingRequiredField from '../exceptions/MissingRequiredField';
 import { getUserId } from '../services/authService';
 import { isTypeValid } from '../services/validatorService';
 import NotValidType from '../exceptions/NotValidType';
-import type { AdvertisementType } from '@prisma/client';
+import { AdvertisementType } from '@prisma/client';
 import TokenIsNotValid from '../exceptions/NotAuthorized';
 import { createAdvertisementService } from '../services/advertisementService';
 
@@ -68,4 +68,15 @@ export const actionCreateAdvertisement = async (
     console.log(error);
     return res.status(500).send(createErrorResponse('Error occurred'));
   }
+};
+
+export const actionListTypes = async (res: Response) => {
+  const response: ApiResponse<object> = {
+    status: 'success',
+    data: {
+      types: Object.values(AdvertisementType),
+    },
+    message: 'Success',
+  };
+  return res.status(200).send(response);
 };
