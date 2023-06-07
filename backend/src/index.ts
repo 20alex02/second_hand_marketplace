@@ -11,6 +11,7 @@ import {
   actionCreateAdvertisement,
   actionListTypes,
 } from './controllers/advertisement';
+import { actionCreateCategory } from './controllers/category';
 
 configEnvVariables();
 const app = express();
@@ -42,6 +43,8 @@ app.post('/api/advertisement', authenticateToken, (_req, res) => {
 });
 
 app.post('/api/advertisements', actionAdvertisementSearch);
+
+app.post('api/category', actionCreateCategory);
 
 // DO NOT MODIFY THE PRECEDING code ^^
 
