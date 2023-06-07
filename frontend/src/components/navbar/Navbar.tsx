@@ -3,7 +3,7 @@ import './navbar.css';
 import { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { AuthToken } from '../state/atom';
+import { AuthToken } from '../../state/atom';
 import { LogoutOutlined, LoginOutlined, MenuOutlined } from '@ant-design/icons';
 
 function Navbar() {

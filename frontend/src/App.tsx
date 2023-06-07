@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Login from './pages/Login';
+import Login from './pages/login/Login';
 import Adverts from './pages/adverts/Adverts';
-import Navbar from './components/Navbar';
+import Navbar from './components/navbar/Navbar';
 import './index.css';
 
 export const App: FC = () => {

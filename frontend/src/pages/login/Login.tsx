@@ -1,12 +1,12 @@
 import { Card, Typography, Form, Input, Button, Alert } from 'antd';
 import './login.css';
-import { AuthToken } from '../state/atom';
+import { AuthToken } from '../../state/atom';
 import { useSetRecoilState } from 'recoil';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
-import { LoginData } from '../models/login';
-import { loginUserFn } from '../services/loginApi';
+import { LoginData } from '../../models/login';
+import { loginUserFn } from '../../services/loginApi';
 
 function Login() {
   const setToken = useSetRecoilState(AuthToken);
