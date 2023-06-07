@@ -12,12 +12,6 @@
   "devDependencies": {
     "@commitlint/cli": "17.4.4",
     "@commitlint/config-conventional": "17.4.4",
-    "@emotion/react": "11.10.6",
-    "@emotion/styled": "11.10.6",
-    "@fontsource/roboto": "4.5.8",
-    "@mui/icons-material": "5.11.11",
-    "@mui/material": "5.11.12",
-    "@oplaner4/smart-sticky": "^1.0.7",
     "@parcel/packager-raw-url": "2.8.3",
     "@parcel/transformer-sass": "^2.8.3",
     "@parcel/transformer-webmanifest": "2.8.3",
