@@ -22,26 +22,30 @@ const AdvertState = (props: { hidden: boolean }) => {
   );
 };
 
-const Advert = (props: { advert: Advert; state?: string }) => {
-  const stats = getStatsModifier(props.advert.participants.length, props.state);
+const Advert = (props: { advert?: AdvertType; state?: string }) => {
+  if (!props.advert) {
+    return <></>;
+  }
+
+  const stats = getStatsModifier(props.advert.participantCount, props.state);
   const imageCount = props.advert.images.length;
 
   let index = 0;
-  const [imagePath, setImagePath] = useState<string>(
-    props.advert.images.at(index)?.path ?? 'default image'
-  ); // TODO default image
+  const setImage = () =>
+    props.advert?.images.at(index)?.path ?? 'default image'; // TODO default image
+  const [imagePath, setImagePath] = useState<string>(setImage());
 
   const intervalId: MutableRefObject<NodeJS.Timer | undefined> = useRef();
   const changeImagePath = () => {
     index = index === imageCount - 1 ? 0 : index + 1;
-    setImagePath(props.advert.images.at(index)?.path ?? 'default image');
+    setImagePath(setImage());
   };
   const imageOnHover = () =>
     (intervalId.current = setInterval(changeImagePath, 1000));
   const imageOnLeave = () => {
     clearInterval(intervalId.current);
     index = 0;
-    setImagePath(props.advert.images.at(index)?.path ?? 'default image');
+    setImagePath(setImage());
   };
 
   return (
@@ -66,10 +70,10 @@ const Advert = (props: { advert: Advert; state?: string }) => {
   );
 };
 
-const switchStats = (advert: Advert, state?: string) => {
+const switchStats = (advert: AdvertType, state?: string) => {
   switch (state) {
     case COUNT:
-      return <ParticipantState count={advert.participants.length} />;
+      return <ParticipantState count={advert.participantCount} />;
     case STATUS:
       return <AdvertState hidden={advert.hidden} />;
     default:

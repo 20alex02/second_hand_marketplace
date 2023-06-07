@@ -11,8 +11,8 @@ const Adverts = () => {
         <Filters />
       </aside>
       <main className="adverts">
-        {advertList.map((item: Advert) => (
-          <Advert key={item.title} advert={item} />
+        {advertList.map((item: AdvertType) => (
+          <Advert key={item.id} advert={item} />
         ))}
       </main>
     </div>
