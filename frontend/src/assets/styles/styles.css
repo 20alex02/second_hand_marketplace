@@ -12,4 +12,9 @@ body {
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: var(--sidebar-mobile-height) 92vh;
+    background-color: var(--primary-color);
+}
+
+#root > div:nth-child(2) {
+    background-color: var(--white);
 }
