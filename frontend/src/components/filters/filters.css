@@ -1,0 +1,106 @@
+@import url('../../assets/styles/_variables.css');
+
+.filters {
+    background-color: var(--primary-color);
+    box-shadow: 0 0 0.2rem 0.1rem rgb(0 0 0 / 10%);
+    font-size: 1.25rem;
+    color: var(--white);
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: 100%;
+    overflow-x: clip;
+}
+
+.filters__button {
+    grid-column: 1;
+    grid-row: 1;
+    align-self: start;
+    margin: 0.9rem;
+    position: fixed;
+}
+
+.filters__button:has(~ .filter-list--visible) {
+    color: var(--primary-color);
+}
+
+.filter-list {
+    grid-column: 1 / span 2;
+    grid-row: 1;
+    justify-self: center;
+    padding: 0;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: var(--sidebar-mobile-height);
+    width: 100vw;
+}
+
+.filter-list__item {
+    padding-bottom: 1rem;
+}
+
+.filter-list--invisible {
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+}
+
+.filter-list--visible {
+    opacity: 1;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.filters:has(.filter-list--visible) {
+    max-height: 60vh;
+    transition: max-height 0.5s ease-in-out;
+    overflow-y: scroll;
+}
+
+.filters:has(.filter-list--invisible) {
+    max-height: var(--sidebar-mobile-height);
+    transition: max-height 0.5s ease-in-out;
+    overflow-y: clip;
+}
+
+.filters::-webkit-scrollbar {
+    width: 1rem;
+}
+
+.filters::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.filters::-webkit-scrollbar-thumb {
+    background: rgb(249 249 249 / 95%) ;
+    border-radius: 1rem;
+    border: 0.25rem solid var(--primary-color);
+}
+
+.filters::-webkit-scrollbar-thumb:hover {
+    background: var(--white);
+}
+
+@media only screen and (min-width: 600px) {
+    .filters {
+        box-shadow: var(--default-shadow);
+        display: flex;
+        justify-content: center;
+        height: 100%;
+        margin: 1rem;
+    }
+
+    .filters:has(.filter-list--visible) {
+        max-height: 95vh;
+        overflow-y: scroll;
+    }
+
+    .filters__button {
+        display: none;
+    }
+
+    .filter-list {
+        width: 100%;
+        margin-top: 0;
+        padding: 1.5rem;
+    }
+}

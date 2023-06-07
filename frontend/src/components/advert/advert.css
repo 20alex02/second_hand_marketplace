@@ -1,0 +1,98 @@
+@import url('../../assets/styles/_variables.css');
+
+.advert {
+    background-color: var(--primary-color);
+    width: var(--advert-width);
+    height: var(--advert-height);
+    display: grid;
+    overflow: hidden;
+    border-radius: 2rem;
+    box-shadow: var(--default-shadow);
+}
+
+.advert__state {
+    grid-row: 1;
+    grid-column: 1;
+    z-index: 0;
+    justify-self: end;
+    color: var(--white);
+    background-color: var(--primary-color);
+    border-radius: 2rem;
+    margin: 0.75rem;
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.advert-stats--none {
+    display: none;
+}
+
+.advert-stats__count {
+    padding: 0.5rem 0.75rem;
+    display: flex;
+    column-gap: 0.5rem;
+    align-items: center;
+}
+
+.advert-stats__status {
+    padding: 0.6rem 0.75rem;
+    font-size: 1.25rem;
+}
+
+.advert__image {
+    grid-row: 1 / span 3;
+    grid-column: 1;
+    width: var(--advert-width);
+    height: var(--advert-height);
+    object-fit: cover;
+    object-position: center;
+    justify-self: center;
+}
+
+.advert__info {
+    grid-row: 1 / span 3;
+    grid-column: 1;
+    z-index: 1;
+    max-height: var(--advert-info-height);
+    height: var(--advert-info-height);
+    padding: 1rem;
+    margin-top: var(--advert-info-margin-top);
+    transition: margin-top 0.5s ease-in-out;
+    align-self: end;
+    overflow: hidden;
+    background-color: rgb(12 186 232 / 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--white);
+    font-size: 1.5rem;
+}
+
+.advert__title {
+    max-height: var(--advert-title-max-height);
+}
+
+.advert__title, .advert__price {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    overflow-wrap: break-word;
+}
+
+.advert__info:hover, .advert__info:active {
+    margin-top: 0;
+    transition: margin-top 0.5s ease-in-out;
+}
+
+.advert__info:hover .advert__title, .advert__info:active .advert__title {
+    white-space: unset;
+}
+
+.advert__state:has(~ .advert__info:hover), .advert__state:has(~ .advert__info:active) {
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.advert:hover, .advert:active {
+    box-shadow: 0 0.1rem 0.3rem 0.1rem rgb(0 0 0 / 50%);
+}
