@@ -1,6 +1,11 @@
+@import url('../../assets/styles/_variables.css');
+
+.ant-menu-item-selected.navbar__item--active * {
+  color: var(--white);
+}
+
 .navbar__item--active {
-  color: black !important;
-  background-color: #0cbae8 !important;
+  background-color: var(--primary-color-dark) !important;
   border-bottom-width: 0px !important;
 }
 
@@ -9,7 +14,7 @@
 }
 
 .ant-drawer-header {
-  background-color: #9ee3f6 !important;
+  background-color: var(--primary-color) !important;
   padding: 12px 10px !important;
 }
 .ant-drawer-body {
@@ -35,18 +40,20 @@
   position: sticky;
   top: 0;
   z-index: 10;
+  box-shadow: var(--light-shadow);
 }
 
 @media (min-width: 500px) {
   .navbar__menu {
     justify-content: right;
     font-size: 20px;
-    background-color: #9ee3f6;
+    background-color: var(--primary-color);
 }
 
 .navbar__item {
     margin-left: 1em !important;
     text-decoration: none !important;
+    color: var(--white);
 }
 
 .navbar__icon {
@@ -63,7 +70,7 @@
 .navbar__icon {
   justify-content: right;
   font-size: 20px;
-  background-color: #9ee3f6;
+  background-color: var(--primary-color);
   height: 2em;
 }
 }

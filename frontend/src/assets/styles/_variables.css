@@ -1,5 +1,6 @@
 :root {
     --primary-color: #0CBAE8;
+    --primary-color-dark: #0A9FD1;
     --primary-color-light: #55CFEF;
     --white: #F9F9F9;
 
@@ -12,6 +13,7 @@
     --advert-title-max-height: 9.5rem;
 
     --default-shadow: 0 0.1rem 0.2rem 0.1rem rgb(0 0 0 / 30%);
+    --light-shadow: 0 0 0.2rem 0.1rem rgb(0 0 0 / 10%);
 
     --sidebar-mobile-height: 8vh;
     --sidebar-width: 19rem;
