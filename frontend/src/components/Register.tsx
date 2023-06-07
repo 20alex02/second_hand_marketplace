@@ -74,7 +74,7 @@ function Register() {
               { required: true, message: 'Please input your phone number!' },
               {
                 pattern: new RegExp(
-                  /^(\+[0-9]*\s)?[0-9]{3}\s[0-9]{3}\s[0-9]{3}$/
+                  /^(\+[420]\s)?[0-9]{3}\s[0-9]{3}\s[0-9]{3}$/
                 ),
                 message: 'Invalid phone format!',
               },
