@@ -1,12 +1,11 @@
 import { z } from 'zod';
 
-export const categoryCreateSchema = z
+const createSchema = z
   .object({
     name: z.string().min(3),
   })
-  .or(
-    z.object({
-      name: z.string().min(3),
-      parentId: z.string().uuid(),
-    })
-  );
+  .and(z.object({ parentId: z.string().uuid() }).optional());
+
+export default {
+  createSchema,
+};

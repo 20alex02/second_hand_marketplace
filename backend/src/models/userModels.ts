@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const userCreateSchema = z.object({
+const createSchema = z.object({
   email: z.string().email().nonempty(),
   phoneNumber: z
     .string()
@@ -11,3 +11,7 @@ export const userCreateSchema = z.object({
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}$/
     ),
 });
+
+export default {
+  createSchema,
+};

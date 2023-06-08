@@ -4,7 +4,6 @@ import { config as configEnvVariables } from 'dotenv';
 import { env } from 'process';
 import type { ApiResponse } from './controllers/types';
 import authenticateToken from './middleware/authMiddleware';
-import { actionCreateSecret } from './controllers/secret';
 import controllers from './controllers/index';
 
 configEnvVariables();
@@ -26,13 +25,11 @@ app.use(express.urlencoded({ extended: true }));
 app.post('/api/user', controllers.user.create);
 
 app.post('/api/secret', (_req, res) => {
-  return actionCreateSecret(_req, res, secretKey as string);
+  return controllers.secret.create(_req, res, secretKey as string);
 });
 
 // ADVERTISEMENT
-app.get('/api/advertisement/types', (_req, res) => {
-  return controllers.advertisement.listTypes(res);
-});
+app.get('/api/advertisement/types', controllers.advertisement.listTypes);
 
 app.post('/api/advertisement', authenticateToken, (_req, res) => {
   return controllers.advertisement.create(_req, res, secretKey as string);

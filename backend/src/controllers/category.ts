@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { createCategoryService } from '../services/categoryService';
+import categoryService from '../services/categoryService';
 import {
   DeletedRecordError,
   NonexistentRecordError,
@@ -13,7 +13,7 @@ import { z } from 'zod';
 
 const create = async (req: Request, res: Response) => {
   try {
-    const id: string = await createCategoryService(req.body);
+    const id = await categoryService.create(req.body);
     return handleOkResp(
       201,
       { uuid: id },

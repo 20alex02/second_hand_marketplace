@@ -1,5 +1,5 @@
 import type { Request, Response } from 'express';
-import { createUserService } from '../services/userService';
+import userService from '../services/userService';
 import { ConflictingRecordError } from '../repositories/types/errors';
 import {
   handleOkResp,
@@ -10,7 +10,7 @@ import { z } from 'zod';
 
 const create = async (req: Request, res: Response) => {
   try {
-    const id: string = await createUserService(req.body);
+    const id: string = await userService.create(req.body);
     return handleOkResp(201, { uuid: id }, res, 'User created successfully');
   } catch (error) {
     if (error instanceof z.ZodError) {

@@ -57,21 +57,43 @@ const readOneAdvertisement = async (
 const readAllAdvertisement = async (
   data: AdvertisementReadAllData
 ): AdvertisementReadAllResult => {
-  const { categories, ...filterData } = data;
+  const { categories, estimatedPrice, created, ...filterData } = data;
+  const categoryFilter = categories
+    ? {
+        categories: {
+          some: {
+            id: {
+              in: categories,
+            },
+          },
+        },
+      }
+    : {};
+
+  const estimatedPriceFilter = estimatedPrice
+    ? {
+        estimatedPrice: {
+          ...(estimatedPrice.from ? { gte: estimatedPrice.from } : {}),
+          ...(estimatedPrice.to ? { lte: estimatedPrice.to } : {}),
+        },
+      }
+    : {};
+  const createdFilter = created
+    ? {
+        createdAt: {
+          ...(created.from ? { gte: created.from } : {}),
+          ...(created.to ? { lte: created.to } : {}),
+        },
+      }
+    : {};
   try {
     const users = await client.advertisement.findMany({
       where: {
         ...filterData,
         deletedAt: null,
-        categories: categories
-          ? {
-              some: {
-                id: {
-                  in: categories,
-                },
-              },
-            }
-          : {},
+        ...categoryFilter,
+        ...estimatedPriceFilter,
+        ...createdFilter,
       },
     });
     return Result.ok(users);
