@@ -11,7 +11,7 @@ import client from '../client';
 import { genericError } from '../types';
 import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
 
-export const readOneParticipant = async (
+const readOneParticipant = async (
   data: ParticipantReadOneData
 ): ParticipantReadOneResult => {
   try {
@@ -38,7 +38,7 @@ export const readOneParticipant = async (
   }
 };
 
-export const readAllParticipant = async (
+const readAllParticipant = async (
   data: ParticipantReadAllData
 ): ParticipantReadAllResult => {
   try {
@@ -52,4 +52,9 @@ export const readAllParticipant = async (
   } catch (e) {
     return genericError;
   }
+};
+
+export default {
+  one: readOneParticipant,
+  all: readAllParticipant,
 };

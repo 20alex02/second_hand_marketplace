@@ -4,39 +4,36 @@ import {
   DeletedRecordError,
   NonexistentRecordError,
 } from '../repositories/types/errors';
-import MissingRequiredField from '../exceptions/MissingRequiredField';
-import type { ApiResponse } from './types';
 import {
-  createErrorResponse,
-  getRequiredField,
-  getOptionalField,
-  handleMissingField,
+  handleOkResp,
+  handleErrorResp,
+  handleValidationErrorResp,
 } from './common';
+import { z } from 'zod';
 
-export const actionCreateCategory = async (req: Request, res: Response) => {
+const create = async (req: Request, res: Response) => {
   try {
-    const data = req.body;
-    const name: string = getRequiredField(data, 'name');
-    const parentId: string | null = getOptionalField(data, 'parentId');
-    const id: string = await createCategoryService(name, parentId);
-    const response: ApiResponse<object> = {
-      status: 'success',
-      data: {
-        uuid: id,
-      },
-      message: 'Category created successfully',
-    };
-    return res.status(201).send(response);
+    const id: string = await createCategoryService(req.body);
+    return handleOkResp(
+      201,
+      { uuid: id },
+      res,
+      'Category created successfully'
+    );
   } catch (error) {
-    if (error instanceof MissingRequiredField) {
-      return res.status(400).send(handleMissingField(error.field));
+    if (error instanceof z.ZodError) {
+      return handleValidationErrorResp(error, res);
     }
     if (error instanceof NonexistentRecordError) {
-      return res.status(422).send(createErrorResponse(error.message));
+      return handleErrorResp(422, res, error.message);
     }
     if (error instanceof DeletedRecordError) {
-      return res.status(422).send(createErrorResponse(error.message));
+      return handleErrorResp(422, res, error.message);
     }
-    return res.status(500).send(createErrorResponse('Error occurred'));
+    return handleErrorResp(500, res, 'Unknown error');
   }
+};
+
+export default {
+  create,
 };

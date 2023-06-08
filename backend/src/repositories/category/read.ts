@@ -8,7 +8,7 @@ import client from '../client';
 import { genericError } from '../types';
 import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
 
-export const readOneCategory = async (
+const readOneCategory = async (
   data: CategoryReadOneData
 ): CategoryReadOneResult => {
   try {
@@ -36,7 +36,7 @@ export const readOneCategory = async (
   }
 };
 
-export const readAllCategory = async (
+const readAllCategory = async (
   data: CategoryReadAllData
 ): CategoryReadAllResult => {
   try {
@@ -54,4 +54,9 @@ export const readAllCategory = async (
   } catch (e) {
     return genericError;
   }
+};
+
+export default {
+  one: readOneCategory,
+  all: readAllCategory,
 };

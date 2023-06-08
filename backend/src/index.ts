@@ -5,13 +5,7 @@ import { env } from 'process';
 import type { ApiResponse } from './controllers/types';
 import authenticateToken from './middleware/authMiddleware';
 import { actionCreateSecret } from './controllers/secret';
-import { actionCreateUser } from './controllers/user';
-import {
-  actionAdvertisementSearch,
-  actionCreateAdvertisement,
-  actionListTypes,
-} from './controllers/advertisement';
-import { actionCreateCategory } from './controllers/category';
+import controllers from './controllers/index';
 
 configEnvVariables();
 const app = express();
@@ -28,34 +22,26 @@ app.use(express.json());
 // parse URL encoded strings
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/api/user', actionCreateUser);
-
-app.get('/api/advertisement/types', (_req, res) => {
-  return actionListTypes(res);
-});
+// USER
+app.post('/api/user', controllers.user.create);
 
 app.post('/api/secret', (_req, res) => {
   return actionCreateSecret(_req, res, secretKey as string);
 });
 
-app.post('/api/advertisement', authenticateToken, (_req, res) => {
-  return actionCreateAdvertisement(_req, res, secretKey as string);
+// ADVERTISEMENT
+app.get('/api/advertisement/types', (_req, res) => {
+  return controllers.advertisement.listTypes(res);
 });
 
-app.post('/api/advertisements', actionAdvertisementSearch);
+app.post('/api/advertisement', authenticateToken, (_req, res) => {
+  return controllers.advertisement.create(_req, res, secretKey as string);
+});
 
-app.post('api/category', actionCreateCategory);
+app.post('/api/advertisements', controllers.advertisement.search);
 
-// DO NOT MODIFY THE PRECEDING code ^^
-
-/*
-  Continue here. Write your RESTful API routes here. Use `Router` from express
-  to divide the routes into smaller parts. Routes should use the
-  `employeeRepository` - you need to first finish it. More is in the
-  assignment issue.
-*/
-
-// DO NOT MODIFY THE FOLLOWING code:
+// CATEGORY
+app.post('/api/category', controllers.category.create);
 
 // No route was taken - 404 - Resource (API endpoint) not found.
 app.use((_req, res) => {

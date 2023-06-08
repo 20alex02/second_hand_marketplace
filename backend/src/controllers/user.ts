@@ -1,45 +1,28 @@
 import type { Request, Response } from 'express';
 import { createUserService } from '../services/userService';
 import { ConflictingRecordError } from '../repositories/types/errors';
-import MissingRequiredField from '../exceptions/MissingRequiredField';
-import type { ApiResponse } from './types';
 import {
-  createErrorResponse,
-  getRequiredField,
-  handleMissingField,
+  handleOkResp,
+  handleErrorResp,
+  handleValidationErrorResp,
 } from './common';
-import EmailIsNotValid from '../exceptions/EmailIsNotValid';
-import { isEmailValid } from '../services/validatorService';
+import { z } from 'zod';
 
-export const actionCreateUser = async (req: Request, res: Response) => {
+const create = async (req: Request, res: Response) => {
   try {
-    const data = req.body;
-    const email: string = getRequiredField(data, 'email');
-    if (!isEmailValid(email)) {
-      throw new EmailIsNotValid();
-    }
-    const phoneNumber: string = getRequiredField(data, 'phoneNumber');
-    const password: string = getRequiredField(data, 'password');
-
-    const id: string = await createUserService(email, phoneNumber, password);
-    const response: ApiResponse<object> = {
-      status: 'success',
-      data: {
-        uuid: id,
-      },
-      message: 'User created successfully',
-    };
-    return res.status(201).send(response);
+    const id: string = await createUserService(req.body);
+    return handleOkResp(201, { uuid: id }, res, 'User created successfully');
   } catch (error) {
-    if (error instanceof MissingRequiredField) {
-      return res.status(400).send(handleMissingField(error.field));
+    if (error instanceof z.ZodError) {
+      return handleValidationErrorResp(error, res);
     }
     if (error instanceof ConflictingRecordError) {
-      return res.status(422).send(createErrorResponse(error.message));
+      return handleErrorResp(422, res, error.message);
     }
-    if (error instanceof EmailIsNotValid) {
-      return res.status(422).send(createErrorResponse(error.message));
-    }
-    return res.status(500).send(createErrorResponse('Error occurred'));
+    return handleErrorResp(500, res, 'Unknown error');
   }
+};
+
+export default {
+  create,
 };

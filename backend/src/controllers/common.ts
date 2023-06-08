@@ -1,5 +1,44 @@
 import type { ApiResponse } from './types';
+import type { Response } from 'express';
 import MissingRequiredField from '../exceptions/MissingRequiredField';
+import type z from 'zod';
+
+export function handleErrorResp(
+  status: number,
+  res: Response,
+  msg: string
+): Response {
+  return res.status(status).send({
+    status: 'error',
+    data: {},
+    message: msg,
+  });
+}
+
+export function handleOkResp(
+  status: number,
+  data: any,
+  res: Response,
+  msg?: string
+): Response {
+  return res.status(status).send({
+    status: 'success',
+    data: data,
+    message: msg,
+  });
+}
+
+export function handleValidationErrorResp(
+  error: z.ZodError,
+  res: Response
+): Response {
+  return res.status(400).send({
+    status: 'error',
+    message: `Validation error: ${error.issues
+      .map((issue) => issue.message)
+      .join(';')}`,
+  });
+}
 
 export const createErrorResponse = (
   reason: string,

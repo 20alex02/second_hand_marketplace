@@ -9,7 +9,7 @@ import client from '../client';
 import { genericError } from '../types';
 import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
 
-export const readOneUserByEmail = async (
+const readOneUserByEmail = async (
   data: UserReadOneUserByEmail
 ): UserReadOneResult => {
   try {
@@ -42,7 +42,7 @@ export const readOneUserByEmail = async (
   }
 };
 
-export const readOneUser = async (data: UserReadOneData): UserReadOneResult => {
+const readOneUser = async (data: UserReadOneData): UserReadOneResult => {
   try {
     const user = await client.user.findUnique({
       where: {
@@ -73,7 +73,7 @@ export const readOneUser = async (data: UserReadOneData): UserReadOneResult => {
   }
 };
 
-export const readAllUser = async (data: UserReadAllData): UserReadAllResult => {
+const readAllUser = async (data: UserReadAllData): UserReadAllResult => {
   try {
     const users = await client.user.findMany({
       where: {
@@ -85,4 +85,10 @@ export const readAllUser = async (data: UserReadAllData): UserReadAllResult => {
   } catch (e) {
     return genericError;
   }
+};
+
+export default {
+  oneById: readOneUser,
+  oneByEmail: readOneUserByEmail,
+  all: readAllUser,
 };

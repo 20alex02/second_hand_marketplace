@@ -1,20 +1,9 @@
-import type { CategoryCreateData } from '../repositories/types/data';
-import createCategory from '../repositories/category/create';
+import category from '../repositories/category';
+import { categoryCreateSchema } from '../models/categoryModels';
 
-export async function createCategoryService(
-  name: string,
-  parentId: string | null
-) {
-  const category: CategoryCreateData =
-    parentId === null
-      ? {
-          name: name,
-        }
-      : {
-          name: name,
-          parentId: parentId,
-        };
-  const result = await createCategory(category);
+export async function createCategoryService(data: any) {
+  const validatedData = categoryCreateSchema.parse(data);
+  const result = await category.create(validatedData);
   if (result.isOk) {
     return result.value.id;
   }

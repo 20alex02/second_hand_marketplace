@@ -1,6 +1,6 @@
 import jwt, { Secret } from 'jsonwebtoken';
 import { randomBytes, createHash } from 'crypto';
-import { readOneUserByEmail } from '../repositories/user/read';
+import user from '../repositories/user';
 import WrongPassword from '../exceptions/WrongPassword';
 import TokenIsNotValid from '../exceptions/NotAuthorized';
 const expiresIn = '2h';
@@ -16,17 +16,17 @@ export const loginUser = async (
   password: string,
   secretKey: string
 ) => {
-  const user = await readOneUserByEmail({ email });
-  if (!user.isOk) {
+  const userResult = await user.read.oneByEmail({ email });
+  if (!userResult.isOk) {
     throw new Error('Error occurred.');
   }
-  const dbPassword = user.value.hashedPassword;
-  const salt = user.value.salt;
+  const dbPassword = userResult.value.hashedPassword;
+  const salt = userResult.value.salt;
   const hashedPassword = hashPassword(password, salt);
   if (hashedPassword.hashedPassword !== dbPassword) {
     throw new WrongPassword();
   }
-  return await generateAccessToken(user.value.id, secretKey);
+  return await generateAccessToken(userResult.value.id, secretKey);
 };
 
 export const hashPassword = (

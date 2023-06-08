@@ -1,22 +1,13 @@
 import { hashPassword } from './authService';
-import type { UserCreateData } from '../repositories/types/data';
-import createUser from '../repositories/user/create';
+import user from '../repositories/user';
+import { userCreateSchema } from '../models/userModels';
 
-export async function createUserService(
-  email: string,
-  phoneNumber: string,
-  password: string
-) {
+export async function createUserService(data: any) {
+  const { password, ...validatedData } = userCreateSchema.parse(data);
   const hashedPassword = hashPassword(password);
-  const user: UserCreateData = {
-    email: email,
-    phoneNumber: phoneNumber,
-    hashedPassword: hashedPassword.hashedPassword,
-    salt: hashedPassword.salt,
-  };
-  const result = await createUser(user);
-  if (result.isOk) {
-    return result.value.id;
+  const result = await user.create({ ...validatedData, ...hashedPassword });
+  if (result.isErr) {
+    throw result.error;
   }
-  throw result.error;
+  return result.value.id;
 }

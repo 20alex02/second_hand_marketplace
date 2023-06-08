@@ -17,11 +17,7 @@ import {
   searchAdvertisementService,
 } from '../services/advertisementService';
 
-export const actionCreateAdvertisement = async (
-  req: Request,
-  res: Response,
-  secret: string
-) => {
+const create = async (req: Request, res: Response, secret: string) => {
   try {
     const data = req.body;
     const authHeader = req.headers['authorization'];
@@ -73,7 +69,7 @@ export const actionCreateAdvertisement = async (
   }
 };
 
-export const actionListTypes = async (res: Response) => {
+const listTypes = async (res: Response) => {
   const response: ApiResponse<object> = {
     status: 'success',
     data: {
@@ -84,10 +80,7 @@ export const actionListTypes = async (res: Response) => {
   return res.status(200).send(response);
 };
 
-export const actionAdvertisementSearch = async (
-  req: Request,
-  res: Response
-) => {
+const search = async (req: Request, res: Response) => {
   try {
     const data = req.body;
     const pageNum: number = getRequiredField(data, 'pageNum');
@@ -129,4 +122,10 @@ export const actionAdvertisementSearch = async (
     console.log(error);
     return res.status(500).send(createErrorResponse('Error occurred'));
   }
+};
+
+export default {
+  create,
+  listTypes,
+  search,
 };
