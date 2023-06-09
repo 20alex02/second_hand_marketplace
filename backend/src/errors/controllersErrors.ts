@@ -12,6 +12,13 @@ export class WrongPassword extends Error {
   }
 }
 
+export class InvalidAccessRights extends Error {
+  constructor() {
+    super('Invalid access rights');
+    this.name = 'InvalidAccessRights';
+  }
+}
+
 export class MissingRequiredField extends Error {
   public field: string;
   constructor(field: string) {

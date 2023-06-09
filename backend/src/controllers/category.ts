@@ -34,9 +34,9 @@ const create = async (req: Request, res: Response) => {
   }
 };
 
-const getOne = async (req: Request, res: Response) => {
+const getOne = async (req: Request, res: Response, secret?: string) => {
   try {
-    const result = categoryService.getOne(req.params);
+    const result = categoryService.getOne(req.params, req.headers, secret);
     return handleOkResp(200, result, res, 'Category searched successfully');
   } catch (error) {
     if (error instanceof z.ZodError) {
