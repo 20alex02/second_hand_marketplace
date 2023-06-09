@@ -5,6 +5,7 @@ import { env } from 'process';
 import type { ApiResponse } from './controllers/types';
 import authenticateToken from './middleware/authMiddleware';
 import controllers from './controllers/index';
+import upload from './middleware/imagesMiddleware';
 
 configEnvVariables();
 const app = express();
@@ -24,15 +25,15 @@ app.use(express.urlencoded({ extended: true }));
 // USER
 app.post('/api/user', controllers.user.create);
 
-app.post('/api/secret', (_req, res) => {
-  return controllers.secret.create(_req, res, secretKey as string);
+app.post('/api/secret', (req, res) => {
+  return controllers.secret.create(req, res, secretKey);
 });
 
 // ADVERTISEMENT
 app.get('/api/advertisement/types', controllers.advertisement.listTypes);
 
-app.post('/api/advertisement', authenticateToken, (_req, res) => {
-  return controllers.advertisement.create(_req, res, secretKey as string);
+app.post('/api/advertisement', authenticateToken, upload, (req, res) => {
+  return controllers.advertisement.create(req, res, secretKey);
 });
 
 app.post('/api/advertisements', controllers.advertisement.search);

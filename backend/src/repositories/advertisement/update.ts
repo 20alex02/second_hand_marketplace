@@ -3,7 +3,10 @@ import type { AdvertisementUpdateData } from '../types/data';
 import type { AdvertisementUpdateResult } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
+import {
+  DeletedRecordError,
+  NonexistentRecordError,
+} from '../../errors/repositoryErrors';
 
 const updateAdvertisement = async (
   data: AdvertisementUpdateData
@@ -16,14 +19,10 @@ const updateAdvertisement = async (
         },
       });
       if (advertisementCheck === null) {
-        return Result.err(
-          new NonexistentRecordError('advertisement does not exists')
-        );
+        return Result.err(new NonexistentRecordError('Advertisement'));
       }
       if (advertisementCheck.deletedAt !== null) {
-        return Result.err(
-          new DeletedRecordError('advertisement already deleted')
-        );
+        return Result.err(new DeletedRecordError('Advertisement'));
       }
       const { id, connectCategories, disconnectCategories, ...dataToUpdate } =
         data;

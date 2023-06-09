@@ -6,16 +6,16 @@ import {
   handleOkResp,
   handleValidationErrorResp,
 } from './common';
-import { WrongPassword } from './errors';
+import { WrongPassword } from '../errors/controllersErrors';
 import { z } from 'zod';
 
 // TODO?? create controller and schema to validate
-const create = async (req: Request, res: Response, secretKey: string) => {
+const create = async (req: Request, res: Response, secretKey?: string) => {
   try {
     const data = req.body;
     const email: string = getRequiredField(data, 'email');
     const password: string = getRequiredField(data, 'password');
-    const bearer = await loginUser(email, password, secretKey as string);
+    const bearer = await loginUser(email, password, secretKey);
     return handleOkResp(
       201,
       { token: bearer },

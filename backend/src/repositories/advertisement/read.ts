@@ -9,7 +9,10 @@ import type {
 } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
+import {
+  DeletedRecordError,
+  NonexistentRecordError,
+} from '../../errors/repositoryErrors';
 
 const readOneAdvertisement = async (
   data: AdvertisementReadOneData
@@ -39,14 +42,10 @@ const readOneAdvertisement = async (
       },
     });
     if (advertisement == null) {
-      return Result.err(
-        new NonexistentRecordError('advertisement does not exists')
-      );
+      return Result.err(new NonexistentRecordError('Advertisement'));
     }
     if (advertisement.deletedAt != null) {
-      return Result.err(
-        new DeletedRecordError('advertisement already deleted')
-      );
+      return Result.err(new DeletedRecordError('Advertisement'));
     }
     return Result.ok(advertisement);
   } catch (e) {

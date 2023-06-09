@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 import userService from '../services/userService';
-import { ConflictingRecordError } from '../repositories/types/errors';
+import { ConflictingRecordError } from '../errors/repositoryErrors';
 import {
   handleOkResp,
   handleErrorResp,

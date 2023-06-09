@@ -3,7 +3,10 @@ import type { UserDeleteData } from '../types/data';
 import type { UserDeleteResult } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
+import {
+  DeletedRecordError,
+  NonexistentRecordError,
+} from '../../errors/repositoryErrors';
 
 const deleteUser = async (data: UserDeleteData): UserDeleteResult => {
   const deletedAt = new Date();
@@ -15,10 +18,10 @@ const deleteUser = async (data: UserDeleteData): UserDeleteResult => {
         },
       });
       if (userCheck === null) {
-        return Result.err(new NonexistentRecordError('user does not exists'));
+        return Result.err(new NonexistentRecordError('User'));
       }
       if (userCheck.deletedAt !== null) {
-        return Result.err(new DeletedRecordError('user already deleted'));
+        return Result.err(new DeletedRecordError('User'));
       }
       const user = await tx.user.update({
         where: {

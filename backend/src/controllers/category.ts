@@ -3,7 +3,7 @@ import categoryService from '../services/categoryService';
 import {
   DeletedRecordError,
   NonexistentRecordError,
-} from '../repositories/types/errors';
+} from '../errors/repositoryErrors';
 import {
   handleOkResp,
   handleErrorResp,

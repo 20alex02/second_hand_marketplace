@@ -1,11 +1,10 @@
 import jwt, { Secret } from 'jsonwebtoken';
 import { randomBytes, createHash } from 'crypto';
 import user from '../repositories/user';
-import WrongPassword from '../exceptions/WrongPassword';
-import TokenIsNotValid from '../exceptions/NotAuthorized';
+import { WrongPassword, TokenIsNotValid } from '../errors/controllersErrors';
 const expiresIn = '2h';
 
-const generateAccessToken = async (uuid: string, secretKey: string) => {
+const generateAccessToken = async (uuid: string, secretKey?: string) => {
   return jwt.sign({ uuid: uuid }, secretKey as Secret, {
     expiresIn: expiresIn,
   });
@@ -14,7 +13,7 @@ const generateAccessToken = async (uuid: string, secretKey: string) => {
 export const loginUser = async (
   email: string,
   password: string,
-  secretKey: string
+  secretKey?: string
 ) => {
   const userResult = await user.read.oneByEmail({ email });
   if (!userResult.isOk) {
@@ -43,10 +42,12 @@ export const hashPassword = (
   return { hashedPassword: hashedPassword, salt: salt };
 };
 
-export const getUserId = (token: string | undefined, secretKey: string) => {
+export const getUserId = (token?: string, secretKey?: string) => {
   if (token) {
     try {
-      const decodedToken = jwt.verify(token, secretKey) as { uuid: string };
+      const decodedToken = jwt.verify(token, secretKey ?? 'undefined') as {
+        uuid: string;
+      };
 
       return decodedToken.uuid;
     } catch (error) {

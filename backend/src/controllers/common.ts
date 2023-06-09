@@ -1,5 +1,5 @@
 import type { Response } from 'express';
-import { MissingRequiredField } from './errors';
+import { MissingRequiredField } from '../errors/controllersErrors';
 import type z from 'zod';
 
 export function handleErrorResp(

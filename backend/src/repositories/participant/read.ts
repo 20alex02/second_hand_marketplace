@@ -9,7 +9,10 @@ import type {
 } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
+import {
+  DeletedRecordError,
+  NonexistentRecordError,
+} from '../../errors/repositoryErrors';
 
 const readOneParticipant = async (
   data: ParticipantReadOneData
@@ -25,12 +28,10 @@ const readOneParticipant = async (
       },
     });
     if (participant == null) {
-      return Result.err(
-        new NonexistentRecordError('participant does not exists')
-      );
+      return Result.err(new NonexistentRecordError('Participant'));
     }
     if (participant.deletedAt != null) {
-      return Result.err(new DeletedRecordError('participant already deleted'));
+      return Result.err(new DeletedRecordError('Participant'));
     }
     return Result.ok(participant);
   } catch (e) {

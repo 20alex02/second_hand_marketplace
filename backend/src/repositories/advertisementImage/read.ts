@@ -9,7 +9,10 @@ import type {
 } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
+import {
+  DeletedRecordError,
+  NonexistentRecordError,
+} from '../../errors/repositoryErrors';
 
 const readOneAdvertisementImage = async (
   data: AdvertisementImageReadOneData
@@ -24,14 +27,10 @@ const readOneAdvertisementImage = async (
       },
     });
     if (image == null) {
-      return Result.err(
-        new NonexistentRecordError('advertisement image does not exists')
-      );
+      return Result.err(new NonexistentRecordError('AdvertisementImage'));
     }
     if (image.deletedAt != null) {
-      return Result.err(
-        new DeletedRecordError('advertisement image already deleted')
-      );
+      return Result.err(new DeletedRecordError('AdvertisementImage'));
     }
     return Result.ok(image);
   } catch (e) {

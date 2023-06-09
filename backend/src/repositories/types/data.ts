@@ -8,13 +8,7 @@ export type UserCreateData = {
   salt: string;
 };
 
-export type UserReadOneData = {
-  id: string;
-};
-
-export type UserReadOneUserByEmail = {
-  email: string;
-};
+export type UserReadOneData = { id: string } | { email: string };
 
 export type UserReadAllData = {
   role: Role;

@@ -3,7 +3,10 @@ import type { AdvertisementImageUpdateData } from '../types/data';
 import type { AdvertisementImageUpdateResult } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
+import {
+  DeletedRecordError,
+  NonexistentRecordError,
+} from '../../errors/repositoryErrors';
 
 const updateAdvertisementImage = async (
   data: AdvertisementImageUpdateData
@@ -16,14 +19,10 @@ const updateAdvertisementImage = async (
         },
       });
       if (advertisementImageCheck === null) {
-        return Result.err(
-          new NonexistentRecordError('advertisement image does not exists')
-        );
+        return Result.err(new NonexistentRecordError('AdvertisementImage'));
       }
       if (advertisementImageCheck.deletedAt !== null) {
-        return Result.err(
-          new DeletedRecordError('advertisement image already deleted')
-        );
+        return Result.err(new DeletedRecordError('AdvertisementImage'));
       }
       const { id, ...dataToUpdate } = data;
       const advertisementImage = await tx.advertisementImage.update({

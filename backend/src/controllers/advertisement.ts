@@ -5,17 +5,22 @@ import {
   handleValidationErrorResp,
 } from './common';
 import { AdvertisementType } from '@prisma/client';
-import { TokenIsNotValid } from './errors';
+import { TokenIsNotValid } from '../errors/controllersErrors';
 import advertisementService from '../services/advertisementService';
 import { z } from 'zod';
 import {
   DeletedRecordError,
   NonexistentRecordError,
-} from '../repositories/types/errors';
+} from '../errors/repositoryErrors';
 
-const create = async (req: Request, res: Response, secret: string) => {
+const create = async (req: Request, res: Response, secret?: string) => {
   try {
-    const id = await advertisementService.create(req.body, req.headers, secret);
+    const id = await advertisementService.create(
+      req.body,
+      req.headers,
+      req.files as Express.Multer.File[],
+      secret
+    );
     return handleOkResp(
       201,
       { uuid: id },

@@ -6,7 +6,10 @@ import type {
 } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
+import {
+  DeletedRecordError,
+  NonexistentRecordError,
+} from '../../errors/repositoryErrors';
 
 const readOneCategory = async (
   data: CategoryReadOneData
@@ -25,10 +28,10 @@ const readOneCategory = async (
       },
     });
     if (category == null) {
-      return Result.err(new NonexistentRecordError('category does not exists'));
+      return Result.err(new NonexistentRecordError('Category'));
     }
     if (category.deletedAt != null) {
-      return Result.err(new DeletedRecordError('category already deleted'));
+      return Result.err(new DeletedRecordError('Category'));
     }
     return Result.ok(category);
   } catch (e) {

@@ -3,7 +3,10 @@ import type { AdvertisementCreateData } from '../types/data';
 import type { AdvertisementCreateResult } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { NonexistentRecordError, DeletedRecordError } from '../types/errors';
+import {
+  NonexistentRecordError,
+  DeletedRecordError,
+} from '../../errors/repositoryErrors';
 
 const createAdvertisement = async (
   data: AdvertisementCreateData
@@ -16,10 +19,10 @@ const createAdvertisement = async (
         },
       });
       if (creatorCheck === null) {
-        return Result.err(new NonexistentRecordError('user does not exists'));
+        return Result.err(new NonexistentRecordError('Advertisement'));
       }
       if (creatorCheck.deletedAt !== null) {
-        return Result.err(new DeletedRecordError('user already deleted'));
+        return Result.err(new DeletedRecordError('Advertisement'));
       }
       const { creatorId, categories, images, ...createData } = data;
       const advertisement = await tx.advertisement.create({
