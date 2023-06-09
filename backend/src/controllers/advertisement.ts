@@ -15,18 +15,13 @@ import {
 
 const create = async (req: Request, res: Response, secret?: string) => {
   try {
-    const id = await advertisementService.create(
+    const result = await advertisementService.create(
       req.body,
       req.headers,
       req.files as Express.Multer.File[],
       secret
     );
-    return handleOkResp(
-      201,
-      { uuid: id },
-      res,
-      'Advertisement created successfully'
-    );
+    return handleOkResp(201, result, res, 'Advertisement created successfully');
   } catch (error) {
     if (error instanceof z.ZodError) {
       return handleValidationErrorResp(error, res);
@@ -50,10 +45,10 @@ const getTypes = async (_req: Request, res: Response) => {
 
 const getAll = async (req: Request, res: Response) => {
   try {
-    const ids = await advertisementService.search(req.body);
+    const result = await advertisementService.search(req.query);
     return handleOkResp(
       200,
-      { uuid: ids },
+      result,
       res,
       'Advertisement searched successfully'
     );
@@ -67,6 +62,6 @@ const getAll = async (req: Request, res: Response) => {
 
 export default {
   create,
-  listTypes: getTypes,
-  search: getAll,
+  getTypes,
+  getAll,
 };

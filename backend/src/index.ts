@@ -6,6 +6,7 @@ import type { ApiResponse } from './controllers/types';
 import authenticateToken from './middleware/authMiddleware';
 import controllers from './controllers/index';
 import upload from './middleware/imagesMiddleware';
+import path from 'path';
 
 configEnvVariables();
 const app = express();
@@ -22,6 +23,9 @@ app.use(express.json());
 // parse URL encoded strings
 app.use(express.urlencoded({ extended: true }));
 
+// send images to frontend
+app.use('/api/images', express.static(path.join(__dirname, 'images')));
+
 // USER
 app.post('/api/user', controllers.user.create);
 
@@ -30,13 +34,13 @@ app.post('/api/secret', (req, res) => {
 });
 
 // ADVERTISEMENT
-app.get('/api/advertisement/types', controllers.advertisement.listTypes);
+app.get('/api/advertisement/types', controllers.advertisement.getTypes);
 
 app.post('/api/advertisement', authenticateToken, upload, (req, res) => {
   return controllers.advertisement.create(req, res, secretKey);
 });
 
-app.post('/api/advertisements', controllers.advertisement.search);
+app.post('/api/advertisements', controllers.advertisement.getAll);
 
 // CATEGORY
 app.post('/api/category', controllers.category.create);

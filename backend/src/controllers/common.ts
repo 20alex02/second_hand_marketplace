@@ -22,7 +22,7 @@ export function handleOkResp(
 ): Response {
   return res.status(status).send({
     status: 'success',
-    data: data,
+    data,
     message: msg,
   });
 }

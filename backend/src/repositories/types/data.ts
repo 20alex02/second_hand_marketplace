@@ -69,6 +69,8 @@ export type AdvertisementReadOneData = {
 };
 
 export type AdvertisementReadAllData = {
+  pageNum: number;
+  perPage: number;
   type?: AdvertisementType;
   hidden?: boolean;
   creatorId?: string;
