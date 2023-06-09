@@ -33,6 +33,14 @@ async function getOne(data: any, headers: any, secret?: string) {
   return result.value;
 }
 
+async function getAll() {
+  const result = await category.read.all({});
+  if (result.isErr) {
+    throw result.error;
+  }
+  return result.value;
+}
+
 async function update(data: any, query: any, headers: any, secret?: string) {
   const authHeader = headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
@@ -55,5 +63,6 @@ async function update(data: any, query: any, headers: any, secret?: string) {
 export default {
   create,
   getOne,
+  getAll,
   update,
 };

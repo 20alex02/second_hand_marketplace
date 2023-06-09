@@ -21,7 +21,12 @@ const create = async (req: Request, res: Response, secret?: string) => {
       req.files as Express.Multer.File[],
       secret
     );
-    return handleOkResp(201, result, res, 'Advertisement created successfully');
+    return handleOkResp(
+      201,
+      { ...result },
+      res,
+      'Advertisement created successfully'
+    );
   } catch (error) {
     if (error instanceof z.ZodError) {
       return handleValidationErrorResp(error, res);
@@ -48,7 +53,7 @@ const getAll = async (req: Request, res: Response) => {
     const result = await advertisementService.search(req.query);
     return handleOkResp(
       200,
-      result,
+      { ...result },
       res,
       'Advertisement searched successfully'
     );

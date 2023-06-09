@@ -49,6 +49,8 @@ app.get('api/category/:id', (req, res) => {
   return controllers.category.getOne(req, res, secretKey);
 });
 
+app.get('/api/category', controllers.category.getAll);
+
 app.patch('/api/category/:id', (req, res) => {
   return controllers.category.update(req, res, secretKey);
 });

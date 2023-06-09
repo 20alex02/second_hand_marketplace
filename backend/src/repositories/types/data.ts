@@ -128,8 +128,7 @@ export type CategoryReadOneData = {
 };
 
 export type CategoryReadAllData = {
-  // TODO filters
-  id: string;
+  advertisementId?: string;
 };
 
 export type CategoryUpdateData =
