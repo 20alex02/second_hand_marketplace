@@ -52,7 +52,31 @@ const getOne = async (req: Request, res: Response, secret?: string) => {
   }
 };
 
+const update = async (req: Request, res: Response, secret?: string) => {
+  try {
+    const result = categoryService.update(
+      req.params,
+      req.query,
+      req.headers,
+      secret
+    );
+    return handleOkResp(200, result, res, 'Category updated successfully');
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return handleValidationErrorResp(error, res);
+    }
+    if (error instanceof NonexistentRecordError) {
+      return handleErrorResp(422, res, error.message);
+    }
+    if (error instanceof DeletedRecordError) {
+      return handleErrorResp(422, res, error.message);
+    }
+    return handleErrorResp(500, res, 'Unknown error');
+  }
+};
+
 export default {
   create,
   getOne,
+  update,
 };

@@ -49,6 +49,10 @@ app.get('api/category/:id', (req, res) => {
   return controllers.category.getOne(req, res, secretKey);
 });
 
+app.patch('/api/category/:id', (req, res) => {
+  return controllers.category.update(req, res, secretKey);
+});
+
 // No route was taken - 404 - Resource (API endpoint) not found.
 app.use((_req, res) => {
   const response: ApiResponse<object> = {

@@ -132,11 +132,9 @@ export type CategoryReadAllData = {
   id: string;
 };
 
-export type CategoryUpdateData = {
-  id: string;
-  name?: string;
-  parentId?: string;
-};
+export type CategoryUpdateData =
+  | { id: string; name: string; parentId?: string }
+  | { id: string; name?: string; parentId: string };
 
 export type CategoryDeleteData = {
   id: string;

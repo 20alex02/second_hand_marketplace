@@ -33,7 +33,27 @@ async function getOne(data: any, headers: any, secret?: string) {
   return result.value;
 }
 
+async function update(data: any, query: any, headers: any, secret?: string) {
+  const authHeader = headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  const id = getUserId(token, secret);
+  const validatedData = categoryModel.updateSchema.parse({ ...data, ...query });
+  const userResult = await user.read.one({ id: id });
+  if (userResult.isErr) {
+    throw userResult.error;
+  }
+  if (userResult.value.role !== Role.ADMIN) {
+    throw new InvalidAccessRights();
+  }
+  const result = await category.update(validatedData);
+  if (result.isErr) {
+    throw result.error;
+  }
+  return result.value;
+}
+
 export default {
   create,
   getOne,
+  update,
 };
