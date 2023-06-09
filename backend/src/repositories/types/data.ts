@@ -8,13 +8,7 @@ export type UserCreateData = {
   salt: string;
 };
 
-export type UserReadOneData = {
-  id: string;
-};
-
-export type UserReadOneUserByEmail = {
-  email: string;
-};
+export type UserReadOneData = { id: string } | { email: string };
 
 export type UserReadAllData = {
   role: Role;
@@ -63,7 +57,7 @@ export type AdvertisementCreateData = {
   title: string;
   type: AdvertisementType;
   description: string;
-  estimatedPrice?: number | null;
+  estimatedPrice?: number;
   hidden?: boolean;
   creatorId: string;
   images: { path: string }[];
@@ -79,7 +73,8 @@ export type AdvertisementReadAllData = {
   hidden?: boolean;
   creatorId?: string;
   categories?: string[];
-  // TODO filters
+  estimatedPrice?: { from: number | undefined; to: number | undefined };
+  created?: { from: Date | undefined; to: Date | undefined };
 };
 
 export type AdvertisementUpdateData = {

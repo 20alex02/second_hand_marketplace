@@ -3,7 +3,7 @@ import type { UserCreateData } from '../types/data';
 import type { UserCreateResult } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { ConflictingRecordError } from '../types/errors';
+import { ConflictingRecordError } from '../../errors/repositoryErrors';
 
 const createUser = async (data: UserCreateData): UserCreateResult => {
   try {
@@ -14,9 +14,7 @@ const createUser = async (data: UserCreateData): UserCreateResult => {
         },
       });
       if (userCheck !== null) {
-        return Result.err(
-          new ConflictingRecordError('user with given email already exists')
-        );
+        return Result.err(new ConflictingRecordError('User', 'email'));
       }
       const user = await tx.user.create({
         data: data,

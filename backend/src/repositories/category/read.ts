@@ -6,9 +6,12 @@ import type {
 } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
+import {
+  DeletedRecordError,
+  NonexistentRecordError,
+} from '../../errors/repositoryErrors';
 
-export const readOneCategory = async (
+const readOneCategory = async (
   data: CategoryReadOneData
 ): CategoryReadOneResult => {
   try {
@@ -25,10 +28,10 @@ export const readOneCategory = async (
       },
     });
     if (category == null) {
-      return Result.err(new NonexistentRecordError('category does not exists'));
+      return Result.err(new NonexistentRecordError('Category'));
     }
     if (category.deletedAt != null) {
-      return Result.err(new DeletedRecordError('category already deleted'));
+      return Result.err(new DeletedRecordError('Category'));
     }
     return Result.ok(category);
   } catch (e) {
@@ -36,7 +39,7 @@ export const readOneCategory = async (
   }
 };
 
-export const readAllCategory = async (
+const readAllCategory = async (
   data: CategoryReadAllData
 ): CategoryReadAllResult => {
   try {
@@ -54,4 +57,9 @@ export const readAllCategory = async (
   } catch (e) {
     return genericError;
   }
+};
+
+export default {
+  one: readOneCategory,
+  all: readAllCategory,
 };

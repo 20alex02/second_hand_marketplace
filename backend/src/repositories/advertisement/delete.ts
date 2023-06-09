@@ -3,7 +3,10 @@ import type { AdvertisementDeleteData } from '../types/data';
 import type { AdvertisementDeleteResult } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { NonexistentRecordError, DeletedRecordError } from '../types/errors';
+import {
+  NonexistentRecordError,
+  DeletedRecordError,
+} from '../../errors/repositoryErrors';
 
 const deleteAdvertisement = async (
   data: AdvertisementDeleteData
@@ -17,14 +20,10 @@ const deleteAdvertisement = async (
         },
       });
       if (advertisementCheck === null) {
-        return Result.err(
-          new NonexistentRecordError('advertisement does not exists')
-        );
+        return Result.err(new NonexistentRecordError('Advertisement'));
       }
       if (advertisementCheck.deletedAt !== null) {
-        return Result.err(
-          new DeletedRecordError('advertisement already deleted')
-        );
+        return Result.err(new DeletedRecordError('Advertisement'));
       }
       const advertisement = await tx.advertisement.update({
         where: {

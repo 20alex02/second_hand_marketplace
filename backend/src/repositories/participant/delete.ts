@@ -3,7 +3,10 @@ import type { ParticipantDeleteData } from '../types/data';
 import type { ParticipantDeleteResult } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { NonexistentRecordError, DeletedRecordError } from '../types/errors';
+import {
+  NonexistentRecordError,
+  DeletedRecordError,
+} from '../../errors/repositoryErrors';
 
 const deleteParticipant = async (
   data: ParticipantDeleteData
@@ -16,14 +19,10 @@ const deleteParticipant = async (
         },
       });
       if (participantCheck === null) {
-        return Result.err(
-          new NonexistentRecordError('participant does not exists')
-        );
+        return Result.err(new NonexistentRecordError('Participant'));
       }
       if (participantCheck.deletedAt !== null) {
-        return Result.err(
-          new DeletedRecordError('participant already deleted')
-        );
+        return Result.err(new DeletedRecordError('Participant'));
       }
       const participant = await tx.participant.update({
         where: {

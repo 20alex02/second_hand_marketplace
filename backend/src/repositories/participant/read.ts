@@ -9,9 +9,12 @@ import type {
 } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
+import {
+  DeletedRecordError,
+  NonexistentRecordError,
+} from '../../errors/repositoryErrors';
 
-export const readOneParticipant = async (
+const readOneParticipant = async (
   data: ParticipantReadOneData
 ): ParticipantReadOneResult => {
   try {
@@ -25,12 +28,10 @@ export const readOneParticipant = async (
       },
     });
     if (participant == null) {
-      return Result.err(
-        new NonexistentRecordError('participant does not exists')
-      );
+      return Result.err(new NonexistentRecordError('Participant'));
     }
     if (participant.deletedAt != null) {
-      return Result.err(new DeletedRecordError('participant already deleted'));
+      return Result.err(new DeletedRecordError('Participant'));
     }
     return Result.ok(participant);
   } catch (e) {
@@ -38,7 +39,7 @@ export const readOneParticipant = async (
   }
 };
 
-export const readAllParticipant = async (
+const readAllParticipant = async (
   data: ParticipantReadAllData
 ): ParticipantReadAllResult => {
   try {
@@ -52,4 +53,9 @@ export const readAllParticipant = async (
   } catch (e) {
     return genericError;
   }
+};
+
+export default {
+  one: readOneParticipant,
+  all: readAllParticipant,
 };

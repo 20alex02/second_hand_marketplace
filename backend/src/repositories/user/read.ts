@@ -1,22 +1,17 @@
 import { Result } from '@badrap/result';
-import type {
-  UserReadOneData,
-  UserReadAllData,
-  UserReadOneUserByEmail,
-} from '../types/data';
+import type { UserReadOneData, UserReadAllData } from '../types/data';
 import type { UserReadOneResult, UserReadAllResult } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
+import {
+  DeletedRecordError,
+  NonexistentRecordError,
+} from '../../errors/repositoryErrors';
 
-export const readOneUserByEmail = async (
-  data: UserReadOneUserByEmail
-): UserReadOneResult => {
+const readOneUser = async (data: UserReadOneData): UserReadOneResult => {
   try {
     const user = await client.user.findUnique({
-      where: {
-        email: data.email,
-      },
+      where: data,
       include: {
         advertisements: {
           where: {
@@ -31,10 +26,10 @@ export const readOneUserByEmail = async (
       },
     });
     if (user == null) {
-      return Result.err(new NonexistentRecordError('user does not exists'));
+      return Result.err(new NonexistentRecordError('User'));
     }
     if (user.deletedAt != null) {
-      return Result.err(new DeletedRecordError('user already deleted'));
+      return Result.err(new DeletedRecordError('User'));
     }
     return Result.ok(user);
   } catch (e) {
@@ -42,38 +37,7 @@ export const readOneUserByEmail = async (
   }
 };
 
-export const readOneUser = async (data: UserReadOneData): UserReadOneResult => {
-  try {
-    const user = await client.user.findUnique({
-      where: {
-        id: data.id,
-      },
-      include: {
-        advertisements: {
-          where: {
-            deletedAt: null,
-          },
-        },
-        participants: {
-          where: {
-            deletedAt: null,
-          },
-        },
-      },
-    });
-    if (user == null) {
-      return Result.err(new NonexistentRecordError('user does not exists'));
-    }
-    if (user.deletedAt != null) {
-      return Result.err(new DeletedRecordError('user already deleted'));
-    }
-    return Result.ok(user);
-  } catch (e) {
-    return genericError;
-  }
-};
-
-export const readAllUser = async (data: UserReadAllData): UserReadAllResult => {
+const readAllUser = async (data: UserReadAllData): UserReadAllResult => {
   try {
     const users = await client.user.findMany({
       where: {
@@ -85,4 +49,9 @@ export const readAllUser = async (data: UserReadAllData): UserReadAllResult => {
   } catch (e) {
     return genericError;
   }
+};
+
+export default {
+  one: readOneUser,
+  all: readAllUser,
 };

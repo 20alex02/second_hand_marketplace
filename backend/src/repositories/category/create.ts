@@ -3,7 +3,10 @@ import type { CategoryCreateData } from '../types/data';
 import type { CategoryCreateResult } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { NonexistentRecordError, DeletedRecordError } from '../types/errors';
+import {
+  NonexistentRecordError,
+  DeletedRecordError,
+} from '../../errors/repositoryErrors';
 
 const createCategory = async (
   data: CategoryCreateData
@@ -17,14 +20,10 @@ const createCategory = async (
           },
         });
         if (categoryCheck === null) {
-          return Result.err(
-            new NonexistentRecordError('parent category does not exists')
-          );
+          return Result.err(new NonexistentRecordError('Parent category'));
         }
         if (categoryCheck.deletedAt !== null) {
-          return Result.err(
-            new DeletedRecordError('parent category already deleted')
-          );
+          return Result.err(new DeletedRecordError('Parent category'));
         }
       }
       const category = await tx.category.create({

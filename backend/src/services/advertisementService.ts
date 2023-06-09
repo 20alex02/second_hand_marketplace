@@ -1,42 +1,48 @@
-import createAdvertisement from '../repositories/advertisement/create';
-import type { AdvertisementType } from '@prisma/client';
-import type { AdvertisementFilter } from '../controllers/types';
+import advertisement from '../repositories/advertisement';
+import advertisementModel from '../models/advertisementModels';
+import { getUserId } from './authService';
 
-export const createAdvertisementService = async (
-  title: string,
-  type: AdvertisementType,
-  description: string,
-  estimatedPrice: number | null,
-  hidden: boolean,
-  creatorId: string,
-  images: string[],
-  categories: string[]
+export const create = async (
+  body: any,
+  headers: any,
+  files: Express.Multer.File[],
+  secret?: string
 ) => {
-  const categoryIds = categories.map((id) => ({ id: id }));
-  const imagePaths = images.map((path) => ({ path: path }));
-  const advertisement = await createAdvertisement({
-    title,
-    type,
-    description,
-    estimatedPrice,
-    hidden,
+  const authHeader = headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  const creatorId = getUserId(token, secret);
+  const images: { path: string }[] = files.map((file: Express.Multer.File) => ({
+    path: file.path,
+  }));
+
+  const validatedData = advertisementModel.createSchema.parse({
     creatorId,
-    images: imagePaths,
-    categories: categoryIds,
+    ...body,
+    images,
   });
-  if (advertisement.isOk) {
-    return advertisement.value.id;
+  const result = await advertisement.create(validatedData);
+  if (result.isErr) {
+    throw result.error;
   }
-  throw advertisement.error;
+  return result.value.id;
 };
 
-export const searchAdvertisementService = async (
-  filter: AdvertisementFilter
-) => {
-  console.log(filter);
-  // const advertisement ;
-  // if (advertisement.isOk) {
-  //   return advertisement.value.id;
-  // }
-  // throw advertisement.error;
+export const getAll = async (data: any) => {
+  const { pageNum, perPage, ...validatedData } =
+    advertisementModel.getAllSchema.parse(data);
+  const result = await advertisement.read.all(validatedData);
+  if (result.isErr) {
+    throw result.error;
+  }
+  return result.value.map((val) => val.id);
+  // .slice(pageNum * perPage, (pageNum + 1) * perPage);
+
+  /* TODO just 1 query, store all advertisements somewhere for better pagination
+    so there are no redundant queries and next page loads by .slice()
+    */
+};
+
+export default {
+  create,
+  search: getAll,
 };

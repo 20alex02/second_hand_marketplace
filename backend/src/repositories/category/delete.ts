@@ -3,7 +3,10 @@ import type { CategoryDeleteData } from '../types/data';
 import type { CategoryDeleteResult } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { NonexistentRecordError, DeletedRecordError } from '../types/errors';
+import {
+  NonexistentRecordError,
+  DeletedRecordError,
+} from '../../errors/repositoryErrors';
 
 // TODO solve recursive delete and include
 const deleteCategory = async (
@@ -18,12 +21,10 @@ const deleteCategory = async (
         },
       });
       if (categoryCheck === null) {
-        return Result.err(
-          new NonexistentRecordError('category does not exists')
-        );
+        return Result.err(new NonexistentRecordError('Category'));
       }
       if (categoryCheck.deletedAt !== null) {
-        return Result.err(new DeletedRecordError('category already deleted'));
+        return Result.err(new DeletedRecordError('Category'));
       }
       const category = await tx.category.update({
         where: {

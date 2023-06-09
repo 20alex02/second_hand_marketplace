@@ -9,9 +9,12 @@ import type {
 } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
+import {
+  DeletedRecordError,
+  NonexistentRecordError,
+} from '../../errors/repositoryErrors';
 
-export const readOneAdvertisement = async (
+const readOneAdvertisement = async (
   data: AdvertisementReadOneData
 ): AdvertisementReadOneResult => {
   try {
@@ -39,14 +42,10 @@ export const readOneAdvertisement = async (
       },
     });
     if (advertisement == null) {
-      return Result.err(
-        new NonexistentRecordError('advertisement does not exists')
-      );
+      return Result.err(new NonexistentRecordError('Advertisement'));
     }
     if (advertisement.deletedAt != null) {
-      return Result.err(
-        new DeletedRecordError('advertisement already deleted')
-      );
+      return Result.err(new DeletedRecordError('Advertisement'));
     }
     return Result.ok(advertisement);
   } catch (e) {
@@ -54,28 +53,55 @@ export const readOneAdvertisement = async (
   }
 };
 
-export const readAllAdvertisement = async (
+const readAllAdvertisement = async (
   data: AdvertisementReadAllData
 ): AdvertisementReadAllResult => {
-  const { categories, ...filterData } = data;
+  const { categories, estimatedPrice, created, ...filterData } = data;
+  const categoryFilter = categories
+    ? {
+        categories: {
+          some: {
+            id: {
+              in: categories,
+            },
+          },
+        },
+      }
+    : {};
+
+  const estimatedPriceFilter = estimatedPrice
+    ? {
+        estimatedPrice: {
+          ...(estimatedPrice.from ? { gte: estimatedPrice.from } : {}),
+          ...(estimatedPrice.to ? { lte: estimatedPrice.to } : {}),
+        },
+      }
+    : {};
+  const createdFilter = created
+    ? {
+        createdAt: {
+          ...(created.from ? { gte: created.from } : {}),
+          ...(created.to ? { lte: created.to } : {}),
+        },
+      }
+    : {};
   try {
     const users = await client.advertisement.findMany({
       where: {
         ...filterData,
         deletedAt: null,
-        categories: categories
-          ? {
-              some: {
-                id: {
-                  in: categories,
-                },
-              },
-            }
-          : {},
+        ...categoryFilter,
+        ...estimatedPriceFilter,
+        ...createdFilter,
       },
     });
     return Result.ok(users);
   } catch (e) {
     return genericError;
   }
+};
+
+export default {
+  one: readOneAdvertisement,
+  all: readAllAdvertisement,
 };

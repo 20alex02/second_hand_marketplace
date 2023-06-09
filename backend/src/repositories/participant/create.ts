@@ -3,7 +3,10 @@ import type { ParticipantCreateData } from '../types/data';
 import type { ParticipantCreateResult } from '../types/return';
 import client from '../client';
 import { genericError } from '../types';
-import { DeletedRecordError, NonexistentRecordError } from '../types/errors';
+import {
+  DeletedRecordError,
+  NonexistentRecordError,
+} from '../../errors/repositoryErrors';
 
 const createParticipant = async (
   data: ParticipantCreateData
@@ -17,10 +20,10 @@ const createParticipant = async (
           },
         });
         if (userCheck === null) {
-          return Result.err(new NonexistentRecordError('user does not exists'));
+          return Result.err(new NonexistentRecordError('User'));
         }
         if (userCheck.deletedAt !== null) {
-          return Result.err(new DeletedRecordError('user already deleted'));
+          return Result.err(new DeletedRecordError('User'));
         }
       }
       const participant = await tx.participant.create({
