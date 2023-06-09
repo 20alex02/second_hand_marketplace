@@ -6,6 +6,11 @@ const createSchema = z
   })
   .and(z.object({ parentId: z.string().uuid() }).optional());
 
+const getOneSchema = z.object({
+  id: z.string().uuid(),
+});
+
 export default {
   createSchema,
+  getOneSchema,
 };

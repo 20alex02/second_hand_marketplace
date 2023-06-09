@@ -45,6 +45,8 @@ app.post('/api/advertisements', controllers.advertisement.getAll);
 // CATEGORY
 app.post('/api/category', controllers.category.create);
 
+app.get('api/category/:id', controllers.category.getOne);
+
 // No route was taken - 404 - Resource (API endpoint) not found.
 app.use((_req, res) => {
   const response: ApiResponse<object> = {

@@ -34,6 +34,25 @@ const create = async (req: Request, res: Response) => {
   }
 };
 
+const getOne = async (req: Request, res: Response) => {
+  try {
+    const result = categoryService.getOne(req.params);
+    return handleOkResp(200, result, res, 'Category searched successfully');
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return handleValidationErrorResp(error, res);
+    }
+    if (error instanceof NonexistentRecordError) {
+      return handleErrorResp(422, res, error.message);
+    }
+    if (error instanceof DeletedRecordError) {
+      return handleErrorResp(422, res, error.message);
+    }
+    return handleErrorResp(500, res, 'Unknown error');
+  }
+};
+
 export default {
   create,
+  getOne,
 };
