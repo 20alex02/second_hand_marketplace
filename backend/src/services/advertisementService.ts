@@ -3,7 +3,7 @@ import advertisementModel from '../models/advertisementModels';
 import { getUserId } from './authService';
 
 export const create = async (
-  body: any,
+  data: any,
   headers: any,
   files: Express.Multer.File[],
   secret?: string
@@ -17,29 +17,23 @@ export const create = async (
 
   const validatedData = advertisementModel.createSchema.parse({
     creatorId,
-    ...body,
+    ...data,
     images,
   });
   const result = await advertisement.create(validatedData);
   if (result.isErr) {
     throw result.error;
   }
-  return result.value.id;
+  return result.value;
 };
 
 export const getAll = async (data: any) => {
-  const { pageNum, perPage, ...validatedData } =
-    advertisementModel.getAllSchema.parse(data);
+  const validatedData = advertisementModel.getAllSchema.parse(data);
   const result = await advertisement.read.all(validatedData);
   if (result.isErr) {
     throw result.error;
   }
-  return result.value.map((val) => val.id);
-  // .slice(pageNum * perPage, (pageNum + 1) * perPage);
-
-  /* TODO just 1 query, store all advertisements somewhere for better pagination
-    so there are no redundant queries and next page loads by .slice()
-    */
+  return result.value;
 };
 
 export default {
