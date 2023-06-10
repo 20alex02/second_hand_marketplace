@@ -56,7 +56,14 @@ const readOneAdvertisement = async (
 const readAllAdvertisement = async (
   data: AdvertisementReadAllData
 ): AdvertisementReadAllResult => {
-  const { categories, estimatedPrice, created, ...filterData } = data;
+  const {
+    categories,
+    estimatedPrice,
+    created,
+    pageNum,
+    perPage,
+    ...filterData
+  } = data;
   const categoryFilter = categories
     ? {
         categories: {
@@ -94,6 +101,8 @@ const readAllAdvertisement = async (
         ...estimatedPriceFilter,
         ...createdFilter,
       },
+      skip: (pageNum - 1) * perPage,
+      take: perPage,
     });
     return Result.ok(users);
   } catch (e) {

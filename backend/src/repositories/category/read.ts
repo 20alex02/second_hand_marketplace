@@ -43,14 +43,19 @@ const readAllCategory = async (
   data: CategoryReadAllData
 ): CategoryReadAllResult => {
   try {
+    const advertisementFilter = data.advertisementId
+      ? {
+          advertisements: {
+            some: {
+              id: data.advertisementId,
+            },
+          },
+        }
+      : {};
     const categories = await client.category.findMany({
       where: {
         deletedAt: null,
-        advertisements: {
-          some: {
-            id: data.id,
-          },
-        },
+        ...advertisementFilter,
       },
     });
     return Result.ok(categories);

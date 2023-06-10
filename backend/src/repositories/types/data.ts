@@ -69,6 +69,8 @@ export type AdvertisementReadOneData = {
 };
 
 export type AdvertisementReadAllData = {
+  pageNum: number;
+  perPage: number;
   type?: AdvertisementType;
   hidden?: boolean;
   creatorId?: string;
@@ -126,15 +128,12 @@ export type CategoryReadOneData = {
 };
 
 export type CategoryReadAllData = {
-  // TODO filters
-  id: string;
+  advertisementId?: string;
 };
 
-export type CategoryUpdateData = {
-  id: string;
-  name?: string;
-  parentId?: string;
-};
+export type CategoryUpdateData =
+  | { id: string; name: string; parentId?: string }
+  | { id: string; name?: string; parentId: string };
 
 export type CategoryDeleteData = {
   id: string;

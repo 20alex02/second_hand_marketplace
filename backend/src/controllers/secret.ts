@@ -9,7 +9,6 @@ import {
 import { WrongPassword } from '../errors/controllersErrors';
 import { z } from 'zod';
 
-// TODO?? create controller and schema to validate
 const create = async (req: Request, res: Response, secretKey?: string) => {
   try {
     const data = req.body;
