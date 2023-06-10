@@ -55,16 +55,22 @@ app.delete('/api/advertisement/:id', authenticateToken, (req, res) => {
 });
 
 // CATEGORY
-app.post('/api/category', controllers.category.create);
+app.post('/api/category', authenticateToken, (req, res) => {
+  return controllers.category.create(req, res, secretKey);
+});
 
-app.get('api/category/:id', (req, res) => {
+app.get('api/category/:id', authenticateToken, (req, res) => {
   return controllers.category.getOne(req, res, secretKey);
 });
 
 app.get('/api/category', controllers.category.getAll);
 
-app.patch('/api/category/:id', (req, res) => {
+app.patch('/api/category/:id', authenticateToken, (req, res) => {
   return controllers.category.update(req, res, secretKey);
+});
+
+app.delete('/api/category/:id', authenticateToken, (req, res) => {
+  return controllers.category.delete(req, res, secretKey);
 });
 
 // PARTICIPANT

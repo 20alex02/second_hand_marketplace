@@ -20,8 +20,13 @@ const updateSchema = z
     message: "At least one of 'name' or 'parentId' must be present",
   });
 
+const deleteSchema = z.object({
+  id: z.string().uuid(),
+});
+
 export default {
   createSchema,
   getOneSchema,
   updateSchema,
+  deleteSchema,
 };

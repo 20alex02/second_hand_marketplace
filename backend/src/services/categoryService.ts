@@ -4,8 +4,12 @@ import { getUserId } from './authService';
 import { InvalidAccessRights } from '../errors/controllersErrors';
 import userService from './userService';
 
-async function create(data: any) {
-  const validatedData = categoryModel.createSchema.parse(data);
+async function create(body: any, headers: any, secret?: string) {
+  const id = getUserId(headers, secret);
+  if (!(await userService.isAdmin(id))) {
+    throw new InvalidAccessRights();
+  }
+  const validatedData = categoryModel.createSchema.parse(body);
   const result = await category.create(validatedData);
   if (result.isErr) {
     throw result.error;
@@ -50,9 +54,23 @@ async function update(params: any, query: any, headers: any, secret?: string) {
   return result.value;
 }
 
+async function deleteCategory(params: any, headers: any, secret?: string) {
+  const validatedData = categoryModel.deleteSchema.parse(params);
+  const id = getUserId(headers, secret);
+  if (!(await userService.isAdmin(id))) {
+    throw new InvalidAccessRights();
+  }
+  const result = await category.delete(validatedData);
+  if (result.isErr) {
+    throw result.error;
+  }
+  return result.value;
+}
+
 export default {
   create,
   getOne,
   getAll,
   update,
+  delete: deleteCategory,
 };

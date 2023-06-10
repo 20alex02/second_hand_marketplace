@@ -18,3 +18,10 @@ export class ConflictingRecordError extends Error {
     this.name = 'ConflictingRecordError';
   }
 }
+
+export class CategoryDeletionError extends Error {
+  constructor(record: string) {
+    super('Category cannot be deleted due to linked' + record);
+    this.name = 'CategoryDeletionError';
+  }
+}

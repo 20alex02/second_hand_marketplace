@@ -2,9 +2,9 @@ import type { Request, Response } from 'express';
 import categoryService from '../services/categoryService';
 import { handleOkResp, handleError } from './common';
 
-const create = async (req: Request, res: Response) => {
+const create = async (req: Request, res: Response, secret?: string) => {
   try {
-    const id = await categoryService.create(req.body);
+    const id = await categoryService.create(req.body, req.headers, secret);
     return handleOkResp(
       201,
       { uuid: id },
@@ -67,9 +67,28 @@ const update = async (req: Request, res: Response, secret?: string) => {
   }
 };
 
+const deleteCategory = async (req: Request, res: Response, secret?: string) => {
+  try {
+    const result = await categoryService.delete(
+      req.params,
+      req.headers,
+      secret
+    );
+    return handleOkResp(
+      200,
+      { ...result },
+      res,
+      'Category deleted successfully'
+    );
+  } catch (error) {
+    return handleError(error, res);
+  }
+};
+
 export default {
   create,
   getOne,
   getAll,
   update,
+  delete: deleteCategory,
 };
