@@ -1,0 +1,65 @@
+@import url('../../assets/styles/_variables.css');
+
+.title-user {
+    z-index: 3;
+    max-width: 50vw;
+    max-height: 3rem;
+    justify-self: center;
+    align-self: center;
+    text-align: center;
+    overflow: hidden;
+    overflow-wrap: break-word;
+    font-size: 1.2rem;
+    color: var(--white);
+}
+
+.title-user:has(~ * .filter-list--visible) {
+    visibility: hidden;
+}
+
+.my-adverts {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    row-gap: 1.5rem;
+}
+
+.my-adverts__tab {
+    grid-row: 1;
+    justify-self: center;
+}
+
+.my-adverts__list {
+    grid-row: 2;
+    display: flex;
+    flex-flow: wrap;
+    justify-content: center;
+    gap: 1.2rem;
+}
+
+@media only screen and (min-width: 600px) {
+    .title-user {
+        grid-row: 1;
+        grid-column: 1;
+        max-width: 100%;
+        z-index: 10;
+        justify-self: start;
+        align-self: center;
+        text-align: start;
+        padding: 1.5rem;
+    }
+
+    .title-user ~ .filters-bar {
+        margin-top: var(--navbar-height);
+    }
+
+    .title-user:has(~ * .filter-list--visible) {
+        visibility: hidden;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .title-user:has(~ * .filter-list--visible) {
+        visibility: visible;
+    }
+}
