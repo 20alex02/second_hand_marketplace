@@ -64,4 +64,8 @@ const getAllSchema = z
       .optional()
   );
 
-export default { createSchema, getAllSchema };
+const deleteSchema = z.object({
+  id: z.string().uuid(),
+});
+
+export default { createSchema, getAllSchema, deleteSchema };

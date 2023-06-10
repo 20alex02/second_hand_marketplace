@@ -46,6 +46,10 @@ app.post('/api/advertisement', authenticateToken, upload, (req, res) => {
   return controllers.advertisement.create(req, res, secretKey);
 });
 
+app.delete('/api/advertisement/:id', authenticateToken, (req, res) => {
+  return controllers.advertisement.delete(req, res, secretKey);
+});
+
 app.post('/api/advertisements', controllers.advertisement.getAll);
 
 // CATEGORY

@@ -40,8 +40,31 @@ const getAll = async (req: Request, res: Response) => {
   }
 };
 
+const deleteAdvertisement = async (
+  req: Request,
+  res: Response,
+  secret?: string
+) => {
+  try {
+    const result = await advertisementService.delete(
+      req.params,
+      req.headers,
+      secret
+    );
+    return handleOkResp(
+      200,
+      { ...result },
+      res,
+      'Advertisement deleted successfully'
+    );
+  } catch (error) {
+    return handleError(error, res);
+  }
+};
+
 export default {
   create,
   getTypes,
   getAll,
+  delete: deleteAdvertisement,
 };
