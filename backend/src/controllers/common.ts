@@ -1,6 +1,15 @@
 import type { Response } from 'express';
-import { MissingRequiredField } from '../errors/controllersErrors';
-import type z from 'zod';
+import {
+  InvalidAccessRights,
+  MissingRequiredField,
+} from '../errors/controllersErrors';
+import { z } from 'zod';
+import {
+  NonexistentRecordError,
+  DeletedRecordError,
+  ConflictingRecordError,
+} from '../errors/repositoryErrors';
+import { InvalidToken, WrongPassword } from '../errors/controllersErrors';
 
 export function handleErrorResp(
   status: number,
@@ -48,4 +57,29 @@ export const getRequiredField = <T>(
     throw new MissingRequiredField(field);
   }
   return curField;
+};
+
+export const handleError = (error: unknown, res: Response) => {
+  if (error instanceof z.ZodError) {
+    return handleValidationErrorResp(error, res);
+  }
+  if (error instanceof NonexistentRecordError) {
+    return handleErrorResp(422, res, error.message);
+  }
+  if (error instanceof DeletedRecordError) {
+    return handleErrorResp(422, res, error.message);
+  }
+  if (error instanceof ConflictingRecordError) {
+    return handleErrorResp(422, res, error.message);
+  }
+  if (error instanceof InvalidToken) {
+    return handleErrorResp(401, res, error.message);
+  }
+  if (error instanceof WrongPassword) {
+    return handleErrorResp(400, res, error.message);
+  }
+  if (error instanceof InvalidAccessRights) {
+    return handleErrorResp(401, res, error.message);
+  }
+  return handleErrorResp(500, res, 'Unknown error');
 };

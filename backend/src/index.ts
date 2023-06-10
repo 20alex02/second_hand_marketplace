@@ -61,6 +61,11 @@ app.patch('/api/category/:id', (req, res) => {
   return controllers.category.update(req, res, secretKey);
 });
 
+// PARTICIPANT
+app.get('/api/participant/:advertisementId', authenticateToken, (req, res) => {
+  return controllers.participant.getAll(req, res, secretKey);
+});
+
 // No route was taken - 404 - Resource (API endpoint) not found.
 app.use((_req, res) => {
   const response: ApiResponse<object> = {

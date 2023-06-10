@@ -2,15 +2,13 @@ import advertisement from '../repositories/advertisement';
 import advertisementModel from '../models/advertisementModels';
 import { getUserId } from './authService';
 
-export const create = async (
+const create = async (
   data: any,
   headers: any,
   files: Express.Multer.File[],
   secret?: string
 ) => {
-  const authHeader = headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-  const creatorId = getUserId(token, secret);
+  const creatorId = getUserId(headers, secret);
   const images: { path: string }[] = files.map((file: Express.Multer.File) => ({
     path: file.path,
   }));
@@ -27,7 +25,7 @@ export const create = async (
   return result.value;
 };
 
-export const getAll = async (data: any) => {
+const getAll = async (data: any) => {
   const validatedData = advertisementModel.getAllSchema.parse(data);
   const result = await advertisement.read.all(validatedData);
   if (result.isErr) {
@@ -38,5 +36,5 @@ export const getAll = async (data: any) => {
 
 export default {
   create,
-  search: getAll,
+  getAll,
 };

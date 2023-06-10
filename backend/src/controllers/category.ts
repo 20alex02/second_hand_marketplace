@@ -1,15 +1,6 @@
 import type { Request, Response } from 'express';
 import categoryService from '../services/categoryService';
-import {
-  DeletedRecordError,
-  NonexistentRecordError,
-} from '../errors/repositoryErrors';
-import {
-  handleOkResp,
-  handleErrorResp,
-  handleValidationErrorResp,
-} from './common';
-import { z } from 'zod';
+import { handleOkResp, handleError } from './common';
 
 const create = async (req: Request, res: Response) => {
   try {
@@ -21,16 +12,7 @@ const create = async (req: Request, res: Response) => {
       'Category created successfully'
     );
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return handleValidationErrorResp(error, res);
-    }
-    if (error instanceof NonexistentRecordError) {
-      return handleErrorResp(422, res, error.message);
-    }
-    if (error instanceof DeletedRecordError) {
-      return handleErrorResp(422, res, error.message);
-    }
-    return handleErrorResp(500, res, 'Unknown error');
+    return handleError(error, res);
   }
 };
 
@@ -48,16 +30,7 @@ const getOne = async (req: Request, res: Response, secret?: string) => {
       'Category searched successfully'
     );
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return handleValidationErrorResp(error, res);
-    }
-    if (error instanceof NonexistentRecordError) {
-      return handleErrorResp(422, res, error.message);
-    }
-    if (error instanceof DeletedRecordError) {
-      return handleErrorResp(422, res, error.message);
-    }
-    return handleErrorResp(500, res, 'Unknown error');
+    return handleError(error, res);
   }
 };
 
@@ -71,16 +44,7 @@ const getAll = async (_req: Request, res: Response) => {
       'Category searched successfully'
     );
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return handleValidationErrorResp(error, res);
-    }
-    if (error instanceof NonexistentRecordError) {
-      return handleErrorResp(422, res, error.message);
-    }
-    if (error instanceof DeletedRecordError) {
-      return handleErrorResp(422, res, error.message);
-    }
-    return handleErrorResp(500, res, 'Unknown error');
+    return handleError(error, res);
   }
 };
 
@@ -99,16 +63,7 @@ const update = async (req: Request, res: Response, secret?: string) => {
       'Category updated successfully'
     );
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return handleValidationErrorResp(error, res);
-    }
-    if (error instanceof NonexistentRecordError) {
-      return handleErrorResp(422, res, error.message);
-    }
-    if (error instanceof DeletedRecordError) {
-      return handleErrorResp(422, res, error.message);
-    }
-    return handleErrorResp(500, res, 'Unknown error');
+    return handleError(error, res);
   }
 };
 

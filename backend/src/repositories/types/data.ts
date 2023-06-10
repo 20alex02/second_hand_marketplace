@@ -39,8 +39,7 @@ export type ParticipantReadOneData = {
 };
 
 export type ParticipantReadAllData = {
-  // TODO filters
-  advertisementId: string;
+  advertisementId?: string;
 };
 
 export type ParticipantUpdateData = {
