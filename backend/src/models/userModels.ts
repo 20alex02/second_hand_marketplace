@@ -12,6 +12,35 @@ const createSchema = z.object({
     ),
 });
 
+const updateSchema = z
+  .object({
+    id: z.string().uuid(),
+  })
+  .and(
+    z
+      .object({
+        phoneNumber: z
+          .string()
+          .regex(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}$/
+          ),
+      })
+      .optional()
+  )
+  .and(
+    z
+      .object({
+        password: z
+          .string()
+          .regex(
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*d)(?=.*[@$!%*?&])[A-Za-zd@$!%*?&]{8,}$/
+          ),
+      })
+      .optional()
+  )
+  .and(z.object({ email: z.string().uuid() }).optional());
+
 export default {
   createSchema,
+  updateSchema,
 };

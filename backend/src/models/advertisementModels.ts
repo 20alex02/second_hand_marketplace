@@ -13,6 +13,11 @@ const createSchema = z
   .and(z.object({ estimatedPrice: z.number().positive() }).optional())
   .and(z.object({ hidden: z.boolean() }).optional());
 
+const orderBySchema = z.union([
+  z.object({ title: z.literal('asc' || 'desc') }),
+  z.object({ estimatedPrice: z.literal('asc' || 'desc') }),
+]);
+
 const getAllSchema = z
   .object({
     pageNum: z.number().positive(),
@@ -22,13 +27,16 @@ const getAllSchema = z
   .and(z.object({ hidden: z.boolean() }).optional())
   .and(z.object({ creatorId: z.string().uuid() }).optional())
   .and(z.object({ type: z.nativeEnum(AdvertisementType) }).optional())
+  .and(z.object({ orderBy: orderBySchema }).optional())
   .and(
     z
       .object({
         created: z.object({ from: z.date(), to: z.date() }).refine(
           ({ from, to }) => {
-            // Check if 'to' >= 'from' when both 'from' and 'to' are present
-            return !(from !== undefined && to !== undefined && to < from);
+            if (from !== undefined && to !== undefined) {
+              return to >= from;
+            }
+            return from !== undefined || to !== undefined;
           },
           { message: "Invalid 'created' date range" }
         ),
@@ -45,8 +53,10 @@ const getAllSchema = z
           })
           .refine(
             ({ from, to }) => {
-              // Check if 'to' >= 'from' when both 'from' and 'to' are present
-              return !(from !== undefined && to !== undefined && to < from);
+              if (from !== undefined && to !== undefined) {
+                return to >= from;
+              }
+              return from !== undefined || to !== undefined;
             },
             { message: "Invalid 'estimatedPrice' range" }
           ),

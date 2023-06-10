@@ -6,6 +6,7 @@ import { genericError } from '../types';
 import {
   DeletedRecordError,
   NonexistentRecordError,
+  ConflictingRecordError,
 } from '../../errors/repositoryErrors';
 
 const updateUser = async (data: UserUpdateData): UserUpdateResult => {
@@ -21,6 +22,16 @@ const updateUser = async (data: UserUpdateData): UserUpdateResult => {
       }
       if (userCheck.deletedAt !== null) {
         return Result.err(new DeletedRecordError('User'));
+      }
+      if (data.email) {
+        const emailCheck = await tx.user.findUnique({
+          where: {
+            email: data.email,
+          },
+        });
+        if (emailCheck !== null) {
+          return Result.err(new ConflictingRecordError('User', 'email'));
+        }
       }
       const { id, ...dataToUpdate } = data;
       const user = await tx.user.update({

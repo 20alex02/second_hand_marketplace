@@ -41,11 +41,14 @@ async function getAll() {
   return result.value;
 }
 
-async function update(data: any, query: any, headers: any, secret?: string) {
+async function update(params: any, query: any, headers: any, secret?: string) {
   const authHeader = headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
   const id = getUserId(token, secret);
-  const validatedData = categoryModel.updateSchema.parse({ ...data, ...query });
+  const validatedData = categoryModel.updateSchema.parse({
+    ...params,
+    ...query,
+  });
   const userResult = await user.read.one({ id: id });
   if (userResult.isErr) {
     throw userResult.error;

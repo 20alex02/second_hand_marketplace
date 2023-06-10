@@ -33,6 +33,10 @@ app.post('/api/secret', (req, res) => {
   return controllers.secret.create(req, res, secretKey);
 });
 
+app.patch('/api/user', authenticateToken, (req, res) => {
+  return controllers.user.update(req, res, secretKey);
+});
+
 // ADVERTISEMENT
 app.get('/api/advertisement/types', controllers.advertisement.getTypes);
 

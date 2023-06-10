@@ -77,6 +77,7 @@ export type AdvertisementReadAllData = {
   categories?: string[];
   estimatedPrice?: { from: number | undefined; to: number | undefined };
   created?: { from: Date | undefined; to: Date | undefined };
+  orderBy?: { title: 'asc' | 'desc' } | { estimatedPrice: 'asc' | 'desc' };
 };
 
 export type AdvertisementUpdateData = {
