@@ -7,7 +7,7 @@ const VISIBLE_MODIFIER = 'filter-list--visible';
 const INVISIBLE_MODIFIER = 'filter-list--invisible';
 
 const Filters = () => {
-  const updateWidth = () => window.innerWidth > 600;
+  const updateWidth = () => window.innerWidth >= 600;
   const [visibility, setVisibility] = useState<string>(INVISIBLE_MODIFIER);
   const [isDesktop, setDesktop] = useState(updateWidth());
 
