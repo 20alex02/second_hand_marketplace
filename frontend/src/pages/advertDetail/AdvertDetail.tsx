@@ -1,12 +1,36 @@
 import advertPlaceholder from '../../assets/advertDetailPlaceholder.json';
+import './advertDetail.css';
 
 import { useParams } from 'react-router-dom';
+import { Carousel, Image } from 'antd';
 
 const AdvertDetail = () => {
   const { id } = useParams(); // TODO get advert
   const advert = advertPlaceholder;
 
-  return <section className="advert-detail">{id}</section>;
+  return (
+    <section className="advert-detail">
+      <div className="advert-detail__categories">{advert.categories.name}</div>
+      <span className="advert-detail__title">{`${advert.type}: ${advert.title}`}</span>
+      <span className="advert-detail__date">{advert.createdAt}</span>
+      <Carousel className="advert-detail__images advert-image" autoplay>
+        {advert.images.map((item: Image) => (
+          <Image
+            className="advert-image__photo"
+            key={item.id}
+            src={item.path}
+          />
+        ))}
+      </Carousel>
+      <span className="advert-detail__description">{advert.description}</span>
+      <span className="advert-detail__price">{advert.estimatedPrice}</span>
+      <div className="advert-detail__advertiser advertiser">
+        <span className="advertiser__title">Advertiser</span>
+        <span className="advertiser__email">{advert.creator.email}</span>
+        <span className="advertiser__phone">{advert.creator.phoneNumber}</span>
+      </div>
+    </section>
+  );
 };
 
 export default AdvertDetail;
