@@ -88,6 +88,8 @@ export type AdvertisementUpdateData = {
   description?: string;
   estimatedPrice?: number;
   hidden?: boolean;
+  createImages: { path: string }[];
+  disconnectImages: { id: string }[];
   connectCategories: { id: string }[];
   disconnectCategories: { id: string }[];
 };

@@ -72,4 +72,24 @@ const getOneSchema = z.object({
   id: z.string().uuid(),
 });
 
-export default { createSchema, getAllSchema, getOneSchema, deleteSchema };
+const updateSchema = z
+  .object({
+    id: z.string().uuid(),
+    createImages: z.array(z.object({ path: z.string() })),
+    disconnectImages: z.array(z.object({ id: z.string().uuid() })),
+    connectCategories: z.array(z.object({ id: z.string().uuid() })),
+    disconnectCategories: z.array(z.object({ id: z.string().uuid() })),
+  })
+  .and(z.object({ title: z.string().min(3) }).optional())
+  .and(z.object({ type: z.nativeEnum(AdvertisementType) }).optional())
+  .and(z.object({ description: z.string() }).optional())
+  .and(z.object({ estimatedPrice: z.number().positive() }).optional())
+  .and(z.object({ hidden: z.boolean() }).optional());
+
+export default {
+  createSchema,
+  getAllSchema,
+  getOneSchema,
+  deleteSchema,
+  updateSchema,
+};

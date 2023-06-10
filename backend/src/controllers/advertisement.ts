@@ -76,10 +76,31 @@ const deleteAdvertisement = async (
   }
 };
 
+const update = async (req: Request, res: Response, secret?: string) => {
+  try {
+    const result = await advertisementService.update(
+      req.body,
+      req.params,
+      req.files as Express.Multer.File[],
+      req.headers,
+      secret
+    );
+    return handleOkResp(
+      200,
+      { ...result },
+      res,
+      'Advertisement searched successfully'
+    );
+  } catch (error) {
+    return handleError(error, res);
+  }
+};
+
 export default {
   create,
   getTypes,
   getAll,
   getOne,
   delete: deleteAdvertisement,
+  update,
 };

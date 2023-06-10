@@ -72,9 +72,46 @@ const deleteAdvertisement = async (
   }
   return result.value;
 };
+
+const update = async (
+  body: any,
+  params: any,
+  files: Express.Multer.File[],
+  headers: any,
+  secret?: string
+) => {
+  const createImages: { path: string }[] = files.map(
+    (file: Express.Multer.File) => ({
+      path: file.path,
+    })
+  );
+  const { id, ...validatedData } = advertisementModel.updateSchema.parse({
+    ...body,
+    ...params,
+    createImages,
+  });
+  const creatorId = getUserId(headers, secret);
+  const userResult = await user.read.one({ id: creatorId });
+  if (userResult.isErr) {
+    throw userResult.error;
+  }
+  if (
+    userResult.value.role !== Role.ADMIN &&
+    !userResult.value.advertisements.some((ad) => ad.creatorId === id)
+  ) {
+    throw new InvalidAccessRights();
+  }
+  const result = await advertisement.update({ id, ...validatedData });
+  if (result.isErr) {
+    throw result.error;
+  }
+  return result.value;
+};
+
 export default {
   create,
   getAll,
   getOne,
   delete: deleteAdvertisement,
+  update,
 };
