@@ -130,6 +130,8 @@ export type CategoryReadOneData = {
 };
 
 export type CategoryReadAllData = {
+  pageNum: number;
+  perPage: number;
   advertisementId?: string;
 };
 

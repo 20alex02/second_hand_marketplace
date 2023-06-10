@@ -30,8 +30,9 @@ async function getOne(data: any, headers: any, secret?: string) {
   return result.value;
 }
 
-async function getAll() {
-  const result = await category.read.all({});
+async function getAll(query: any) {
+  const validatedData = categoryModel.getAllSchema.parse(query);
+  const result = await category.read.all(validatedData);
   if (result.isErr) {
     throw result.error;
   }

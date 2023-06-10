@@ -43,20 +43,21 @@ const readAllCategory = async (
   data: CategoryReadAllData
 ): CategoryReadAllResult => {
   try {
-    const advertisementFilter = data.advertisementId
+    const { perPage, pageNum, ...filters } = data;
+    const advertisements = filters.advertisementId
       ? {
-          advertisements: {
-            some: {
-              id: data.advertisementId,
-            },
+          some: {
+            id: filters.advertisementId,
           },
         }
       : {};
     const categories = await client.category.findMany({
       where: {
         deletedAt: null,
-        ...advertisementFilter,
+        advertisements,
       },
+      skip: (pageNum - 1) * perPage,
+      take: perPage,
     });
     return Result.ok(categories);
   } catch (e) {

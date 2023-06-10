@@ -34,9 +34,9 @@ const getOne = async (req: Request, res: Response, secret?: string) => {
   }
 };
 
-const getAll = async (_req: Request, res: Response) => {
+const getAll = async (req: Request, res: Response) => {
   try {
-    const result = await categoryService.getAll();
+    const result = await categoryService.getAll(req.query);
     return handleOkResp(
       200,
       { ...result },
