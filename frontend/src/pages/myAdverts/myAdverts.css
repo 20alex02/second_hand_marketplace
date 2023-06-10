@@ -1,10 +1,7 @@
 .my-adverts {
-    grid-row: 2;
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto auto;
-    padding: 1rem;
-    overflow-y: scroll;
     row-gap: 1.5rem;
 }
 
@@ -19,29 +16,4 @@
     flex-flow: wrap;
     justify-content: center;
     gap: 1.2rem;
-}
-
-.my-adverts::-webkit-scrollbar {
-    width: 1rem;
-}
-
-.my-adverts::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.my-adverts::-webkit-scrollbar-thumb {
-    background: var(--primary-color-light);
-    border-radius: 1rem;
-    border: 0.25rem solid var(--white);
-}
-
-.my-adverts::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-color);
-}
-
-@media only screen and (min-width: 600px) {
-    .my-adverts {
-        grid-column: 2;
-        grid-row: 1;
-    }
 }

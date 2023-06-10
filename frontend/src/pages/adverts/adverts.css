@@ -17,31 +17,10 @@
 }
 
 .adverts {
-    grid-row: 2;
     display: flex;
     flex-flow: wrap;
     justify-content: center;
-    padding: 1rem;
-    overflow-y: scroll;
     gap: 1.2rem;
-}
-
-.adverts::-webkit-scrollbar {
-    width: 1rem;
-}
-
-.adverts::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.adverts::-webkit-scrollbar-thumb {
-    background: var(--primary-color-light);
-    border-radius: 1rem;
-    border: 0.25rem solid var(--white);
-}
-
-.adverts::-webkit-scrollbar-thumb:hover {
-    background: var(--primary-color);
 }
 
 @media only screen and (min-width: 600px) {
@@ -57,10 +36,5 @@
         grid-column: 1;
         width: var(--sidebar-width);
         height: 100%;
-    }
-
-    .adverts {
-        grid-column: 2;
-        grid-row: 1;
     }
 }

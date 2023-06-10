@@ -1,0 +1,30 @@
+.adverts, .my-adverts {
+    grid-row: 2;
+    padding: 1rem;
+    overflow-y: scroll;
+}
+
+.adverts::-webkit-scrollbar, .my-adverts::-webkit-scrollbar {
+    width: 1rem;
+}
+
+.adverts::-webkit-scrollbar-track, .my-adverts::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.adverts::-webkit-scrollbar-thumb, .my-adverts::-webkit-scrollbar-thumb {
+    background: var(--primary-color-light);
+    border-radius: 1rem;
+    border: 0.25rem solid var(--white);
+}
+
+.adverts::-webkit-scrollbar-thumb:hover, .my-adverts::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
+}
+
+@media only screen and (min-width: 600px) {
+    .adverts, .my-adverts {
+        grid-column: 2;
+        grid-row: 1;
+    }
+}
