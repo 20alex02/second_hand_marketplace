@@ -37,6 +37,16 @@ const getAll = async (data: any) => {
   return result.value;
 };
 
+const getOne = async (params: any) => {
+  const validatedData = advertisementModel.getOneSchema.parse(params);
+  const result = await advertisement.read.one(validatedData);
+  if (result.isErr) {
+    throw result.error;
+  }
+  const { participants, ...rest } = result.value;
+  return rest;
+};
+
 const deleteAdvertisement = async (
   params: any,
   headers: any,
@@ -65,5 +75,6 @@ const deleteAdvertisement = async (
 export default {
   create,
   getAll,
+  getOne,
   delete: deleteAdvertisement,
 };

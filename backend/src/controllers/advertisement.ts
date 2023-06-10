@@ -40,6 +40,20 @@ const getAll = async (req: Request, res: Response) => {
   }
 };
 
+const getOne = async (req: Request, res: Response) => {
+  try {
+    const result = await advertisementService.getOne(req.params);
+    return handleOkResp(
+      200,
+      { ...result },
+      res,
+      'Advertisement searched successfully'
+    );
+  } catch (error) {
+    return handleError(error, res);
+  }
+};
+
 const deleteAdvertisement = async (
   req: Request,
   res: Response,
@@ -66,5 +80,6 @@ export default {
   create,
   getTypes,
   getAll,
+  getOne,
   delete: deleteAdvertisement,
 };

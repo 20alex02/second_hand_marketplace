@@ -68,4 +68,8 @@ const deleteSchema = z.object({
   id: z.string().uuid(),
 });
 
-export default { createSchema, getAllSchema, deleteSchema };
+const getOneSchema = z.object({
+  id: z.string().uuid(),
+});
+
+export default { createSchema, getAllSchema, getOneSchema, deleteSchema };

@@ -42,6 +42,10 @@ app.get('/api/user/:id', authenticateToken, controllers.user.getOne);
 // ADVERTISEMENT
 app.get('/api/advertisement/types', controllers.advertisement.getTypes);
 
+app.get('/api/advertisement/:id', controllers.advertisement.getOne);
+
+app.get('/api/advertisement', controllers.advertisement.getAll);
+
 app.post('/api/advertisement', authenticateToken, upload, (req, res) => {
   return controllers.advertisement.create(req, res, secretKey);
 });
@@ -49,8 +53,6 @@ app.post('/api/advertisement', authenticateToken, upload, (req, res) => {
 app.delete('/api/advertisement/:id', authenticateToken, (req, res) => {
   return controllers.advertisement.delete(req, res, secretKey);
 });
-
-app.post('/api/advertisements', controllers.advertisement.getAll);
 
 // CATEGORY
 app.post('/api/category', controllers.category.create);
