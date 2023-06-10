@@ -1,0 +1,35 @@
+{
+  "id": "bda335c0-aefa-443b-bea0-15d2a03d5870",
+  "title": "Kitty",
+  "type": "OFFER",
+  "description": "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed vel lectus. Donec odio tempus molestie, porttitor ut, iaculis quis, sem. Proin mattis lacinia justo.",
+  "estimatedPrice": 20000,
+  "creator": {
+    "email": "email@email.com",
+    "phoneNumber": 123456789
+  },
+  "participants": [],
+  "images": [
+    {
+      "id": "046a0ab5-6ebb-41e1-af4c-62f4780491e1",
+      "path": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Stray_kitten_Rambo002.jpg/1200px-Stray_kitten_Rambo002.jpg"
+    },
+    {
+      "id": "e977708c-992b-4719-801d-2d8acdba64cf",
+      "path": "https://www.marthastewart.com/thmb/g-FunKfdiZombJQ7pB4wb8BF4C8=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/cat-kitten-138468381-4cd82b91d7be45cb9f9aa8366e10bce4.jpg"
+    },
+    {
+      "id": "9ee125ef-0f05-4138-bb07-27cdb893e894",
+      "path": "https://icatcare.org/app/uploads/2018/07/Helping-your-new-cat-or-kitten-settle-in-1.png"
+    }
+  ],
+  "categories": {
+    "name": "cat",
+    "parent": {
+      "name": "household animals",
+      "parent": {
+        "name": "animals"
+      }
+    }
+  }
+}
