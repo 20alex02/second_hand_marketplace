@@ -1,7 +1,6 @@
 import advertList from '../../assets/advertsPlaceholder.json';
 import '../adverts/adverts.css';
 import './myAdverts.css';
-import '../../assets/styles/commonAdverts.css';
 
 import Filters from '../../components/filters/Filters';
 import Advert from '../../components/advert/Advert';
@@ -15,9 +14,11 @@ const CLOSED = 'Closed';
 
 const Adverts = () => {
   const [advertStatus, setAdvertStatus] = useState<string | undefined>(COUNT);
+  const hidden = false; // TODO admin
 
   return (
-    <div className="container">
+    <div className="my-container">
+      <div className="title-user">{hidden ? '' : "User's adverts"}</div>
       <aside className="filters-bar">
         <Filters />
       </aside>

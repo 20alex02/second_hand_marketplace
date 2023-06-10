@@ -42,7 +42,7 @@
   margin: 0.9rem;
 }
 
-.navbar:has(~ .container .filters-bar .filters .filter-list--visible) {
+.navbar:has(~ * .filter-list--visible) {
   display: none;
 }
 
@@ -68,7 +68,7 @@
     margin: 0;
   }
 
-  .navbar:has(~ .container .filters-bar .filters .filter-list--visible) {
+  .navbar:has(~ * .filter-list--visible) {
     display: block;
   }
 
