@@ -2,6 +2,7 @@ import './advert.css';
 import React, { MutableRefObject, useRef, useState } from 'react';
 import { CheckOutlined, StopOutlined, UserOutlined } from '@ant-design/icons';
 import { COUNT, STATUS } from './states';
+import { useNavigate } from 'react-router-dom';
 
 const NONE_MODIFIER = ' advert-stats--none';
 
@@ -48,8 +49,12 @@ const Advert = (props: { advert?: AdvertType; state?: string }) => {
     setImagePath(setImage());
   };
 
+  const navigate = useNavigate();
   return (
-    <article className="advert">
+    <article
+      className="advert"
+      onClick={() => navigate(`/advert/${props.advert?.id}`)}
+    >
       <div className={`advert__state advert-stats${stats}`}>
         {switchStats(props.advert, props.state)}
       </div>

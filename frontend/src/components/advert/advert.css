@@ -8,6 +8,7 @@
     overflow: hidden;
     border-radius: 2rem;
     box-shadow: var(--default-shadow);
+    cursor: pointer;
 }
 
 .advert__state {
