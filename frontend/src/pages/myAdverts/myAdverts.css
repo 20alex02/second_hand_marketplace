@@ -41,7 +41,7 @@
     .title-user {
         grid-row: 1;
         grid-column: 1;
-        max-width: 100%;
+        max-width: calc(var(--sidebar-width) + 3rem);
         z-index: 10;
         justify-self: start;
         align-self: center;
