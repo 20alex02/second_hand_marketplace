@@ -8,6 +8,7 @@ import {
   NonexistentRecordError,
   DeletedRecordError,
   ConflictingRecordError,
+  CategoryDeletionError,
 } from '../errors/repositoryErrors';
 import { InvalidToken, WrongPassword } from '../errors/controllersErrors';
 
@@ -70,6 +71,9 @@ export const handleError = (error: unknown, res: Response) => {
     return handleErrorResp(422, res, error.message);
   }
   if (error instanceof ConflictingRecordError) {
+    return handleErrorResp(422, res, error.message);
+  }
+  if (error instanceof CategoryDeletionError) {
     return handleErrorResp(422, res, error.message);
   }
   if (error instanceof InvalidToken) {

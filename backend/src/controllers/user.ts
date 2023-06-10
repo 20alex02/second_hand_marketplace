@@ -23,7 +23,16 @@ const update = async (req: Request, res: Response, secret?: string) => {
 const getOne = async (req: Request, res: Response) => {
   try {
     const result = await userService.getOne(req.params);
-    return handleOkResp(201, { ...result }, res, 'User searched successfully');
+    return handleOkResp(200, { ...result }, res, 'User searched successfully');
+  } catch (error) {
+    return handleError(error, res);
+  }
+};
+
+const getAll = async (req: Request, res: Response, secret?: string) => {
+  try {
+    const result = await userService.getAll(req.headers, secret);
+    return handleOkResp(200, { ...result }, res, 'Users searched successfully');
   } catch (error) {
     return handleError(error, res);
   }
@@ -33,4 +42,5 @@ export default {
   create,
   update,
   getOne,
+  getAll,
 };
