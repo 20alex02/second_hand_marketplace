@@ -1,5 +1,6 @@
 type AdvertDetail = {
   id: string;
+  createdAt: string;
   title: string;
   type: AdvertisementType;
   description: string;
