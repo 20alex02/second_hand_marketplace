@@ -1,9 +1,8 @@
 import category from '../repositories/category';
 import categoryModel from '../models/categoryModels';
 import { getUserId } from './authService';
-import user from '../repositories/user';
-import { Role } from '@prisma/client';
 import { InvalidAccessRights } from '../errors/controllersErrors';
+import userService from './userService';
 
 async function create(data: any) {
   const validatedData = categoryModel.createSchema.parse(data);
@@ -15,15 +14,9 @@ async function create(data: any) {
 }
 
 async function getOne(data: any, headers: any, secret?: string) {
-  const authHeader = headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-  const id = getUserId(token, secret);
   const validatedData = categoryModel.getOneSchema.parse(data);
-  const userResult = await user.read.one({ id: id });
-  if (userResult.isErr) {
-    throw userResult.error;
-  }
-  if (userResult.value.role !== Role.ADMIN) {
+  const id = getUserId(headers, secret);
+  if (!(await userService.isAdmin(id))) {
     throw new InvalidAccessRights();
   }
   const result = await category.read.one(validatedData);
@@ -42,18 +35,12 @@ async function getAll() {
 }
 
 async function update(params: any, query: any, headers: any, secret?: string) {
-  const authHeader = headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-  const id = getUserId(token, secret);
   const validatedData = categoryModel.updateSchema.parse({
     ...params,
     ...query,
   });
-  const userResult = await user.read.one({ id: id });
-  if (userResult.isErr) {
-    throw userResult.error;
-  }
-  if (userResult.value.role !== Role.ADMIN) {
+  const id = getUserId(headers, secret);
+  if (!(await userService.isAdmin(id))) {
     throw new InvalidAccessRights();
   }
   const result = await category.update(validatedData);

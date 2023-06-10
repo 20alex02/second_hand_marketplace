@@ -37,6 +37,8 @@ app.patch('/api/user', authenticateToken, (req, res) => {
   return controllers.user.update(req, res, secretKey);
 });
 
+app.get('/api/user/:id', authenticateToken, controllers.user.getOne);
+
 // ADVERTISEMENT
 app.get('/api/advertisement/types', controllers.advertisement.getTypes);
 

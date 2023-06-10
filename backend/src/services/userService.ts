@@ -2,6 +2,15 @@ import { hashPassword } from './authService';
 import user from '../repositories/user';
 import userModel from '../models/userModels';
 import { getUserId } from './authService';
+import { Role } from '@prisma/client';
+
+async function isAdmin(id: string) {
+  const userResult = await user.read.one({ id: id });
+  if (userResult.isErr) {
+    throw userResult.error;
+  }
+  return userResult.value.role !== Role.ADMIN;
+}
 
 async function create(data: any) {
   const { password, ...validatedData } = userModel.createSchema.parse(data);
@@ -14,9 +23,7 @@ async function create(data: any) {
 }
 
 async function update(headers: any, query: any, secret?: string) {
-  const authHeader = headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
-  const id = getUserId(token, secret);
+  const id = getUserId(headers, secret);
   const { password, ...validatedData } = userModel.updateSchema.parse({
     id,
     ...query,
@@ -29,7 +36,18 @@ async function update(headers: any, query: any, secret?: string) {
   return result.value.id;
 }
 
+async function getOne(params: any) {
+  const validatedData = userModel.getOneSchema.parse(params);
+  const result = await user.read.one(validatedData);
+  if (result.isErr) {
+    throw result.error;
+  }
+  return result.value;
+}
+
 export default {
+  isAdmin,
   create,
   update,
+  getOne,
 };

@@ -40,7 +40,10 @@ const updateSchema = z
   )
   .and(z.object({ email: z.string().uuid() }).optional());
 
+const getOneSchema = z.object({ id: z.string().uuid() });
+
 export default {
   createSchema,
   updateSchema,
+  getOneSchema,
 };

@@ -15,7 +15,7 @@ export const loginUser = async (
   password: string,
   secretKey?: string
 ) => {
-  const userResult = await user.read.oneByEmail({ email });
+  const userResult = await user.read.one({ email });
   if (!userResult.isOk) {
     throw new Error('Error occurred.');
   }
@@ -42,7 +42,25 @@ export const hashPassword = (
   return { hashedPassword: hashedPassword, salt: salt };
 };
 
-export const getUserId = (token?: string, secretKey?: string) => {
+// export const getUserId = (token?: string, secretKey?: string) => {
+//   if (token) {
+//     try {
+//       const decodedToken = jwt.verify(token, secretKey ?? 'undefined') as {
+//         uuid: string;
+//       };
+
+//       return decodedToken.uuid;
+//     } catch (error) {
+//       throw new TokenIsNotValid();
+//     }
+//   } else {
+//     throw new Error();
+//   }
+// };
+
+export const getUserId = (headers: any, secretKey?: string) => {
+  const authHeader = headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
   if (token) {
     try {
       const decodedToken = jwt.verify(token, secretKey ?? 'undefined') as {

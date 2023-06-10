@@ -52,7 +52,29 @@ const update = async (req: Request, res: Response, secret?: string) => {
   }
 };
 
+const getOne = async (req: Request, res: Response) => {
+  try {
+    const result = await userService.getOne(req.params);
+    return handleOkResp(201, { ...result }, res, 'User searched successfully');
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return handleValidationErrorResp(error, res);
+    }
+    if (error instanceof NonexistentRecordError) {
+      return handleErrorResp(422, res, error.message);
+    }
+    if (error instanceof DeletedRecordError) {
+      return handleErrorResp(422, res, error.message);
+    }
+    if (error instanceof TokenIsNotValid) {
+      return handleErrorResp(401, res, error.message);
+    }
+    return handleErrorResp(500, res, 'Unknown error');
+  }
+};
+
 export default {
   create,
   update,
+  getOne,
 };
