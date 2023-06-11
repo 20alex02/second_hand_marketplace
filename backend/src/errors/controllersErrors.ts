@@ -1,7 +1,7 @@
-export class TokenIsNotValid extends Error {
+export class InvalidToken extends Error {
   constructor() {
     super('Token is not valid.');
-    this.name = 'TokenIsNotValid';
+    this.name = 'InvalidToken';
   }
 }
 

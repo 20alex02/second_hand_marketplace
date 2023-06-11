@@ -1,17 +1,7 @@
 import type { Request, Response } from 'express';
-import {
-  handleOkResp,
-  handleErrorResp,
-  handleValidationErrorResp,
-} from './common';
+import { handleOkResp, handleError } from './common';
 import { AdvertisementType } from '@prisma/client';
-import { TokenIsNotValid } from '../errors/controllersErrors';
 import advertisementService from '../services/advertisementService';
-import { z } from 'zod';
-import {
-  DeletedRecordError,
-  NonexistentRecordError,
-} from '../errors/repositoryErrors';
 
 const create = async (req: Request, res: Response, secret?: string) => {
   try {
@@ -28,19 +18,7 @@ const create = async (req: Request, res: Response, secret?: string) => {
       'Advertisement created successfully'
     );
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return handleValidationErrorResp(error, res);
-    }
-    if (error instanceof NonexistentRecordError) {
-      return handleErrorResp(422, res, error.message);
-    }
-    if (error instanceof DeletedRecordError) {
-      return handleErrorResp(422, res, error.message);
-    }
-    if (error instanceof TokenIsNotValid) {
-      return handleErrorResp(401, res, error.message);
-    }
-    return handleErrorResp(500, res, 'Unknown error');
+    return handleError(error, res);
   }
 };
 
@@ -50,7 +28,7 @@ const getTypes = async (_req: Request, res: Response) => {
 
 const getAll = async (req: Request, res: Response) => {
   try {
-    const result = await advertisementService.search(req.query);
+    const result = await advertisementService.getAll(req.query);
     return handleOkResp(
       200,
       { ...result },
@@ -58,10 +36,63 @@ const getAll = async (req: Request, res: Response) => {
       'Advertisement searched successfully'
     );
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return handleValidationErrorResp(error, res);
-    }
-    return handleErrorResp(500, res, 'Unknown error');
+    return handleError(error, res);
+  }
+};
+
+const getOne = async (req: Request, res: Response) => {
+  try {
+    const result = await advertisementService.getOne(req.params);
+    return handleOkResp(
+      200,
+      { ...result },
+      res,
+      'Advertisement searched successfully'
+    );
+  } catch (error) {
+    return handleError(error, res);
+  }
+};
+
+const deleteAdvertisement = async (
+  req: Request,
+  res: Response,
+  secret?: string
+) => {
+  try {
+    const result = await advertisementService.delete(
+      req.params,
+      req.headers,
+      secret
+    );
+    return handleOkResp(
+      200,
+      { ...result },
+      res,
+      'Advertisement deleted successfully'
+    );
+  } catch (error) {
+    return handleError(error, res);
+  }
+};
+
+const update = async (req: Request, res: Response, secret?: string) => {
+  try {
+    const result = await advertisementService.update(
+      req.body,
+      req.params,
+      req.files as Express.Multer.File[],
+      req.headers,
+      secret
+    );
+    return handleOkResp(
+      200,
+      { ...result },
+      res,
+      'Advertisement searched successfully'
+    );
+  } catch (error) {
+    return handleError(error, res);
   }
 };
 
@@ -69,4 +100,7 @@ export default {
   create,
   getTypes,
   getAll,
+  getOne,
+  delete: deleteAdvertisement,
+  update,
 };

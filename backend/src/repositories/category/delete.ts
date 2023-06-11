@@ -6,9 +6,9 @@ import { genericError } from '../types';
 import {
   NonexistentRecordError,
   DeletedRecordError,
+  CategoryDeletionError,
 } from '../../errors/repositoryErrors';
 
-// TODO solve recursive delete and include
 const deleteCategory = async (
   data: CategoryDeleteData
 ): CategoryDeleteResult => {
@@ -19,6 +19,10 @@ const deleteCategory = async (
         where: {
           id: data.id,
         },
+        include: {
+          subcategories: true,
+          advertisements: true,
+        },
       });
       if (categoryCheck === null) {
         return Result.err(new NonexistentRecordError('Category'));
@@ -26,29 +30,19 @@ const deleteCategory = async (
       if (categoryCheck.deletedAt !== null) {
         return Result.err(new DeletedRecordError('Category'));
       }
+      if (categoryCheck.subcategories.length !== 0) {
+        return Result.err(new CategoryDeletionError('subcategories'));
+      }
+      if (categoryCheck.advertisements.length !== 0) {
+        return Result.err(new CategoryDeletionError('advertisements'));
+      }
+
       const category = await tx.category.update({
         where: {
           id: data.id,
         },
         data: {
-          deletedAt: deletedAt,
-          subcategories: {
-            updateMany: {
-              where: {
-                deletedAt: null,
-              },
-              data: {
-                deletedAt: deletedAt,
-              },
-            },
-          },
-        },
-        include: {
-          subcategories: {
-            where: {
-              deletedAt: deletedAt,
-            },
-          },
+          deletedAt,
         },
       });
       return Result.ok(category);
