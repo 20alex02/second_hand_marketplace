@@ -1,17 +1,18 @@
-import { Card, Typography, Form, Input, Button, Alert } from 'antd';
+import { Card, Typography, Form, Input, Button, Modal } from 'antd';
 import './login.css';
 import { AuthToken } from '../../state/atom';
 import { useSetRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { LoginData } from '../../models/login';
 import { loginUserFn } from '../../services/loginApi';
+import Register from '../../components/Register';
 
 function Login() {
   const setToken = useSetRecoilState(AuthToken);
   const navigate = useNavigate();
-  const [errorMsg, setErrorMsg] = useState<string>('');
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [modal, errorModal] = Modal.useModal();
   const { mutate: loginUser } = useMutation(
     (data: LoginData) => loginUserFn(data),
     {
@@ -20,11 +21,17 @@ function Login() {
         navigate('/Adverts');
       },
       onError: (error: any) => {
-        setErrorMsg(error.response.data.error);
+        modal.error({
+          title: 'Unable to login',
+          content: error.response.data.message,
+        });
       },
     }
   );
 
+  if (searchParams.get('register')) {
+    return <Register />;
+  }
   const onFinish = (values: LoginData) => {
     loginUser(values);
   };
@@ -39,6 +46,7 @@ function Login() {
           initialValues={{ remember: true }}
           onFinish={onFinish}
           layout="vertical"
+          size="large"
         >
           <Form.Item
             label="Email"
@@ -47,7 +55,10 @@ function Login() {
               {
                 required: true,
                 message: 'Please input your email!',
+              },
+              {
                 type: 'email',
+                message: 'Incorrect email format!',
               },
             ]}
           >
@@ -67,7 +78,7 @@ function Login() {
               type="primary"
               htmlType="button"
               className="login-card__button"
-              onClick={() => navigate('/Register')}
+              onClick={() => setSearchParams({ register: '1' })}
             >
               Register
             </Button>
@@ -81,16 +92,7 @@ function Login() {
           </Form.Item>
         </Form>
       </Card>
-      {errorMsg && (
-        <div className="errorMsg">
-          <Alert
-            message={errorMsg}
-            type="error"
-            showIcon
-            closable={true}
-          ></Alert>
-        </div>
-      )}
+      {errorModal}
     </div>
   );
 }

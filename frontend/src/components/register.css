@@ -1,0 +1,52 @@
+.register-card {
+    background-color: #e7f8fd;
+    max-width: 50em;
+    margin: 1em auto;
+}
+
+.register-card__button {
+    background-color: #098cae;
+    margin-top: 1em;
+
+}
+.register {
+    margin: 1em auto;
+    max-width: 50em;
+}
+
+.reg-section{
+    background-color: var(--white);
+}
+
+.register-card__title {
+    margin-top: 0;
+}
+
+.breadcrumbs {
+    margin-left: 1em;
+}
+
+.errorMsg {
+    margin: 0 auto;
+    max-width: fit-content;
+}
+
+@media (min-width: 400px) {
+    .register-form {
+        display: grid;
+        column-gap: 10%;
+        grid-template-columns: 45% 45%;
+        grid-template-rows: auto;
+        grid-template-areas: 
+          "name lastname"
+          "email phone"
+          "password confirm";
+    }
+}
+
+@media (min-width: 700px) {
+
+    .breadcrumbs {
+        margin-left: 4em;
+    }
+}
