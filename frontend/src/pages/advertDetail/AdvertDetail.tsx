@@ -4,6 +4,8 @@ import './advertDetail.css';
 import { useParams } from 'react-router-dom';
 import { Carousel, Image } from 'antd';
 
+import priceUtil from '../../utils/priceUtil';
+
 const AdvertDetail = () => {
   const { id } = useParams(); // TODO get advert
   const advert = advertPlaceholder;
@@ -23,7 +25,9 @@ const AdvertDetail = () => {
         ))}
       </Carousel>
       <span className="advert-detail__description">{advert.description}</span>
-      <span className="advert-detail__price">{advert.estimatedPrice}</span>
+      <span className="advert-detail__price">
+        {priceUtil.formatPrice(advert.estimatedPrice)}
+      </span>
       <div className="advert-detail__advertiser advertiser">
         <span className="advertiser__title">Advertiser</span>
         <span className="advertiser__email">{advert.creator.email}</span>
