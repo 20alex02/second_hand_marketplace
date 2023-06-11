@@ -18,7 +18,7 @@ function Login() {
     {
       onSuccess: (data) => {
         setToken(data.token);
-        navigate('/Adverts');
+        navigate('/');
       },
       onError: (error: any) => {
         modal.error({
