@@ -1,6 +1,7 @@
 @import url('../../assets/styles/_variables.css');
 
 .advert-detail {
+    max-height: calc(100vh - var(--navbar-height) - var(--advert-detail-padding) * 2);
     max-width: var(--advert-detail-width);
     padding: var(--advert-detail-padding);
     display: flex;

@@ -2,9 +2,10 @@ import advertPlaceholder from '../../assets/advertDetailPlaceholder.json';
 import './advertDetail.css';
 
 import { useParams } from 'react-router-dom';
-import { Carousel, Image } from 'antd';
+import { Carousel, Collapse, Image } from 'antd';
 
 import priceUtil from '../../utils/priceUtil';
+import CategoryCollapse from '../../components/categoryCollapse/CategoryCollapse';
 
 const AdvertDetail = () => {
   const { id } = useParams(); // TODO get advert
@@ -12,7 +13,7 @@ const AdvertDetail = () => {
 
   return (
     <section className="advert-detail">
-      <div className="advert-detail__categories">{advert.categories.name}</div>
+      <CategoryCollapse category={advert.categories} />
       <span className="advert-detail__title">{`${advert.type}: ${advert.title}`}</span>
       <span className="advert-detail__date">{advert.createdAt}</span>
       <Carousel className="advert-detail__images advert-image" autoplay>

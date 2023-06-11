@@ -1,0 +1,10 @@
+@import url('../../assets/styles/_variables.css');
+
+.category-collapse {
+    margin-bottom: 0.7rem;
+}
+
+.ant-collapse.category-collapse {
+    max-width: var(--advert-detail-width);
+    background-color: var(--white);
+}
