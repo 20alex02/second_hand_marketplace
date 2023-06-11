@@ -1,0 +1,20 @@
+.participant-table {
+    display: flex;
+    flex-direction: column;
+}
+
+.participant-table__title {
+    margin-top: 1rem;
+}
+
+.participant-table__empty {
+    font-size: 1.25rem;
+    align-self: center;
+    padding: 0.5rem;
+}
+
+.participant-table__data td.ant-table-cell:first-child {
+    word-wrap: break-word;
+    word-break: break-all;
+    white-space: normal;
+}

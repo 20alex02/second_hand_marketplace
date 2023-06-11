@@ -107,8 +107,13 @@
         justify-self: end;
     }
 
-    .contact-advertiser {
+    .contact-advertiser, .participant-table {
         grid-area: contact;
         justify-self: center;
+    }
+
+    .participant-table {
+        min-width: 40vw;
+        max-width: 40vw;
     }
 }

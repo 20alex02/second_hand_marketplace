@@ -9,6 +9,7 @@ import priceUtil from '../../utils/priceUtil';
 import CategoryCollapse from '../../components/categoryCollapse/CategoryCollapse';
 import ContactAdvertiser from '../../components/contactAdvertiser/ContactAdvertiser';
 import Advertiser from '../../components/advertiser/Advertiser';
+import ParticipantTable from '../../components/participantTable/ParticipantTable';
 import { CloseOutlined, EditOutlined } from '@ant-design/icons';
 
 const EditButtons = () => {
@@ -22,7 +23,7 @@ const EditButtons = () => {
 
 const AdvertDetail = () => {
   const { id } = useParams(); // TODO get advert
-  const isUsersAdvert = true; // TODO
+  const isUsersAdvert = false; // TODO
 
   const advert = advertPlaceholder;
 
@@ -46,7 +47,7 @@ const AdvertDetail = () => {
         {priceUtil.formatPrice(advert.estimatedPrice)}
       </span>
       <Advertiser creator={advert.creator} />
-      <ContactAdvertiser />
+      {isUsersAdvert ? <ParticipantTable /> : <ContactAdvertiser />}
     </section>
   );
 };
