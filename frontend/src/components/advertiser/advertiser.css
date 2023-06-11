@@ -1,0 +1,9 @@
+.advertiser {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.4rem;
+}
+
+.advertiser__email, .advertiser__phone {
+    font-size: 1.1rem;
+}

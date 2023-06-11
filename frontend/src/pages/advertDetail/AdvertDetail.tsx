@@ -8,6 +8,7 @@ import { Carousel, Image } from 'antd';
 import priceUtil from '../../utils/priceUtil';
 import CategoryCollapse from '../../components/categoryCollapse/CategoryCollapse';
 import ContactAdvertiser from '../../components/contactAdvertiser/ContactAdvertiser';
+import Advertiser from '../../components/advertiser/Advertiser';
 
 const AdvertDetail = () => {
   const { id } = useParams(); // TODO get advert
@@ -31,11 +32,7 @@ const AdvertDetail = () => {
       <span className="advert-detail__price">
         {priceUtil.formatPrice(advert.estimatedPrice)}
       </span>
-      <div className="advert-detail__advertiser advertiser">
-        <h2 className="advertiser__title">Advertiser</h2>
-        <span className="advertiser__email">{advert.creator.email}</span>
-        <span className="advertiser__phone">{advert.creator.phoneNumber}</span>
-      </div>
+      <Advertiser creator={advert.creator} />
       <ContactAdvertiser />
     </section>
   );
