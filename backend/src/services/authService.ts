@@ -16,8 +16,8 @@ export const loginUser = async (
   secretKey?: string
 ) => {
   const userResult = await user.read.one({ email });
-  if (!userResult.isOk) {
-    throw new Error('Error occurred.');
+  if (userResult.isErr) {
+    throw userResult.error;
   }
   const dbPassword = userResult.value.hashedPassword;
   const salt = userResult.value.salt;
@@ -25,7 +25,9 @@ export const loginUser = async (
   if (hashedPassword.hashedPassword !== dbPassword) {
     throw new WrongPassword();
   }
-  return await generateAccessToken(userResult.value.id, secretKey);
+  const token = await generateAccessToken(userResult.value.id, secretKey);
+  const role = userResult.value.role;
+  return { token, role };
 };
 
 export const hashPassword = (

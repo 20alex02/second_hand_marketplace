@@ -7,13 +7,8 @@ const create = async (req: Request, res: Response, secretKey?: string) => {
     const data = req.body;
     const email: string = getRequiredField(data, 'email');
     const password: string = getRequiredField(data, 'password');
-    const bearer = await loginUser(email, password, secretKey);
-    return handleOkResp(
-      201,
-      { token: bearer },
-      res,
-      'Token created successfully'
-    );
+    const result = await loginUser(email, password, secretKey);
+    return handleOkResp(201, { ...result }, res, 'Token created successfully');
   } catch (error) {
     return handleError(error, res);
   }
