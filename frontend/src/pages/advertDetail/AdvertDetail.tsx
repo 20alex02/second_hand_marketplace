@@ -3,7 +3,7 @@ import './advertDetail.css';
 import '../../assets/styles/common.css';
 
 import { useParams } from 'react-router-dom';
-import { Button, Carousel, Image } from 'antd';
+import { Button, Carousel, Image, Modal } from 'antd';
 
 import priceUtil from '../../utils/priceUtil';
 import CategoryCollapse from '../../components/categoryCollapse/CategoryCollapse';
@@ -11,12 +11,55 @@ import ContactAdvertiser from '../../components/contactAdvertiser/ContactAdverti
 import Advertiser from '../../components/advertiser/Advertiser';
 import ParticipantTable from '../../components/participantTable/ParticipantTable';
 import { CloseOutlined, EditOutlined } from '@ant-design/icons';
+import { useState } from 'react';
 
 const EditButtons = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div className="advert-detail__edit-buttons advert-buttons">
       <Button className="advert-button__edit" icon={<EditOutlined rev />} />
-      <Button className="advert-button__remove" icon={<CloseOutlined rev />} />
+      <Button
+        className="advert-button__remove"
+        icon={<CloseOutlined rev />}
+        onClick={showModal}
+      />
+      <Modal
+        className="advert-button__remove-modal remove-modal"
+        title="Remove advert"
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={[
+          <Button
+            className="remove-modal__delete"
+            key="delete"
+            onClick={handleCancel}
+          >
+            Delete
+          </Button>,
+          <Button
+            className="remove-modal__finished"
+            key="finished"
+            type="primary"
+            onClick={handleOk}
+          >
+            Mark as finished
+          </Button>,
+        ]}
+      />
     </div>
   );
 };

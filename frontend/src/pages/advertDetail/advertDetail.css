@@ -17,6 +17,10 @@
     column-gap: 0.4rem;
 }
 
+.remove-modal__finished {
+    background-color: var(--primary-color);
+}
+
 .advert-detail__title {
     font-size: 1.5rem;
     margin: 0;
