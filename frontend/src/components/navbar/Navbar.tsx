@@ -59,7 +59,8 @@ function Navbar() {
         label: <NavLink to="/MyAdverts">My adverts</NavLink>,
         key: 'myAdverts',
         className:
-          'navbar__item ' + (url === '/' ? 'navbar__item--active' : ''),
+          'navbar__item ' +
+          (url === '/MyAdverts' ? 'navbar__item--active' : ''),
       },
       {
         label: (
