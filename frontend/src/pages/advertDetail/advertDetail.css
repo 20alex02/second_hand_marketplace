@@ -10,6 +10,13 @@
     overflow-x: hidden;
 }
 
+.advert-detail__edit-buttons {
+    align-self: flex-end;
+    margin-bottom: 0.5rem;
+    display: flex;
+    column-gap: 0.4rem;
+}
+
 .advert-detail__title {
     font-size: 1.5rem;
     margin: 0;
@@ -46,6 +53,7 @@
     .advert-detail {
         display: grid;
         grid-template:
+            "buttons buttons"
             "category category"
             "image image"
             "title date"
@@ -53,6 +61,11 @@
             "advertiser price"
             "contact contact" / 30vw 30vw;
         justify-content: center;
+    }
+
+    .advert-detail__edit-buttons {
+        grid-area: buttons;
+        justify-self: end;
     }
 
     .category-collapse {
