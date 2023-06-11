@@ -24,6 +24,7 @@ export type UserUpdateData = {
   phoneNumber?: string;
   hashedPassword?: string;
   salt?: string;
+  role?: Role;
 };
 
 export type UserDeleteData = {

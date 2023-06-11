@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { Role } from '@prisma/client';
 
 const createSchema = z.object({
   email: z.string().email().nonempty(),
@@ -30,7 +31,8 @@ const updateSchema = z
       })
       .optional()
   )
-  .and(z.object({ email: z.string().uuid() }).optional());
+  .and(z.object({ email: z.string().uuid() }).optional())
+  .and(z.object({ role: z.nativeEnum(Role) }).optional());
 
 const getOneSchema = z.object({ id: z.string().uuid() });
 
