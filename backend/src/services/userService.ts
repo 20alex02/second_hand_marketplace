@@ -18,6 +18,9 @@ async function create(data: any) {
   const hashedPassword = hashPassword(password);
   const result = await user.create({ ...validatedData, ...hashedPassword });
   if (result.isErr) {
+    if (result.error.message === 'ConflictingemailinUser') {
+      result.error.message = 'User with this email already exist.';
+    }
     throw result.error;
   }
   return result.value.id;
