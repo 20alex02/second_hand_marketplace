@@ -1,5 +1,5 @@
 .register-card {
-    background-color: #e7f8fd;
+    background: linear-gradient(to bottom right, var(--primary-color-light-300), var(--primary-color-light-200) );
     max-width: 50em;
     margin: 1em auto;
 }

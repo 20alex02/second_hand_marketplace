@@ -7,7 +7,7 @@
     margin: 3em auto;
     margin-bottom: 1em;
     font-family: var(--font-family-montserrat);
-    background-color: var(--primary-color-light-100);
+    background: linear-gradient(to bottom right, var(--primary-color-light-300), var(--primary-color-light-200) );
     position: relative;
 }
 
