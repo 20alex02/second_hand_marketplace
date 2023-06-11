@@ -5,6 +5,7 @@ import type {
   AdvertisementCreateData,
   CategoryCreateData,
 } from '../repositories/types/data';
+import { Role } from '@prisma/client';
 
 const data: {
   users: UserCreateData[];
@@ -31,6 +32,13 @@ const data: {
       phoneNumber: '555-555-9012',
       hashedPassword: 'password789',
       salt: 'salt789',
+    },
+    {
+      email: 'jackjohnson@example.com',
+      phoneNumber: '123-456-7890',
+      hashedPassword: 'qwerty123',
+      salt: 'sugar',
+      role: Role.ADMIN,
     },
   ],
   participants: [
