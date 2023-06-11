@@ -60,7 +60,7 @@ function Navbar() {
         key: 'myAdverts',
         className:
           'navbar__item ' +
-          (url === '/MyAdverts' ? 'navbar__item--active' : ''),
+          (url === '/MyAdverts'.toUpperCase() ? 'navbar__item--active' : ''),
       },
       {
         label: (
