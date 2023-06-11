@@ -6,6 +6,7 @@ export type UserCreateData = {
   phoneNumber: string;
   hashedPassword: string;
   salt: string;
+  role?: Role;
 };
 
 export type UserReadOneData = { id: string } | { email: string };
