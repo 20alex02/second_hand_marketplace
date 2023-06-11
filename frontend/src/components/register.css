@@ -9,9 +9,13 @@
     margin-top: 1em;
 
 }
-.reg {
+.register {
     margin: 1em auto;
     max-width: 50em;
+}
+
+.reg-section{
+    background-color: var(--white);
 }
 
 .register-card__title {
