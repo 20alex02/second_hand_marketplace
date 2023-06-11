@@ -1,7 +1,7 @@
 import advertList from '../../assets/advertsPlaceholder.json';
 import '../adverts/adverts.css';
 import './myAdverts.css';
-import '../../assets/styles/commonAdverts.css';
+import '../../assets/styles/common.css';
 
 import Filters from '../../components/filters/Filters';
 import Advert from '../../components/advert/Advert';

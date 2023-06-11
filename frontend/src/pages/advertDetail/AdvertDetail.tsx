@@ -1,8 +1,9 @@
 import advertPlaceholder from '../../assets/advertDetailPlaceholder.json';
 import './advertDetail.css';
+import '../../assets/styles/common.css';
 
 import { useParams } from 'react-router-dom';
-import { Carousel, Collapse, Image } from 'antd';
+import { Carousel, Image } from 'antd';
 
 import priceUtil from '../../utils/priceUtil';
 import CategoryCollapse from '../../components/categoryCollapse/CategoryCollapse';
