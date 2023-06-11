@@ -1,9 +1,8 @@
-import { Card, Typography, Form, Input, Button, Alert } from 'antd';
+import { Card, Typography, Form, Input, Button, Modal } from 'antd';
 import './login.css';
 import { AuthToken } from '../../state/atom';
 import { useSetRecoilState } from 'recoil';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { LoginData } from '../../models/login';
 import { loginUserFn } from '../../services/loginApi';
@@ -13,7 +12,7 @@ function Login() {
   const setToken = useSetRecoilState(AuthToken);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  const [errorMsg, setErrorMsg] = useState<string>('');
+  const [modal, errorModal] = Modal.useModal();
   const { mutate: loginUser } = useMutation(
     (data: LoginData) => loginUserFn(data),
     {
@@ -22,7 +21,10 @@ function Login() {
         navigate('/Adverts');
       },
       onError: (error: any) => {
-        setErrorMsg(error.response.data.error);
+        modal.error({
+          title: 'Unable to login',
+          content: error.response.data.message,
+        });
       },
     }
   );
@@ -90,16 +92,7 @@ function Login() {
           </Form.Item>
         </Form>
       </Card>
-      {errorMsg && (
-        <div className="errorMsg">
-          <Alert
-            message={errorMsg}
-            type="error"
-            showIcon
-            closable={true}
-          ></Alert>
-        </div>
-      )}
+      {errorModal}
     </div>
   );
 }

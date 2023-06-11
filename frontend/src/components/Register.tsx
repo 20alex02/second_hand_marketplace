@@ -42,7 +42,6 @@ function Register() {
     }, secondsToGo * 1000);
   };
 
-  const [errorMsg, setErrorMsg] = useState<string>('');
   const { mutate: loginUser } = useMutation(
     (data: RegisterData) => registerUserFn(data),
     {
@@ -50,7 +49,10 @@ function Register() {
         countDown();
       },
       onError: (error: any) => {
-        setErrorMsg(error.response.data.error);
+        modal.error({
+          title: 'Unable to register',
+          content: error.response.data.message,
+        });
       },
     }
   );
@@ -103,14 +105,14 @@ function Register() {
             </Form.Item>
 
             <Form.Item
-              name="phone"
+              name="phoneNumber"
               label="Phone Number"
               hasFeedback
               rules={[
                 { required: true, message: 'Please input your phone number!' },
                 {
                   pattern: new RegExp(
-                    /^(\+[420]\s)?[0-9]{3}\s[0-9]{3}\s[0-9]{3}$/
+                    /^(\+420\s)?[0-9]{3}\s[0-9]{3}\s[0-9]{3}$/
                   ),
                   message: 'Invalid phone format!',
                 },
@@ -188,16 +190,6 @@ function Register() {
             </Form.Item>
           </Form>
         </Card>
-        {errorMsg && (
-          <div className="errorMsg">
-            <Alert
-              message={errorMsg}
-              type="error"
-              showIcon
-              closable={true}
-            ></Alert>
-          </div>
-        )}
         {confirmation}
       </div>
     </section>

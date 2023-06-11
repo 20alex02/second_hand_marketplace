@@ -14,5 +14,5 @@ export type LoginData = {
 export type RegisterData = {
   email: string;
   password: string;
-  phone: string;
+  phoneNumber: string;
 };
