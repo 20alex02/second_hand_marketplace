@@ -25,6 +25,10 @@
     object-position: center;
 }
 
+.ant-image-preview-operations-operation:not(:first-child) {
+    display: none;
+}
+
 .advert-detail__price {
     align-self: flex-end;
     font-size: 1.3rem;
