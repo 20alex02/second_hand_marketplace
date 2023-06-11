@@ -1,6 +1,6 @@
 import { Card, Typography, Form, Input, Button, Modal } from 'antd';
 import './login.css';
-import { AuthToken } from '../../state/atom';
+import { AuthToken, UserRole } from '../../state/atom';
 import { useSetRecoilState } from 'recoil';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
@@ -10,6 +10,7 @@ import Register from '../../components/Register';
 
 function Login() {
   const setToken = useSetRecoilState(AuthToken);
+  const setRole = useSetRecoilState(UserRole);
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [modal, errorModal] = Modal.useModal();
@@ -18,6 +19,7 @@ function Login() {
     {
       onSuccess: (data) => {
         setToken(data.token);
+        setRole(data.role);
         navigate('/');
       },
       onError: (error: any) => {
