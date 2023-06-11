@@ -13,6 +13,11 @@
     overflow-y: scroll;
 }
 
+.contact-advertiser__title, .advertiser__title {
+    font-size: 1.5rem;
+    margin: 0.75rem 0 0.25rem 0;
+}
+
 .adverts::-webkit-scrollbar,
 .my-adverts::-webkit-scrollbar,
 .advert-detail::-webkit-scrollbar {

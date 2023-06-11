@@ -1,0 +1,20 @@
+.contact-advertiser__title {
+    margin-bottom: 1rem;
+}
+
+.contact-info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.contact-info__email .ant-input-prefix,
+.contact-info__phone .ant-input-prefix {
+    padding-right: 0.5rem;
+}
+
+.contact-advertiser__button {
+    width: 100%;
+    background-color: var(--primary-color);
+}
