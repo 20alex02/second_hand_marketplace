@@ -22,6 +22,9 @@
     --content-height: auto;
 
     --sidebar-width: 19rem;
+
+    --advert-detail-padding: 1rem;
+    --advert-detail-width: calc(100vw - var(--advert-detail-padding) * 2);
 }
 
 @media only screen and (min-width: 562px) {

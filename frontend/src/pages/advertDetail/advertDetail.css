@@ -1,6 +1,8 @@
+@import url('../../assets/styles/_variables.css');
+
 .advert-detail {
-    max-width: calc(100vw - 2rem);
-    padding: 1rem;
+    max-width: var(--advert-detail-width);
+    padding: var(--advert-detail-padding);
     display: flex;
     flex-direction: column;
     row-gap: 0.5rem;
@@ -15,7 +17,7 @@
 }
 
 .ant-image-img.advert-image__photo {
-    min-width: calc(100vw - 2rem);
+    min-width: var(--advert-detail-width);
     height: 14rem;
     object-fit: cover;
     object-position: center;
