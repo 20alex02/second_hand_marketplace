@@ -29,11 +29,14 @@ async function create(data: any) {
 
 async function update(headers: any, query: any, secret?: string) {
   const id = getUserId(headers, secret);
-  const { password, ...validatedData } = userModel.updateSchema.parse({
+  const { password, role, ...validatedData } = userModel.updateSchema.parse({
     id,
     ...query,
   });
   const hashedPassword = password ? hashPassword(password) : {};
+  if (role && !(await isAdmin(id))) {
+    throw new InvalidAccessRights();
+  }
   const result = await user.update({ ...validatedData, ...hashedPassword });
   if (result.isErr) {
     throw result.error;
