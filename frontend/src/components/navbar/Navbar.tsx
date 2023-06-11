@@ -67,6 +67,13 @@ function Navbar() {
     }
     items.push(
       {
+        label: <NavLink to="/InterestedIn">Interested in</NavLink>,
+        key: 'interest',
+        className:
+          'navbar__item ' +
+          (url === '/InterestedIn'.toUpperCase() ? 'navbar__item--active' : ''),
+      },
+      {
         label: <NavLink to="/Edit">Edit</NavLink>,
         key: 'edit',
         className:
