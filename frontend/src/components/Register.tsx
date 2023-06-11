@@ -1,16 +1,6 @@
-import {
-  Card,
-  Typography,
-  Form,
-  Input,
-  Button,
-  Alert,
-  Breadcrumb,
-  Modal,
-} from 'antd';
+import { Card, Typography, Form, Input, Button, Breadcrumb, Modal } from 'antd';
 import './register.css';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { RegisterData } from '../models/login';
 import { registerUserFn } from '../services/loginApi';
@@ -112,7 +102,7 @@ function Register() {
                 { required: true, message: 'Please input your phone number!' },
                 {
                   pattern: new RegExp(
-                    /^(\+420\s)?[0-9]{3}\s[0-9]{3}\s[0-9]{3}$/
+                    /^(\+420\s)?[0-9]{3}\s?[0-9]{3}\s?[0-9]{3}$/
                   ),
                   message: 'Invalid phone format!',
                 },
