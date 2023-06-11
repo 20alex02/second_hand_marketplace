@@ -21,3 +21,8 @@ body {
 #root > *:nth-child(2) {
     background-color: var(--white);
 }
+
+.ant-checkbox-checked .ant-checkbox-inner {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}

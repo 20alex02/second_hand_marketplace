@@ -9,6 +9,10 @@
     margin-bottom: 1.25rem;
 }
 
+.contact-info--logged-in {
+    padding: 0 0.5rem;
+}
+
 .contact-info__email .ant-input-prefix,
 .contact-info__phone .ant-input-prefix {
     padding-right: 0.5rem;
