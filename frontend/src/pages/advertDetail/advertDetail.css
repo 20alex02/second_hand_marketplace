@@ -12,6 +12,7 @@
 
 .advert-detail__title {
     font-size: 1.5rem;
+    margin: 0;
 }
 
 .advert-detail__images {
@@ -46,6 +47,7 @@
 
 .advertiser__title {
     font-size: 1.5rem;
+    margin: 0.25rem 0;
 }
 
 .advertiser__email, .advertiser__phone {

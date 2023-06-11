@@ -15,7 +15,7 @@ const AdvertDetail = () => {
   return (
     <section className="advert-detail">
       <CategoryCollapse category={advert.categories} />
-      <span className="advert-detail__title">{`${advert.type}: ${advert.title}`}</span>
+      <h1 className="advert-detail__title">{`${advert.type}: ${advert.title}`}</h1>
       <span className="advert-detail__date">{advert.createdAt}</span>
       <Carousel className="advert-detail__images advert-image" autoplay>
         {advert.images.map((item: Image) => (
@@ -31,7 +31,7 @@ const AdvertDetail = () => {
         {priceUtil.formatPrice(advert.estimatedPrice)}
       </span>
       <div className="advert-detail__advertiser advertiser">
-        <span className="advertiser__title">Advertiser</span>
+        <h2 className="advertiser__title">Advertiser</h2>
         <span className="advertiser__email">{advert.creator.email}</span>
         <span className="advertiser__phone">{advert.creator.phoneNumber}</span>
       </div>
