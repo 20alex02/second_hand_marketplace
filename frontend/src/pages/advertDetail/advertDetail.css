@@ -13,6 +13,7 @@
 .advert-detail__title {
     font-size: 1.5rem;
     margin: 0;
+    word-break: break-word;
 }
 
 .advert-detail__images {
@@ -31,10 +32,70 @@
 }
 
 .advert-detail__price {
+    text-align: end;
     align-self: flex-end;
     font-size: 1.3rem;
 }
 
 .advert-detail__description {
     font-size: 1.2rem;
+    word-break: break-word;
+}
+
+@media only screen and (min-width: 600px) {
+    .advert-detail {
+        display: grid;
+        grid-template:
+            "category category"
+            "image image"
+            "title date"
+            "description description"
+            "advertiser price"
+            "contact contact" / 30vw 30vw;
+        justify-content: center;
+    }
+
+    .category-collapse {
+        grid-area: category;
+    }
+
+    .ant-carousel:has(.advert-image) {
+        grid-area: image;
+    }
+
+    .ant-image-img.advert-image__photo {
+        min-width: 60vw;
+        height: 100%;
+        aspect-ratio: 2 / 1;
+    }
+
+    .advert-detail__title {
+        grid-area: title;
+        margin-top: 0.7rem;
+    }
+
+    .advert-detail__date {
+        grid-area: date;
+        align-self: end;
+        justify-self: end;
+    }
+
+    .advert-detail__description {
+        grid-area: description;
+    }
+
+    .advertiser {
+        grid-area: advertiser;
+    }
+
+    .advert-detail__price {
+        grid-area: price;
+        align-self: end;
+        justify-self: end;
+    }
+
+    .contact-advertiser {
+        grid-area: contact;
+        justify-self: center;
+    }
 }
