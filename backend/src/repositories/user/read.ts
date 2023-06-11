@@ -26,10 +26,10 @@ const readOneUser = async (data: UserReadOneData): UserReadOneResult => {
       },
     });
     if (user == null) {
-      return Result.err(new NonexistentRecordError('User'));
+      return Result.err(new NonexistentRecordError('User '));
     }
     if (user.deletedAt != null) {
-      return Result.err(new DeletedRecordError('User'));
+      return Result.err(new DeletedRecordError('User '));
     }
     return Result.ok(user);
   } catch (e) {
@@ -39,11 +39,14 @@ const readOneUser = async (data: UserReadOneData): UserReadOneResult => {
 
 const readAllUser = async (data: UserReadAllData): UserReadAllResult => {
   try {
+    const { perPage, pageNum, ...filters } = data;
     const users = await client.user.findMany({
       where: {
         deletedAt: null,
-        ...data,
+        ...filters,
       },
+      skip: (pageNum - 1) * perPage,
+      take: perPage,
     });
     return Result.ok(users);
   } catch (e) {

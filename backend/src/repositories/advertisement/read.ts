@@ -62,6 +62,7 @@ const readAllAdvertisement = async (
     created,
     pageNum,
     perPage,
+    orderBy,
     ...filterData
   } = data;
   const categoryFilter = categories
@@ -101,6 +102,7 @@ const readAllAdvertisement = async (
         ...estimatedPriceFilter,
         ...createdFilter,
       },
+      orderBy: orderBy ?? {},
       skip: (pageNum - 1) * perPage,
       take: perPage,
     });

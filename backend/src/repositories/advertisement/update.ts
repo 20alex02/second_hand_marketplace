@@ -12,6 +12,7 @@ const updateAdvertisement = async (
   data: AdvertisementUpdateData
 ): AdvertisementUpdateResult => {
   try {
+    const deletedAt = new Date();
     return await client.$transaction(async (tx) => {
       const advertisementCheck = await tx.advertisement.findUnique({
         where: {
@@ -24,24 +25,53 @@ const updateAdvertisement = async (
       if (advertisementCheck.deletedAt !== null) {
         return Result.err(new DeletedRecordError('Advertisement'));
       }
-      const { id, connectCategories, disconnectCategories, ...dataToUpdate } =
-        data;
-      await tx.advertisement.update({
-        where: {
-          id: id,
-        },
-        data: {
-          categories: {
-            disconnect: disconnectCategories,
+      const {
+        id,
+        connectCategories,
+        disconnectCategories,
+        createImages,
+        disconnectImages,
+        ...dataToUpdate
+      } = data;
+      const images =
+        createImages.length !== 0
+          ? {
+              createMany: {
+                data: createImages,
+              },
+            }
+          : {};
+      if (disconnectCategories.length !== 0 || disconnectImages.length !== 0) {
+        await tx.advertisement.update({
+          where: {
+            id: id,
           },
-        },
-      });
+          data: {
+            categories: {
+              disconnect: disconnectCategories,
+            },
+            images: {
+              updateMany: {
+                where: {
+                  id: { in: disconnectImages.map((image) => image.id) },
+                },
+                data: {
+                  deletedAt,
+                },
+              },
+              disconnect: disconnectImages,
+            },
+          },
+        });
+      }
+
       const advertisement = await tx.advertisement.update({
         where: {
           id: id,
         },
         data: {
           ...dataToUpdate,
+          images,
           categories: {
             connect: connectCategories,
           },

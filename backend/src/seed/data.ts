@@ -5,6 +5,11 @@ import type {
   AdvertisementCreateData,
   CategoryCreateData,
 } from '../repositories/types/data';
+import { Role } from '@prisma/client';
+import { hashPassword } from '../services/authService';
+
+const passwords = ['password1', 'password2', 'password3', 'password4'];
+const hashedPasswords = passwords.map((password) => hashPassword(password));
 
 const data: {
   users: UserCreateData[];
@@ -17,20 +22,27 @@ const data: {
     {
       email: 'johndoe@example.com',
       phoneNumber: '555-555-1234',
-      hashedPassword: 'password123',
-      salt: 'salt123',
+      hashedPassword: hashedPasswords[0]?.hashedPassword as string,
+      salt: hashedPasswords[0]?.salt as string,
     },
     {
       email: 'janedoe@example.com',
       phoneNumber: '555-555-5678',
-      hashedPassword: 'password456',
-      salt: 'salt456',
+      hashedPassword: hashedPasswords[1]?.hashedPassword as string,
+      salt: hashedPasswords[1]?.salt as string,
     },
     {
       email: 'bobsmith@example.com',
       phoneNumber: '555-555-9012',
-      hashedPassword: 'password789',
-      salt: 'salt789',
+      hashedPassword: hashedPasswords[2]?.hashedPassword as string,
+      salt: hashedPasswords[2]?.salt as string,
+    },
+    {
+      email: 'jackjohnson@example.com',
+      phoneNumber: '123-456-7890',
+      hashedPassword: hashedPasswords[3]?.hashedPassword as string,
+      salt: hashedPasswords[3]?.salt as string,
+      role: Role.ADMIN,
     },
   ],
   participants: [

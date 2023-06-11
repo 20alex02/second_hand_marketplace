@@ -1,7 +1,7 @@
 import jwt, { Secret } from 'jsonwebtoken';
 import { randomBytes, createHash } from 'crypto';
 import user from '../repositories/user';
-import { WrongPassword, TokenIsNotValid } from '../errors/controllersErrors';
+import { WrongPassword, InvalidToken } from '../errors/controllersErrors';
 const expiresIn = '2h';
 
 const generateAccessToken = async (uuid: string, secretKey?: string) => {
@@ -15,9 +15,9 @@ export const loginUser = async (
   password: string,
   secretKey?: string
 ) => {
-  const userResult = await user.read.oneByEmail({ email });
-  if (!userResult.isOk) {
-    throw new Error('Error occurred.');
+  const userResult = await user.read.one({ email });
+  if (userResult.isErr) {
+    throw userResult.error;
   }
   const dbPassword = userResult.value.hashedPassword;
   const salt = userResult.value.salt;
@@ -25,7 +25,9 @@ export const loginUser = async (
   if (hashedPassword.hashedPassword !== dbPassword) {
     throw new WrongPassword();
   }
-  return await generateAccessToken(userResult.value.id, secretKey);
+  const token = await generateAccessToken(userResult.value.id, secretKey);
+  const role = userResult.value.role;
+  return { token, role };
 };
 
 export const hashPassword = (
@@ -42,7 +44,9 @@ export const hashPassword = (
   return { hashedPassword: hashedPassword, salt: salt };
 };
 
-export const getUserId = (token?: string, secretKey?: string) => {
+export const getUserId = (headers: any, secretKey?: string) => {
+  const authHeader = headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
   if (token) {
     try {
       const decodedToken = jwt.verify(token, secretKey ?? 'undefined') as {
@@ -51,7 +55,7 @@ export const getUserId = (token?: string, secretKey?: string) => {
 
       return decodedToken.uuid;
     } catch (error) {
-      throw new TokenIsNotValid();
+      throw new InvalidToken();
     }
   } else {
     throw new Error();

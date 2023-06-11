@@ -33,26 +33,57 @@ app.post('/api/secret', (req, res) => {
   return controllers.secret.create(req, res, secretKey);
 });
 
+app.patch('/api/user', authenticateToken, (req, res) => {
+  return controllers.user.update(req, res, secretKey);
+});
+
+app.get('/api/user', authenticateToken, (req, res) => {
+  return controllers.user.getAll(req, res, secretKey);
+});
+
+app.get('/api/user/:id', authenticateToken, controllers.user.getOne);
+
 // ADVERTISEMENT
 app.get('/api/advertisement/types', controllers.advertisement.getTypes);
+
+app.get('/api/advertisement/:id', controllers.advertisement.getOne);
+
+app.get('/api/advertisement', controllers.advertisement.getAll);
 
 app.post('/api/advertisement', authenticateToken, upload, (req, res) => {
   return controllers.advertisement.create(req, res, secretKey);
 });
 
-app.post('/api/advertisements', controllers.advertisement.getAll);
+app.patch('/api/advertisement/:id', authenticateToken, upload, (req, res) => {
+  return controllers.advertisement.update(req, res, secretKey);
+});
+
+app.delete('/api/advertisement/:id', authenticateToken, (req, res) => {
+  return controllers.advertisement.delete(req, res, secretKey);
+});
 
 // CATEGORY
-app.post('/api/category', controllers.category.create);
+app.post('/api/category', authenticateToken, (req, res) => {
+  return controllers.category.create(req, res, secretKey);
+});
 
-app.get('api/category/:id', (req, res) => {
+app.get('api/category/:id', authenticateToken, (req, res) => {
   return controllers.category.getOne(req, res, secretKey);
 });
 
 app.get('/api/category', controllers.category.getAll);
 
-app.patch('/api/category/:id', (req, res) => {
+app.patch('/api/category/:id', authenticateToken, (req, res) => {
   return controllers.category.update(req, res, secretKey);
+});
+
+app.delete('/api/category/:id', authenticateToken, (req, res) => {
+  return controllers.category.delete(req, res, secretKey);
+});
+
+// PARTICIPANT
+app.get('/api/participant/:advertisementId', authenticateToken, (req, res) => {
+  return controllers.participant.getAll(req, res, secretKey);
 });
 
 // No route was taken - 404 - Resource (API endpoint) not found.

@@ -17,7 +17,7 @@ const createUser = async (data: UserCreateData): UserCreateResult => {
         return Result.err(new ConflictingRecordError('User', 'email'));
       }
       const user = await tx.user.create({
-        data: data,
+        data,
       });
       return Result.ok(user);
     });

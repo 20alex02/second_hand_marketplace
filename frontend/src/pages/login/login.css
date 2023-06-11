@@ -7,7 +7,7 @@
     margin: 3em auto;
     margin-bottom: 1em;
     font-family: var(--font-family-montserrat);
-    background-color: var(--primary-color-light-100);
+    background: linear-gradient(to bottom right, var(--primary-color-light-300), var(--primary-color-light-200) );
     position: relative;
 }
 
@@ -21,7 +21,11 @@
 
 .login-card__button:first-of-type {
     margin-bottom: 2em;
-    margin-right: 5em;
+    margin-right: 3em;
+}
+
+.ant-form-item-label {
+    padding: 0 !important;
 }
 
 .errorMsg {
@@ -29,9 +33,9 @@
     max-width: fit-content;
 }
 
-@media (min-width: 285px) {
+@media only screen and (min-width: 285px) {
     .login-card__button:first-of-type {
-        margin-right: 5em;
+        margin-right: 3em;
         margin-bottom: 0em;
     }
 }

@@ -6,12 +6,15 @@ export type UserCreateData = {
   phoneNumber: string;
   hashedPassword: string;
   salt: string;
+  role?: Role;
 };
 
 export type UserReadOneData = { id: string } | { email: string };
 
 export type UserReadAllData = {
-  role: Role;
+  pageNum: number;
+  perPage: number;
+  // role?: Role;
   // TODO filters
 };
 
@@ -21,6 +24,7 @@ export type UserUpdateData = {
   phoneNumber?: string;
   hashedPassword?: string;
   salt?: string;
+  role?: Role;
 };
 
 export type UserDeleteData = {
@@ -39,8 +43,7 @@ export type ParticipantReadOneData = {
 };
 
 export type ParticipantReadAllData = {
-  // TODO filters
-  advertisementId: string;
+  advertisementId?: string;
 };
 
 export type ParticipantUpdateData = {
@@ -77,6 +80,7 @@ export type AdvertisementReadAllData = {
   categories?: string[];
   estimatedPrice?: { from: number | undefined; to: number | undefined };
   created?: { from: Date | undefined; to: Date | undefined };
+  orderBy?: { title: 'asc' | 'desc' } | { estimatedPrice: 'asc' | 'desc' };
 };
 
 export type AdvertisementUpdateData = {
@@ -86,6 +90,8 @@ export type AdvertisementUpdateData = {
   description?: string;
   estimatedPrice?: number;
   hidden?: boolean;
+  createImages: { path: string }[];
+  disconnectImages: { id: string }[];
   connectCategories: { id: string }[];
   disconnectCategories: { id: string }[];
 };
@@ -128,6 +134,8 @@ export type CategoryReadOneData = {
 };
 
 export type CategoryReadAllData = {
+  pageNum: number;
+  perPage: number;
   advertisementId?: string;
 };
 

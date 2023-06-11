@@ -85,10 +85,6 @@ export type AdvertisementImageUpdateResult = DbResult<AdvertisementImage>;
 export type AdvertisementImageDeleteResult = DbResult<AdvertisementImage>;
 
 // CATEGORY
-type Subcategories = {
-  subcategories: Category[];
-};
-
 type Advertisements = {
   advertisements: Advertisement[];
 };
@@ -101,4 +97,4 @@ export type CategoryReadAllResult = DbResult<Category[]>;
 
 export type CategoryUpdateResult = DbResult<Category>;
 
-export type CategoryDeleteResult = DbResult<Category & Subcategories>;
+export type CategoryDeleteResult = DbResult<Category>;
