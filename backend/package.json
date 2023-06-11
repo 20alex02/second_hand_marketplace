@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node src/index.ts",
-    "seed": "prisma migrate reset --force && ts-node backend/src/seed/seed.ts",
-    "db:showcase": "prisma migrate reset --force && ts-node backend/src/seed/seed.ts && ts-node src/repositories/showcase.ts"
+    "seed": "prisma migrate reset --force && ts-node src/seed/seed.ts",
+    "db:showcase": "prisma migrate reset --force && ts-node src/seed/seed.ts && ts-node src/repositories/showcase.ts"
   },
   "author": "xkadera",
   "license": "ISC",
