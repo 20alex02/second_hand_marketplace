@@ -5,7 +5,6 @@ import { NavLink, useLocation } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { AuthToken, UserRole } from '../../state/atom';
 import { LogoutOutlined, LoginOutlined, MenuOutlined } from '@ant-design/icons';
-import { Role } from '../../models/login';
 
 function Navbar() {
   const [current, setCurrent] = useState('');
@@ -56,7 +55,7 @@ function Navbar() {
         'navbar__item ' +
         (url === '/MyAdverts'.toUpperCase() ? 'navbar__item--active' : ''),
     });
-    if (userRole === Role.ADMIN) {
+    if (userRole === 'ADMIN') {
       items.push({
         label: <NavLink to="/Users">Users</NavLink>,
         key: 'users',

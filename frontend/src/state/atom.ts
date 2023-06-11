@@ -1,12 +1,11 @@
 import { atom } from 'recoil';
-import { Role } from '../models/login';
 
 export const AuthToken = atom<string>({
   key: 'token',
   default: '',
 });
 
-export const UserRole = atom<Role>({
+export const UserRole = atom<string>({
   key: 'role',
-  default: Role.USER,
+  default: 'USER',
 });

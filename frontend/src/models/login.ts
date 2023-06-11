@@ -1,6 +1,8 @@
 export interface authTokenResponse {
-  token: string;
-  role: Role;
+  data: {
+    token: string;
+    role: string;
+  };
 }
 
 export interface registerResponse {
@@ -17,8 +19,3 @@ export type RegisterData = {
   password: string;
   phoneNumber: string;
 };
-
-export enum Role {
-  USER,
-  ADMIN,
-}

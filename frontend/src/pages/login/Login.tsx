@@ -17,9 +17,9 @@ function Login() {
   const { mutate: loginUser } = useMutation(
     (data: LoginData) => loginUserFn(data),
     {
-      onSuccess: (data) => {
-        setToken(data.token);
-        setRole(data.role);
+      onSuccess: (res) => {
+        setToken(res.data.token);
+        setRole(res.data.role);
         navigate('/');
       },
       onError: (error: any) => {
