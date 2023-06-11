@@ -1,0 +1,123 @@
+@import url('../../assets/styles/_variables.css');
+
+.advert-detail {
+    max-height: calc(100vh - var(--navbar-height) - var(--advert-detail-padding) * 2);
+    max-width: var(--advert-detail-width);
+    padding: var(--advert-detail-padding);
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    overflow-x: hidden;
+}
+
+.advert-detail__edit-buttons {
+    align-self: flex-end;
+    margin-bottom: 0.5rem;
+    display: flex;
+    column-gap: 0.4rem;
+}
+
+.remove-modal__finished {
+    background-color: var(--primary-color);
+}
+
+.advert-detail__title {
+    font-size: 1.5rem;
+    margin: 0;
+    word-break: break-word;
+}
+
+.advert-detail__images {
+    background-color: var(--primary-color);
+}
+
+.ant-image-img.advert-image__photo {
+    min-width: var(--advert-detail-width);
+    height: 14rem;
+    object-fit: cover;
+    object-position: center;
+}
+
+.ant-image-preview-operations-operation:not(:first-child) {
+    display: none;
+}
+
+.advert-detail__price {
+    text-align: end;
+    align-self: flex-end;
+    font-size: 1.3rem;
+}
+
+.advert-detail__description {
+    font-size: 1.2rem;
+    word-break: break-word;
+}
+
+@media only screen and (min-width: 600px) {
+    .advert-detail {
+        display: grid;
+        grid-template:
+            "buttons buttons"
+            "category category"
+            "image image"
+            "title date"
+            "description description"
+            "advertiser price"
+            "contact contact" / 30vw 30vw;
+        justify-content: center;
+    }
+
+    .advert-detail__edit-buttons {
+        grid-area: buttons;
+        justify-self: end;
+    }
+
+    .category-collapse {
+        grid-area: category;
+    }
+
+    .ant-carousel:has(.advert-image) {
+        grid-area: image;
+    }
+
+    .ant-image-img.advert-image__photo {
+        min-width: 60vw;
+        height: 100%;
+        aspect-ratio: 2 / 1;
+    }
+
+    .advert-detail__title {
+        grid-area: title;
+        margin-top: 0.7rem;
+    }
+
+    .advert-detail__date {
+        grid-area: date;
+        align-self: end;
+        justify-self: end;
+    }
+
+    .advert-detail__description {
+        grid-area: description;
+    }
+
+    .advertiser {
+        grid-area: advertiser;
+    }
+
+    .advert-detail__price {
+        grid-area: price;
+        align-self: end;
+        justify-self: end;
+    }
+
+    .contact-advertiser, .participant-table {
+        grid-area: contact;
+        justify-self: center;
+    }
+
+    .participant-table {
+        min-width: 40vw;
+        max-width: 40vw;
+    }
+}

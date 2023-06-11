@@ -13,21 +13,36 @@
     overflow-y: scroll;
 }
 
-.adverts::-webkit-scrollbar, .my-adverts::-webkit-scrollbar {
+.contact-advertiser__title,
+.advertiser__title,
+.participant-table__title {
+    font-size: 1.5rem;
+    margin: 0.75rem 0 0.25rem 0;
+}
+
+.adverts::-webkit-scrollbar,
+.my-adverts::-webkit-scrollbar,
+.advert-detail::-webkit-scrollbar {
     width: 1rem;
 }
 
-.adverts::-webkit-scrollbar-track, .my-adverts::-webkit-scrollbar-track {
+.adverts::-webkit-scrollbar-track,
+.my-adverts::-webkit-scrollbar-track,
+.advert-detail::-webkit-scrollbar-track {
     background: transparent;
 }
 
-.adverts::-webkit-scrollbar-thumb, .my-adverts::-webkit-scrollbar-thumb {
+.adverts::-webkit-scrollbar-thumb,
+.my-adverts::-webkit-scrollbar-thumb,
+.advert-detail::-webkit-scrollbar-thumb {
     background: var(--primary-color-light);
     border-radius: 1rem;
     border: 0.25rem solid var(--white);
 }
 
-.adverts::-webkit-scrollbar-thumb:hover, .my-adverts::-webkit-scrollbar-thumb:hover {
+.adverts::-webkit-scrollbar-thumb:hover,
+.my-adverts::-webkit-scrollbar-thumb:hover,
+.advert-detail::-webkit-scrollbar-thumb:hover {
     background: var(--primary-color);
 }
 

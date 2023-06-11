@@ -2,6 +2,9 @@ import './advert.css';
 import React, { MutableRefObject, useRef, useState } from 'react';
 import { CheckOutlined, StopOutlined, UserOutlined } from '@ant-design/icons';
 import { COUNT, STATUS } from './states';
+import { useNavigate } from 'react-router-dom';
+
+import priceUtil from '../../utils/priceUtil';
 
 const NONE_MODIFIER = ' advert-stats--none';
 
@@ -48,8 +51,12 @@ const Advert = (props: { advert?: AdvertType; state?: string }) => {
     setImagePath(setImage());
   };
 
+  const navigate = useNavigate();
   return (
-    <article className="advert">
+    <article
+      className="advert"
+      onClick={() => navigate(`/advert/${props.advert?.id}`)}
+    >
       <div className={`advert__state advert-stats${stats}`}>
         {switchStats(props.advert, props.state)}
       </div>
@@ -63,7 +70,7 @@ const Advert = (props: { advert?: AdvertType; state?: string }) => {
       <div className="advert__info">
         <span className="advert__title">{props.advert.title}</span>
         <span className="advert__price">
-          {formatPrice(props.advert.estimatedPrice)}
+          {priceUtil.formatPrice(props.advert.estimatedPrice)}
         </span>
       </div>
     </article>
@@ -91,8 +98,5 @@ const getStatsModifier = (participantCount: number, state?: string) => {
       return NONE_MODIFIER;
   }
 };
-
-const formatPrice = (price?: number) =>
-  price ? `${price.toLocaleString('cs-CZ')} CZK` : 'Negotiable';
 
 export default Advert;
