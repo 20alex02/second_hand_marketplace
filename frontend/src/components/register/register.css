@@ -31,7 +31,7 @@
     max-width: fit-content;
 }
 
-@media (min-width: 400px) {
+@media only screen and (min-width: 400px) {
     .register-form {
         display: grid;
         column-gap: 10%;
@@ -44,7 +44,7 @@
     }
 }
 
-@media (min-width: 700px) {
+@media only screen and (min-width: 700px) {
 
     .breadcrumbs {
         margin-left: 4em;

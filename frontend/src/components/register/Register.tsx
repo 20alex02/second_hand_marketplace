@@ -2,8 +2,8 @@ import { Card, Typography, Form, Input, Button, Breadcrumb, Modal } from 'antd';
 import './register.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
-import { RegisterData } from '../models/login';
-import { registerUserFn } from '../services/loginApi';
+import { RegisterData } from '../../models/login';
+import { registerUserFn } from '../../services/loginApi';
 
 function Register() {
   const navigate = useNavigate();

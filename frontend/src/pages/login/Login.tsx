@@ -6,7 +6,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { LoginData } from '../../models/login';
 import { loginUserFn } from '../../services/loginApi';
-import Register from '../../components/Register';
+import Register from '../../components/register/Register';
 
 function Login() {
   const setToken = useSetRecoilState(AuthToken);
