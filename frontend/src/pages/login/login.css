@@ -21,7 +21,11 @@
 
 .login-card__button:first-of-type {
     margin-bottom: 2em;
-    margin-right: 5em;
+    margin-right: 3em;
+}
+
+.ant-form-item-label {
+    padding: 0 !important;
 }
 
 .errorMsg {
@@ -31,7 +35,7 @@
 
 @media only screen and (min-width: 285px) {
     .login-card__button:first-of-type {
-        margin-right: 5em;
+        margin-right: 3em;
         margin-bottom: 0em;
     }
 }

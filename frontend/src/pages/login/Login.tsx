@@ -2,15 +2,17 @@ import { Card, Typography, Form, Input, Button, Alert } from 'antd';
 import './login.css';
 import { AuthToken } from '../../state/atom';
 import { useSetRecoilState } from 'recoil';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useState } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import { LoginData } from '../../models/login';
 import { loginUserFn } from '../../services/loginApi';
+import Register from '../../components/Register';
 
 function Login() {
   const setToken = useSetRecoilState(AuthToken);
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [errorMsg, setErrorMsg] = useState<string>('');
   const { mutate: loginUser } = useMutation(
     (data: LoginData) => loginUserFn(data),
@@ -25,6 +27,9 @@ function Login() {
     }
   );
 
+  if (searchParams.get('register')) {
+    return <Register />;
+  }
   const onFinish = (values: LoginData) => {
     loginUser(values);
   };
@@ -39,6 +44,7 @@ function Login() {
           initialValues={{ remember: true }}
           onFinish={onFinish}
           layout="vertical"
+          size="large"
         >
           <Form.Item
             label="Email"
@@ -70,7 +76,7 @@ function Login() {
               type="primary"
               htmlType="button"
               className="login-card__button"
-              onClick={() => navigate('/Register')}
+              onClick={() => setSearchParams({ register: '1' })}
             >
               Register
             </Button>
