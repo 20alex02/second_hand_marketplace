@@ -4,7 +4,6 @@ import userModel from '../models/userModels';
 import { getUserId } from './authService';
 import { Role } from '@prisma/client';
 import { InvalidAccessRights } from '../errors/controllersErrors';
-import type { AnyMxRecord } from 'dns';
 
 async function isAdmin(id: string) {
   const userResult = await user.read.one({ id: id });
