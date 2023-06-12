@@ -7,6 +7,7 @@ import { useMutation } from '@tanstack/react-query';
 import { LoginData } from '../../models/login';
 import { loginUserFn } from '../../services/loginApi';
 import Register from '../../components/register/Register';
+import { ApiError } from '../../models/error';
 
 function Login() {
   const setToken = useSetRecoilState(AuthToken);
@@ -19,10 +20,12 @@ function Login() {
     {
       onSuccess: (res) => {
         setToken(res.data.token);
+        localStorage.setItem('Token', res.data.token);
         setRole(res.data.role);
+        localStorage.setItem('Role', res.data.role);
         navigate('/');
       },
-      onError: (error: any) => {
+      onError: (error: ApiError) => {
         modal.error({
           title: 'Unable to login',
           content: error.response.data.message,
