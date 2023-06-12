@@ -1,4 +1,5 @@
-import { authTokenResponse } from '../models/login';
+import { AxiosResponse } from 'axios';
+import { EditData } from '../models/edit';
 import axiosInstance from './base';
 
 export const getMyData = async (token: string) => {
@@ -8,9 +9,9 @@ export const getMyData = async (token: string) => {
   return response.data;
 };
 
-export const editMydata = async (token: string) => {
-  const response = await axiosInstance.patch<authTokenResponse>('api/user', {
-    headers: { authentication: `Bearer ${token}` },
+export const editMyData = async (token: string, data: EditData) => {
+  const response = await axiosInstance.patch<AxiosResponse>('api/user/', data, {
+    headers: { authorization: `Bearer ${token}` },
   });
   return response.data;
 };
