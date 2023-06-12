@@ -1,9 +1,9 @@
 import { AxiosResponse } from 'axios';
-import { EditData } from '../models/edit';
+import { EditData, MyDataResponse } from '../models/edit';
 import axiosInstance from './base';
 
 export const getMyData = async (token: string) => {
-  const response = await axiosInstance.get('api/user:id', {
+  const response = await axiosInstance.get<MyDataResponse>('api/user/me', {
     headers: { authentication: `Bearer ${token}` },
   });
   return response.data;
