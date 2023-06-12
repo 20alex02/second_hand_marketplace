@@ -1,4 +1,4 @@
-import { Alert, Button, Card, Spin, Table, Typography } from 'antd';
+import { Alert, Card, Spin, Table, Typography } from 'antd';
 import './users.css';
 import { AuthToken, UserRole } from '../../state/atom';
 import { useRecoilValue } from 'recoil';
