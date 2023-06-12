@@ -12,8 +12,8 @@ export type UserCreateData = {
 export type UserReadOneData = { id: string } | { email: string };
 
 export type UserReadAllData = {
-  pageNum: number;
-  perPage: number;
+  // pageNum: number;
+  // perPage: number;
   // role?: Role;
   // TODO filters
 };

@@ -53,13 +53,12 @@ async function getOne(params: any) {
   return result.value;
 }
 
-async function getAll(query: any, headers: any, secret?: string) {
+async function getAll(headers: any, secret?: string) {
   const id = getUserId(headers, secret);
   if (!(await isAdmin(id))) {
     throw new InvalidAccessRights();
   }
-  const validatedData = userModel.getAllSchema.parse(query);
-  const result = await user.read.all(validatedData);
+  const result = await user.read.all({});
   if (result.isErr) {
     throw result.error;
   }
