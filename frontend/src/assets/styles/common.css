@@ -22,19 +22,25 @@
 
 .adverts::-webkit-scrollbar,
 .my-adverts::-webkit-scrollbar,
-.advert-detail::-webkit-scrollbar {
+.advert-detail::-webkit-scrollbar,
+.advert-creation::-webkit-scrollbar,
+.advert-creation__image .ant-upload-list::-webkit-scrollbar {
     width: 1rem;
 }
 
 .adverts::-webkit-scrollbar-track,
 .my-adverts::-webkit-scrollbar-track,
-.advert-detail::-webkit-scrollbar-track {
+.advert-detail::-webkit-scrollbar-track,
+.advert-creation::-webkit-scrollbar-track,
+.advert-creation__image .ant-upload-list::-webkit-scrollbar-track {
     background: transparent;
 }
 
 .adverts::-webkit-scrollbar-thumb,
 .my-adverts::-webkit-scrollbar-thumb,
-.advert-detail::-webkit-scrollbar-thumb {
+.advert-detail::-webkit-scrollbar-thumb,
+.advert-creation::-webkit-scrollbar-thumb,
+.advert-creation__image .ant-upload-list::-webkit-scrollbar-thumb {
     background: var(--primary-color-light);
     border-radius: 1rem;
     border: 0.25rem solid var(--white);
@@ -42,7 +48,9 @@
 
 .adverts::-webkit-scrollbar-thumb:hover,
 .my-adverts::-webkit-scrollbar-thumb:hover,
-.advert-detail::-webkit-scrollbar-thumb:hover {
+.advert-detail::-webkit-scrollbar-thumb:hover,
+.advert-creation::-webkit-scrollbar-thumb:hover,
+.advert-creation__image .ant-upload-list::-webkit-scrollbar-thumb:hover {
     background: var(--primary-color);
 }
 

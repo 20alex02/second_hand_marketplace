@@ -1,0 +1,114 @@
+@import url('../../assets/styles/_variables.css');
+
+.advert-creation {
+    max-height: calc(100vh - var(--navbar-height));
+    max-width: 100vw;
+    padding: var(--advert-detail-padding);
+    display: flex;
+    flex-direction: column;
+    row-gap: 0.5rem;
+    overflow-x: hidden;
+}
+
+.advert-creation__buttons {
+    align-self: flex-end;
+    margin-bottom: 0.5rem;
+    display: flex;
+    column-gap: 0.4rem;
+}
+
+.advert-creation__type {
+    margin: 0;
+}
+
+.advert-creation__title {
+    font-size: 1.5rem;
+    margin: 0;
+    word-break: break-word;
+}
+
+.advert-creation__date {
+    margin-bottom: 1rem;
+}
+
+.advert-creation__image {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.advert-creation__image .ant-upload-list {
+    max-height: 9.5rem;
+    overflow-y: scroll;
+}
+
+.advert-creation__price {
+    text-align: end;
+    align-self: flex-end;
+    font-size: 1.3rem;
+}
+
+.advert-creation__description {
+    font-size: 1.2rem;
+    word-break: break-word;
+}
+
+@media only screen and (min-width: 600px) {
+    .advert-creation {
+        min-width: 100vw;
+        display: grid;
+        grid-template:
+            "buttons buttons"
+            "category category"
+            "image image"
+            "type date"
+            "title x"
+            "description description"
+            "advertiser price" / 30vw 30vw;
+        justify-content: center;
+    }
+
+    .advert-creation__buttons {
+        grid-area: buttons;
+        justify-self: end;
+    }
+
+    .category-collapse {
+        grid-area: category;
+    }
+
+    .advert-creation__image {
+        grid-area: image;
+    }
+
+    .advert-creation__type {
+        grid-area: type;
+        margin: 0;
+    }
+
+    .advert-creation__title {
+        grid-area: title;
+    }
+
+    .advert-creation__date {
+        grid-area: date;
+        align-self: end;
+        justify-self: end;
+    }
+
+    .advert-creation__description {
+        grid-area: description;
+    }
+
+    .advert-creation__price {
+        grid-area: price;
+        align-self: start;
+    }
+
+    .advert-creation__price .ant-input-number {
+        width: 30vw;
+    }
+
+    .advertiser {
+        grid-area: advertiser;
+    }
+}
