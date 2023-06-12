@@ -11,23 +11,28 @@ import { ApiError } from '../../models/error';
 interface DataType {
   email: string;
   phoneNumber: string;
-  uuid: string;
+  id: string;
 }
 
 function Users() {
   const Token = useRecoilValue(AuthToken);
   const Role = useRecoilValue(UserRole);
   const [err, setError] = useState<string>('');
+  const [users, setUsers] = useState<DataType[]>();
 
   if (Role != 'ADMIN' || Token == '') {
     setError('You have no access to this page.');
   }
 
-  const { isLoading, data } = useQuery<[DataType], ApiError>(
+  const { isLoading } = useQuery<{ data: DataType }, ApiError>(
     ['users'],
     () => getUsers(Token),
     {
       onError: (error) => setError(error.response?.data?.message as string),
+      onSuccess: (data) => {
+        const dataArray: DataType[] = Object.values(data.data);
+        setUsers(dataArray);
+      },
     }
   );
 
@@ -37,7 +42,7 @@ function Users() {
     {
       key: '3',
       title: 'Action',
-      dataIndex: 'uuid',
+      dataIndex: 'id',
       render: (uuid) => <button>test {uuid}</button>,
     },
   ];
@@ -62,7 +67,11 @@ function Users() {
               <Spin size="large" />
             </div>
           ) : (
-            <Table columns={columms} dataSource={data}></Table>
+            <Table
+              columns={columms}
+              dataSource={users}
+              pagination={{ pageSize: 10 }}
+            ></Table>
           )}
         </Card>
       )}
