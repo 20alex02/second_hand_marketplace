@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import userService from '../services/userService';
 import { handleOkResp, handleError } from './common';
+import { getUserId } from '../services/authService';
 
 const create = async (req: Request, res: Response) => {
   try {
@@ -31,8 +32,18 @@ const getOne = async (req: Request, res: Response) => {
 
 const getAll = async (req: Request, res: Response, secret?: string) => {
   try {
-    const result = await userService.getAll(req.headers, secret);
+    const result = await userService.getAll(req.params, req.headers, secret);
     return handleOkResp(200, { ...result }, res, 'Users searched successfully');
+  } catch (error) {
+    return handleError(error, res);
+  }
+};
+
+const getMe = async (req: Request, res: Response, secret?: string) => {
+  try {
+    const userId = getUserId(req.headers, secret);
+    const result = await userService.getById(userId);
+    return handleOkResp(200, { ...result }, res, 'User searched successfully');
   } catch (error) {
     return handleError(error, res);
   }
@@ -43,4 +54,5 @@ export default {
   update,
   getOne,
   getAll,
+  getMe,
 };

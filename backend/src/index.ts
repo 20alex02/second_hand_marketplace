@@ -29,6 +29,10 @@ app.use('/api/images', express.static(path.join(__dirname, 'images')));
 // USER
 app.post('/api/user', controllers.user.create);
 
+app.get('/api/user/me', authenticateToken, (req, res) => {
+  return controllers.user.getMe(req, res, secretKey);
+});
+
 app.post('/api/secret', (req, res) => {
   return controllers.secret.create(req, res, secretKey);
 });
@@ -84,6 +88,10 @@ app.delete('/api/category/:id', authenticateToken, (req, res) => {
 // PARTICIPANT
 app.get('/api/participant/:advertisementId', authenticateToken, (req, res) => {
   return controllers.participant.getAll(req, res, secretKey);
+});
+
+app.post('/api/participant/:advertisementId', (req, res) => {
+  return controllers.participant.join(req, res, secretKey);
 });
 
 // No route was taken - 404 - Resource (API endpoint) not found.

@@ -53,6 +53,14 @@ async function getOne(params: any) {
   return result.value;
 }
 
+async function getById(id: string) {
+  const result = await user.read.one({ id: id });
+  if (result.isErr) {
+    throw result.error;
+  }
+  return result.value;
+}
+
 async function getAll(query: any, headers: any, secret?: string) {
   const id = getUserId(headers, secret);
   if (!(await isAdmin(id))) {
@@ -72,4 +80,5 @@ export default {
   update,
   getOne,
   getAll,
+  getById,
 };

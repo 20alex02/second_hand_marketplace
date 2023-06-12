@@ -60,6 +60,17 @@ export const getRequiredField = <T>(
   return curField;
 };
 
+export const getOptionalField = <T>(
+  data: { [x: string]: T | null },
+  field: string
+) => {
+  const curField = data[field];
+  if (curField === null || curField === undefined) {
+    return null;
+  }
+  return curField;
+};
+
 export const handleError = (error: unknown, res: Response) => {
   if (error instanceof z.ZodError) {
     return handleValidationErrorResp(error, res);
