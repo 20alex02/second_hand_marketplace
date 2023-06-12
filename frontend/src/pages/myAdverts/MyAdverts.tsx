@@ -9,17 +9,18 @@ import Advert from '../../components/advert/Advert';
 import { COUNT, STATUS } from '../../components/advert/states';
 import { useState } from 'react';
 import { Segmented } from 'antd';
+import ManageFloatButtons from '../../components/manageFloatButtons/ManageFloatButtons';
 
 const ACTIVE = 'Active';
 const CLOSED = 'Closed';
 
 const Adverts = () => {
   const [advertStatus, setAdvertStatus] = useState<string | undefined>(COUNT);
-  const hidden = false; // TODO admin
+  const isAdmin = false; // TODO admin
 
   return (
     <div className="my-container">
-      <div className="title-user">{hidden ? '' : "User's adverts"}</div>
+      <div className="title-user">{isAdmin ? "User's adverts" : ''}</div>
       <aside className="filters-bar">
         <Filters />
       </aside>
@@ -36,6 +37,7 @@ const Adverts = () => {
             <Advert key={item.id} advert={item} state={advertStatus} />
           ))}
         </div>
+        <ManageFloatButtons isAdmin={isAdmin} />
       </main>
     </div>
   );

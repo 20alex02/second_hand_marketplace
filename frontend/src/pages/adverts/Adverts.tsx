@@ -4,8 +4,11 @@ import '../../assets/styles/common.css';
 
 import Filters from '../../components/filters/Filters';
 import Advert from '../../components/advert/Advert';
+import ManageFloatButtons from '../../components/manageFloatButtons/ManageFloatButtons';
 
 const Adverts = () => {
+  const isAdmin = false; // TODO
+
   return (
     <div className="container">
       <aside className="filters-bar">
@@ -15,6 +18,7 @@ const Adverts = () => {
         {advertList.map((item: AdvertType) => (
           <Advert key={item.id} advert={item} />
         ))}
+        <ManageFloatButtons isAdmin={isAdmin} />
       </main>
     </div>
   );
