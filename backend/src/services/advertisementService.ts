@@ -25,11 +25,11 @@ const create = async (
   if (result.isErr) {
     throw result.error;
   }
-  return result.value;
+  return result.value.id;
 };
 
-const getAll = async (data: any) => {
-  const validatedData = advertisementModel.getAllSchema.parse(data);
+const getAll = async (query: any) => {
+  const validatedData = advertisementModel.getAllSchema.parse(query);
   const result = await advertisement.read.all(validatedData);
   if (result.isErr) {
     throw result.error;
@@ -43,7 +43,7 @@ const getOne = async (params: any) => {
   if (result.isErr) {
     throw result.error;
   }
-  const { participants, ...rest } = result.value;
+  const { participants, creator, ...rest } = result.value;
   return rest;
 };
 
@@ -70,7 +70,7 @@ const deleteAdvertisement = async (
   if (result.isErr) {
     throw result.error;
   }
-  return result.value;
+  return result.value.id;
 };
 
 const update = async (
@@ -105,7 +105,7 @@ const update = async (
   if (result.isErr) {
     throw result.error;
   }
-  return result.value;
+  return result.value.id;
 };
 
 export default {

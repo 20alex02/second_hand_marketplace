@@ -45,7 +45,9 @@ app.get('/api/user', authenticateToken, (req, res) => {
   return controllers.user.getAll(req, res, secretKey);
 });
 
-app.get('/api/user/:id', authenticateToken, controllers.user.getOne);
+app.get('/api/user/:id', authenticateToken, (req, res) => {
+  return controllers.user.getOne(req, res, secretKey);
+});
 
 // ADVERTISEMENT
 app.get('/api/advertisement/types', controllers.advertisement.getTypes);

@@ -13,7 +13,7 @@ const create = async (req: Request, res: Response, secret?: string) => {
     );
     return handleOkResp(
       201,
-      { ...result },
+      { uuid: result },
       res,
       'Advertisement created successfully'
     );
@@ -67,7 +67,7 @@ const deleteAdvertisement = async (
     );
     return handleOkResp(
       200,
-      { ...result },
+      { uuid: result },
       res,
       'Advertisement deleted successfully'
     );
@@ -87,7 +87,7 @@ const update = async (req: Request, res: Response, secret?: string) => {
     );
     return handleOkResp(
       200,
-      { ...result },
+      { uuid: result },
       res,
       'Advertisement searched successfully'
     );

@@ -4,6 +4,7 @@ import userModel from '../models/userModels';
 import { getUserId } from './authService';
 import { Role } from '@prisma/client';
 import { InvalidAccessRights } from '../errors/controllersErrors';
+import type { AnyMxRecord } from 'dns';
 
 async function isAdmin(id: string) {
   const userResult = await user.read.one({ id: id });
@@ -44,13 +45,25 @@ async function update(headers: any, query: any, secret?: string) {
   return result.value.id;
 }
 
-async function getOne(params: any) {
+async function getOne(params: any, headers: any, secret?: string) {
+  const id = getUserId(headers, secret);
+  if (!(await isAdmin(id))) {
+    throw new InvalidAccessRights();
+  }
   const validatedData = userModel.getOneSchema.parse(params);
   const result = await user.read.one(validatedData);
   if (result.isErr) {
     throw result.error;
   }
-  return result.value;
+  const {
+    salt,
+    hashedPassword,
+    deletedAt,
+    participants,
+    advertisements,
+    ...rest
+  } = result.value;
+  return rest;
 }
 
 async function getById(id: string) {

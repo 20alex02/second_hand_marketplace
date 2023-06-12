@@ -21,9 +21,9 @@ const update = async (req: Request, res: Response, secret?: string) => {
   }
 };
 
-const getOne = async (req: Request, res: Response) => {
+const getOne = async (req: Request, res: Response, secret?: string) => {
   try {
-    const result = await userService.getOne(req.params);
+    const result = await userService.getOne(req.params, req.headers, secret);
     return handleOkResp(200, { ...result }, res, 'User searched successfully');
   } catch (error) {
     return handleError(error, res);

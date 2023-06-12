@@ -105,6 +105,9 @@ const readAllAdvertisement = async (
       orderBy: orderBy ?? {},
       skip: (pageNum - 1) * perPage,
       take: perPage,
+      include: {
+        images: true,
+      },
     });
     return Result.ok(users);
   } catch (e) {
