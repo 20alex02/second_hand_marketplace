@@ -1,22 +1,32 @@
-import { Alert, Card, Spin, Table, Typography } from 'antd';
+import { Alert, Button, Card, Spin, Table, Typography } from 'antd';
 import './users.css';
 import { AuthToken, UserRole } from '../../state/atom';
 import { useRecoilValue } from 'recoil';
 import type { ColumnsType } from 'antd/es/table';
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { getUsers } from '../../services/usersApi';
 import { ApiError } from '../../models/error';
+import { makeAdmin } from '../../services/usersApi';
+import {
+  CloseCircleTwoTone,
+  CrownFilled,
+  FileOutlined,
+  UserAddOutlined,
+} from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 interface DataType {
   email: string;
   phoneNumber: string;
   id: string;
+  role: string;
 }
 
 function Users() {
   const Token = useRecoilValue(AuthToken);
   const Role = useRecoilValue(UserRole);
+  const navigate = useNavigate();
   const [err, setError] = useState<string>('');
   const [users, setUsers] = useState<DataType[]>();
 
@@ -36,14 +46,49 @@ function Users() {
     }
   );
 
+  const { mutate: makeAdminHandle } = useMutation((id: string) =>
+    makeAdmin(Token, id)
+  );
+
   const columms: ColumnsType<DataType> = [
-    { key: '1', title: 'Email', dataIndex: 'email' },
+    {
+      key: '1',
+      title: 'Email',
+      dataIndex: 'email',
+    },
     { key: '2', title: 'Phone number', dataIndex: 'phoneNumber' },
     {
       key: '3',
       title: 'Action',
       dataIndex: 'id',
-      render: (uuid) => <button>test {uuid}</button>,
+      render: (id, record) => (
+        <div className="action-row">
+          {record.role == 'ADMIN' ? (
+            <CrownFilled className="action__icon" rev={undefined} />
+          ) : (
+            <UserAddOutlined
+              className="action__icon"
+              onClick={() => makeAdminHandle(id)}
+              rev={undefined}
+            />
+          )}
+          <FileOutlined
+            className="action__icon"
+            onClick={() =>
+              navigate({
+                pathname: '/MyAdverts',
+                search: `?id=${id}`,
+              })
+            }
+            rev={undefined}
+          />
+          <CloseCircleTwoTone
+            rev={undefined}
+            twoToneColor="red"
+            className="action__icon"
+          />
+        </div>
+      ),
     },
   ];
 
