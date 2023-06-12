@@ -36,6 +36,8 @@ const updateSchema = z
 
 const getOneSchema = z.object({ id: z.string().uuid() });
 
+const adminUpdateSchema = z.object({ id: z.string().uuid() });
+
 // const getAllSchema = z.object({
 //   pageNum: z.number().positive(),
 //   perPage: z.number().positive(),
@@ -45,5 +47,6 @@ export default {
   createSchema,
   updateSchema,
   getOneSchema,
+  adminUpdateSchema,
   // getAllSchema,
 };

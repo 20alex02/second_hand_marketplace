@@ -45,6 +45,21 @@ async function update(headers: any, query: any, secret?: string) {
   return result.value.id;
 }
 
+async function adminUpdate(headers: any, params: any, secret?: string) {
+  const id = getUserId(headers, secret);
+  if (!(await isAdmin(id))) {
+    throw new InvalidAccessRights();
+  }
+  const { ...validatedData } = userModel.adminUpdateSchema.parse({
+    ...params,
+  });
+  const result = await user.update({ ...validatedData, role: Role.ADMIN });
+  if (result.isErr) {
+    throw result.error;
+  }
+  return result.value.id;
+}
+
 async function getOne(params: any, headers: any, secret?: string) {
   const id = getUserId(headers, secret);
   if (!(await isAdmin(id))) {
@@ -93,6 +108,7 @@ export default {
   isAdmin,
   create,
   update,
+  adminUpdate,
   getOne,
   getAll,
   getById,

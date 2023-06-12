@@ -37,6 +37,10 @@ app.post('/api/secret', (req, res) => {
   return controllers.secret.create(req, res, secretKey);
 });
 
+app.patch('/api/user/:id', authenticateToken, (req, res) => {
+  return controllers.user.adminUpdate(req, res, secretKey);
+});
+
 app.patch('/api/user', authenticateToken, (req, res) => {
   return controllers.user.update(req, res, secretKey);
 });
