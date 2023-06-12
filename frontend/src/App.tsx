@@ -5,6 +5,7 @@ import Adverts from './pages/adverts/Adverts';
 import AdvertDetail from './pages/advertDetail/AdvertDetail';
 import Navbar from './components/navbar/Navbar';
 import './index.css';
+import Edit from './pages/edit/Edit';
 
 export const App: FC = () => {
   return (
@@ -14,6 +15,7 @@ export const App: FC = () => {
         <Route path="/" element={<Adverts />} />
         <Route path="/advert/:id" element={<AdvertDetail />} />
         <Route path="/Login" element={<Login />} />
+        <Route path="/Edit" element={<Edit />} />
       </Routes>
     </>
   );
