@@ -1,0 +1,24 @@
+.user-section{
+    background-color: var(--white);
+}
+
+.users-card {
+    background: linear-gradient(to bottom right, var(--primary-color-light-300), var(--primary-color-light-200) );
+    max-width: 50em;
+    margin: 1em auto;
+}
+
+.loading {
+    text-align: center;
+}
+
+.action__icon {
+    font-size: 20px;
+    margin-right: 0.5em;
+}
+.action-row {
+    display: flex;
+}
+.users-error {
+    margin-top: 3em;
+}

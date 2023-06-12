@@ -4,6 +4,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { useMutation } from '@tanstack/react-query';
 import { RegisterData } from '../../models/login';
 import { registerUserFn } from '../../services/loginApi';
+import { ApiError } from '../../models/error';
 
 function Register() {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ function Register() {
       onSuccess: () => {
         countDown();
       },
-      onError: (error: any) => {
+      onError: (error: ApiError) => {
         modal.error({
           title: 'Unable to register',
           content: error.response.data.message,
