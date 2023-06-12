@@ -58,7 +58,7 @@ const update = async (req: Request, res: Response, secret?: string) => {
     );
     return handleOkResp(
       200,
-      { ...result },
+      { uuid: result },
       res,
       'Category updated successfully'
     );
@@ -76,7 +76,7 @@ const deleteCategory = async (req: Request, res: Response, secret?: string) => {
     );
     return handleOkResp(
       200,
-      { ...result },
+      { uuid: result },
       res,
       'Category deleted successfully'
     );

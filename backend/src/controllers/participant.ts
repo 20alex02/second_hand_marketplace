@@ -48,7 +48,7 @@ const join = async (req: Request, res: Response, secret?: string) => {
     });
     return handleOkResp(
       201,
-      { result },
+      { uuid: result },
       res,
       'Join as participant was successful'
     );

@@ -27,7 +27,8 @@ async function getOne(data: any, headers: any, secret?: string) {
   if (result.isErr) {
     throw result.error;
   }
-  return result.value;
+  const { advertisements, ...rest } = result.value;
+  return rest;
 }
 
 async function getAll(query: any) {
@@ -52,7 +53,7 @@ async function update(params: any, query: any, headers: any, secret?: string) {
   if (result.isErr) {
     throw result.error;
   }
-  return result.value;
+  return result.value.id;
 }
 
 async function deleteCategory(params: any, headers: any, secret?: string) {
@@ -65,7 +66,7 @@ async function deleteCategory(params: any, headers: any, secret?: string) {
   if (result.isErr) {
     throw result.error;
   }
-  return result.value;
+  return result.value.id;
 }
 
 export default {

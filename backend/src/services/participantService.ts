@@ -54,7 +54,7 @@ const join = async (params: {
   if (result.isErr) {
     throw result.error;
   }
-  return result.value.advertisementId;
+  return result.value.id;
 };
 
 export default {
