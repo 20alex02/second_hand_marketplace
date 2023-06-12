@@ -62,7 +62,10 @@ async function getAll(headers: any, secret?: string) {
   if (result.isErr) {
     throw result.error;
   }
-  return result.value;
+  const filtered = result.value.map(
+    ({ hashedPassword, salt, deletedAt, ...rest }) => rest
+  );
+  return filtered;
 }
 
 export default {
