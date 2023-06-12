@@ -39,14 +39,11 @@ const readOneUser = async (data: UserReadOneData): UserReadOneResult => {
 
 const readAllUser = async (data: UserReadAllData): UserReadAllResult => {
   try {
-    const { perPage, pageNum, ...filters } = data;
     const users = await client.user.findMany({
       where: {
         deletedAt: null,
-        ...filters,
+        ...data,
       },
-      skip: (pageNum - 1) * perPage,
-      take: perPage,
     });
     return Result.ok(users);
   } catch (e) {
