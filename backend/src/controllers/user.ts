@@ -31,7 +31,7 @@ const getOne = async (req: Request, res: Response) => {
 
 const getAll = async (req: Request, res: Response, secret?: string) => {
   try {
-    const result = await userService.getAll(req.params, req.headers, secret);
+    const result = await userService.getAll(req.headers, secret);
     return handleOkResp(200, { ...result }, res, 'Users searched successfully');
   } catch (error) {
     return handleError(error, res);

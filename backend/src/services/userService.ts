@@ -10,7 +10,7 @@ async function isAdmin(id: string) {
   if (userResult.isErr) {
     throw userResult.error;
   }
-  return userResult.value.role !== Role.ADMIN;
+  return userResult.value.role === Role.ADMIN;
 }
 
 async function create(data: any) {
