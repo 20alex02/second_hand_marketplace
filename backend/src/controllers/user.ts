@@ -14,7 +14,7 @@ const create = async (req: Request, res: Response) => {
 
 const update = async (req: Request, res: Response, secret?: string) => {
   try {
-    const id: string = await userService.update(req.headers, req.query, secret);
+    const id: string = await userService.update(req.headers, req.body, secret);
     return handleOkResp(200, { uuid: id }, res, 'User updated successfully');
   } catch (error) {
     return handleError(error, res);
