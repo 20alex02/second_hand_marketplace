@@ -14,12 +14,16 @@
     max-width: 50em;
 }
 
+.loading {
+    text-align: center;
+}
+
 .edit-section{
     background-color: var(--white);
 }
 
 .edit-card__title {
-    margin-top: 0;
+    margin-top: 0em;
 }
 
 

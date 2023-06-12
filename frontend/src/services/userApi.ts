@@ -4,7 +4,7 @@ import axiosInstance from './base';
 
 export const getMyData = async (token: string) => {
   const response = await axiosInstance.get<MyDataResponse>('api/user/me', {
-    headers: { authentication: `Bearer ${token}` },
+    headers: { authorization: `Bearer ${token}` },
   });
   return response.data;
 };

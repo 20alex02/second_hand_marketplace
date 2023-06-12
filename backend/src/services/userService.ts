@@ -30,7 +30,7 @@ async function create(data: any) {
 async function update(headers: any, query: any, secret?: string) {
   const id = getUserId(headers, secret);
   const { password, role, ...validatedData } = userModel.updateSchema.parse({
-    id,
+    id: id,
     ...query,
   });
   const hashedPassword = password ? hashPassword(password) : {};
