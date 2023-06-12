@@ -6,6 +6,7 @@ import AdvertDetail from './pages/advertDetail/AdvertDetail';
 import Navbar from './components/navbar/Navbar';
 import './index.css';
 import Users from './pages/users/Users';
+import Edit from './pages/edit/Edit';
 
 export const App: FC = () => {
   return (
@@ -16,6 +17,7 @@ export const App: FC = () => {
         <Route path="/advert/:id" element={<AdvertDetail />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Users" element={<Users />} />
+        <Route path="/Edit" element={<Edit />} />
       </Routes>
     </>
   );
