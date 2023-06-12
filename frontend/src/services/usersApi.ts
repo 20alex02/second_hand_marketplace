@@ -9,12 +9,12 @@ export const getUsers = async (token: string) => {
 };
 
 export const makeAdmin = async (token: string, id: string) => {
-  const response = await axiosInstance.patch<AxiosResponse>('api/user', {
-    params: {
-      id: id,
-      role: 'ADMIN',
-    },
-    headers: { authorization: `Bearer ${token}` },
-  });
+  const response = await axiosInstance.patch<AxiosResponse>(
+    'api/user/' + id,
+    null,
+    {
+      headers: { authorization: `Bearer ${token}` },
+    }
+  );
   return response.data;
 };

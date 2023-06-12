@@ -1,10 +1,10 @@
-import { Alert, Card, Spin, Table, Typography } from 'antd';
+import { Alert, Card, Spin, Table, Typography, Modal } from 'antd';
 import './users.css';
 import { AuthToken, UserRole } from '../../state/atom';
 import { useRecoilValue } from 'recoil';
 import type { ColumnsType } from 'antd/es/table';
 import { useState } from 'react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getUsers } from '../../services/usersApi';
 import { ApiError } from '../../models/error';
 import { makeAdmin } from '../../services/usersApi';
@@ -27,8 +27,10 @@ function Users() {
   const Token = useRecoilValue(AuthToken);
   const Role = useRecoilValue(UserRole);
   const navigate = useNavigate();
+  const [modal, errorModal] = Modal.useModal();
   const [err, setError] = useState<string>('');
   const [users, setUsers] = useState<DataType[]>();
+  const queryClient = useQueryClient();
 
   if (Role != 'ADMIN' || Token == '') {
     setError('You have no access to this page.');
@@ -46,8 +48,16 @@ function Users() {
     }
   );
 
-  const { mutate: makeAdminHandle } = useMutation((id: string) =>
-    makeAdmin(Token, id)
+  const { mutate: makeAdminHandle } = useMutation(
+    (id: string) => makeAdmin(Token, id),
+    {
+      onError: (error: ApiError) =>
+        modal.error({
+          title: 'Unable to change role',
+          content: error.response.data.message,
+        }),
+      onSuccess: () => queryClient.invalidateQueries(['users']),
+    }
   );
 
   const columms: ColumnsType<DataType> = [
@@ -120,6 +130,7 @@ function Users() {
           )}
         </Card>
       )}
+      {errorModal}
     </section>
   );
 }
