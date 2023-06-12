@@ -44,6 +44,9 @@ const readAllUser = async (data: UserReadAllData): UserReadAllResult => {
         deletedAt: null,
         ...data,
       },
+      orderBy: {
+        email: 'asc',
+      },
     });
     return Result.ok(users);
   } catch (e) {
