@@ -82,4 +82,5 @@ export default {
   update,
   getOne,
   getAll,
+  getById,
 };
