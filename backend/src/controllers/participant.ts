@@ -34,7 +34,7 @@ const join = async (req: Request, res: Response, secret?: string) => {
     try {
       userId = getUserId(req.headers, secret);
     } catch (error) {
-      console.log('Adding by phone number.')
+      console.log('Adding by phone number.');
     }
     const phoneNumber: string | null = getOptionalField(data, 'phoneNumber');
     const advertId = getRequiredField(getParams, 'advertisementId');
