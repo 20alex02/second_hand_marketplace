@@ -13,6 +13,7 @@ import { CategoryIdsForAdverts } from '../../state/selector';
 const Adverts = () => {
   const [adverts, setAdverts] = useState<AdvertType[]>([]);
   const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
   const categories = useRecoilValue(CategoryIdsForAdverts);
 
   const { isLoading } = useQuery(
@@ -21,6 +22,7 @@ const Adverts = () => {
     {
       onSuccess: (data) => {
         const dataArray: AdvertType[] = Object.values(data.data);
+        setCount(dataArray.pop() as unknown as number);
         setAdverts(dataArray);
       },
     }
@@ -41,13 +43,16 @@ const Adverts = () => {
             {adverts.map((item: AdvertType) => (
               <Advert key={item.id} advert={item} />
             ))}
-            <Pagination
-              className="adverts__pages"
-              onChange={(page) => setPage(page)}
-            />
           </>
         )}
       </main>
+      <div className="adverts__pages">
+        <Pagination
+          total={count}
+          pageSize={9}
+          onChange={(page) => setPage(page)}
+        />
+      </div>
     </div>
   );
 };
