@@ -11,6 +11,11 @@
     overflow-x: clip;
 }
 
+.filters__loading {
+    text-align: center;
+    margin-top: 2em;
+}
+
 .filters__button {
     grid-column: 1;
     grid-row: 1;
