@@ -1,5 +1,5 @@
 import { Result } from '@badrap/result';
-import type { CategoryReadOneData, CategoryReadAllData } from '../types/data';
+import type { CategoryReadOneData } from '../types/data';
 import type {
   CategoryReadOneResult,
   CategoryReadAllResult,
@@ -39,25 +39,12 @@ const readOneCategory = async (
   }
 };
 
-const readAllCategory = async (
-  data: CategoryReadAllData
-): CategoryReadAllResult => {
+const readAllCategory = async (): CategoryReadAllResult => {
   try {
-    const { perPage, pageNum, ...filters } = data;
-    const advertisements = filters.advertisementId
-      ? {
-          some: {
-            id: filters.advertisementId,
-          },
-        }
-      : {};
     const categories = await client.category.findMany({
       where: {
         deletedAt: null,
-        advertisements,
       },
-      skip: (pageNum - 1) * perPage,
-      take: perPage,
     });
     return Result.ok(categories);
   } catch (e) {

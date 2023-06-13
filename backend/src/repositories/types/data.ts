@@ -133,11 +133,10 @@ export type CategoryReadOneData = {
   id: string;
 };
 
-export type CategoryReadAllData = {
-  pageNum: number;
-  perPage: number;
-  advertisementId?: string;
-};
+// export type CategoryReadAllData = {
+// pageNum: number;
+// perPage: number;
+// };
 
 export type CategoryUpdateData =
   | { id: string; name: string; parentId?: string }
