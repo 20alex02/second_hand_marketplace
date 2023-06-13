@@ -35,7 +35,11 @@ const getAll = async (query: Request['query']) => {
   if (result.isErr) {
     throw result.error;
   }
-  return result.value;
+  const adCount = await advertisement.read.allWithoutFilters();
+  if (adCount.isErr) {
+    throw adCount.error;
+  }
+  return { advertisements: result.value, advertisementCount: adCount.value };
 };
 
 const getOne = async (params: Request['params']) => {

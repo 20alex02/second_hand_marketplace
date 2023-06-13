@@ -18,51 +18,24 @@ const orderBySchema = z.union([
   z.object({ estimatedPrice: z.literal('asc' || 'desc') }),
 ]);
 
-const getAllSchema = z
-  .object({
-    pageNum: z.number().positive(),
-    perPage: z.number().positive(),
-  })
-  .and(z.object({ categories: z.array(z.string().uuid()) }).optional())
-  .and(z.object({ hidden: z.boolean() }).optional())
-  .and(z.object({ creatorId: z.string().uuid() }).optional())
-  .and(z.object({ type: z.nativeEnum(AdvertisementType) }).optional())
-  .and(z.object({ orderBy: orderBySchema }).optional())
-  .and(
-    z
-      .object({
-        created: z.object({ from: z.date(), to: z.date() }).refine(
-          ({ from, to }) => {
-            if (from !== undefined && to !== undefined) {
-              return to >= from;
-            }
-            return from !== undefined || to !== undefined;
-          },
-          { message: "Invalid 'created' date range" }
-        ),
-      })
-      .optional()
-  )
-  .and(
-    z
-      .object({
-        estimatedPrice: z
-          .object({
-            from: z.number().positive(),
-            to: z.number().positive(),
-          })
-          .refine(
-            ({ from, to }) => {
-              if (from !== undefined && to !== undefined) {
-                return to >= from;
-              }
-              return from !== undefined || to !== undefined;
-            },
-            { message: "Invalid 'estimatedPrice' range" }
-          ),
-      })
-      .optional()
-  );
+const getAllSchema = z.object({
+  pageNum: z.string().regex(/^\d+$/).transform(Number),
+  perPage: z.string().regex(/^\d+$/).transform(Number),
+  categories: z.array(z.string().uuid()).optional(),
+  hidden: z.boolean().optional(),
+  creatorId: z.string().uuid().optional(),
+  // type: z.nativeEnum(AdvertisementType).optional(),
+  orderBy: orderBySchema.optional(),
+  created: z.object({ from: z.date(), to: z.date() }).optional(),
+  estimatedPrice: z
+    .object({
+      from: z.number().positive(),
+      to: z.number().positive(),
+    })
+    .optional(),
+});
+
+export type readAllAd = z.infer<typeof getAllSchema>;
 
 const deleteSchema = z.object({
   id: z.string().uuid(),
