@@ -22,7 +22,7 @@ const getAll = async (req: Request, res: Response, secret?: string) => {
       'Participants searched successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -32,7 +32,7 @@ const join = async (req: Request, res: Response, secret?: string) => {
     const getParams = req.params;
     let userId = null;
     try {
-      userId = getUserId(req.headers, secret);
+      userId = getUserId(req.headers.authorization, secret);
     } catch (error) {
       console.log('Adding by phone number.');
     }
@@ -53,7 +53,7 @@ const join = async (req: Request, res: Response, secret?: string) => {
       'Join as participant was successful'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 

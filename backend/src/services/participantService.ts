@@ -5,9 +5,14 @@ import user from '../repositories/user';
 import { Role } from '@prisma/client';
 import { InvalidAccessRights } from '../errors/controllersErrors';
 import type { ParticipantCreateData } from '../repositories/types/data';
+import type { Request } from 'express';
 
-const getAll = async (params: any, headers: any, secret?: string) => {
-  const id = getUserId(headers, secret);
+const getAll = async (
+  params: Request['params'],
+  headers: Request['headers'],
+  secret?: string
+) => {
+  const id = getUserId(headers.authorization, secret);
   const userResult = await user.read.one({ id: id });
   if (userResult.isErr) {
     throw userResult.error;
