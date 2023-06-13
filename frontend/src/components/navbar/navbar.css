@@ -9,6 +9,10 @@
   border-bottom-width: 0px !important;
 }
 
+.navbar__item:hover {
+  cursor: pointer;
+}
+
 .navbar-drawer {
   height: fit-content !important;
 }
