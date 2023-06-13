@@ -72,7 +72,7 @@ const AdvertCreation = (props: {
       ) : (
         <CreateButtons />
       )}
-      <CategoryCollapse category={props.advert?.categories} edit />
+      <CategoryCollapse categories={props.advert?.categories} edit />
       <Form.Item
         className="advert-creation__type"
         name="type"

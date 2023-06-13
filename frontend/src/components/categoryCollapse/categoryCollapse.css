@@ -14,3 +14,11 @@
     gap: 0.5rem;
     flex-wrap: wrap;
 }
+
+.category-modal .ant-btn-primary {
+    background-color: var(--primary-color);
+}
+
+.category-modal__select {
+    width: 100%;
+}

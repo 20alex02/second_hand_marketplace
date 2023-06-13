@@ -1,0 +1,32 @@
+[
+  {
+    "id": "0",
+    "name": "cat",
+    "parentId": "1"
+  },
+  {
+    "id": "1",
+    "name": "household animals",
+    "parentId": "2"
+  },
+  {
+    "id": "2",
+    "name": "animals",
+    "parentId": null
+  },
+  {
+    "id": "3",
+    "name": "dog",
+    "parentId": "1"
+  },
+  {
+    "id": "4",
+    "name": "car",
+    "parentId": "5"
+  },
+  {
+    "id": "5",
+    "name": "vehicles",
+    "parentId": null
+  }
+]

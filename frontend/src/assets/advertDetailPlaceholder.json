@@ -24,13 +24,21 @@
       "path": "https://icatcare.org/app/uploads/2018/07/Helping-your-new-cat-or-kitten-settle-in-1.png"
     }
   ],
-  "categories": {
-    "name": "cat",
-    "parent": {
+  "categories": [
+    {
+      "id": "0",
+      "name": "cat",
+      "parentId": "1"
+    },
+    {
+      "id": "1",
       "name": "household animals",
-      "parent": {
-        "name": "animals"
-      }
+      "parentId": "2"
+    },
+    {
+      "id": "2",
+      "name": "animals",
+      "parentId": null
     }
-  }
+  ]
 }

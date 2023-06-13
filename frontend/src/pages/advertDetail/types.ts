@@ -8,7 +8,7 @@ type AdvertDetail = {
   creator: Contact;
   participants: Contact[];
   images: Image[];
-  categories: Category;
+  categories: Category[];
 };
 
 // type AdvertisementType = 'OFFER' | 'REQUEST';
@@ -22,6 +22,7 @@ type Contact =
   | { phoneNumber: string };
 
 type Category = {
+  id: string;
   name: string;
-  parent?: Category;
+  parentId: string | null;
 };

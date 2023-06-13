@@ -78,7 +78,7 @@ const AdvertInformation = (props: {
   return (
     <section className="advert-detail">
       {isUsersAdvert ? <EditButtons setEditing={props.setIsEditing} /> : <></>}
-      <CategoryCollapse category={props.advert.categories} />
+      <CategoryCollapse categories={props.advert.categories} />
       <h1 className="advert-detail__title">{`${props.advert.type}: ${props.advert.title}`}</h1>
       <span className="advert-detail__date">{props.advert.createdAt}</span>
       <Carousel className="advert-detail__images advert-image" autoplay>
