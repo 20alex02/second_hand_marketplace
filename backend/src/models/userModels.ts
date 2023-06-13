@@ -27,12 +27,13 @@ const updateSchema = z
       .object({
         password: z
           .string()
-          .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)+[A-Za-z\d@$!%*?&]{6,}$/),
+          .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)+[A-Za-z\d@$!%*?&]{6,}$/)
+          .optional(),
       })
       .optional()
   )
-  .and(z.object({ email: z.string().uuid() }).optional())
-  .and(z.object({ role: z.nativeEnum(Role) }).optional());
+  .and(z.object({ email: z.string().email() }).optional())
+  .and(z.object({ role: z.nativeEnum(Role).optional() }).optional());
 
 const getOneSchema = z.object({ id: z.string().uuid() });
 
