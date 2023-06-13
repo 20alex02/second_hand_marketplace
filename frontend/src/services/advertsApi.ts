@@ -13,7 +13,7 @@ export const getAdverts = async (
   const response = await axiosInstance.get<AxiosResponse>('api/advertisement', {
     params: {
       pageNum: pageNum,
-      perPage: 9,
+      perPage: 1,
       categories: categoryIds,
     },
   });

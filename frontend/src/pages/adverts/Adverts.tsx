@@ -3,12 +3,13 @@ import '../../assets/styles/common.css';
 
 import Filters from '../../components/filters/Filters';
 import Advert from '../../components/advert/Advert';
-import { Pagination, Spin } from 'antd';
+import { Alert, Pagination, Spin } from 'antd';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getAdverts } from '../../services/advertsApi';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { CategoryIdsForAdverts } from '../../state/selector';
+import { ApiError } from '../../models/error';
 
 const Adverts = () => {
   const [adverts, setAdverts] = useState<AdvertType[]>([]);
@@ -17,9 +18,11 @@ const Adverts = () => {
   const categories = useRecoilValue(CategoryIdsForAdverts);
   const client = useQueryClient();
   const categoriesRef = useRef(categories);
+  const pageRef = useRef(page);
+  const [err, setErr] = useState('');
 
   useEffect(() => {
-    client.invalidateQueries(['adverts']);
+    pageRef.current = page;
   }, [page]);
 
   useEffect(() => {
@@ -28,17 +31,18 @@ const Adverts = () => {
 
   useEffect(() => {
     client.invalidateQueries(['adverts', categories]);
-  }, [categories]);
+  }, [categories, page]);
 
   const { isLoading } = useQuery(
     ['adverts', categories],
-    () => getAdverts(page, categoriesRef.current),
+    () => getAdverts(pageRef.current, categoriesRef.current),
     {
       onSuccess: (data) => {
-        const dataArray: AdvertType[] = Object.values(data.data);
-        setCount(dataArray.pop() as unknown as number);
+        const dataArray: AdvertType[] = Object.values(data.data.advertisements);
         setAdverts(dataArray);
+        setCount(data.data.advertisementCount);
       },
+      onError: (error: ApiError) => setErr(error.response.data.message),
     }
   );
 
@@ -54,16 +58,26 @@ const Adverts = () => {
           </div>
         ) : (
           <>
-            {adverts.map((item: AdvertType) => (
-              <Advert key={item.id} advert={item} />
-            ))}
+            {err ? (
+              <Alert
+                className="adverts-error"
+                message="Error"
+                description={err}
+                type="error"
+                showIcon
+              />
+            ) : (
+              adverts.map((item: AdvertType) => (
+                <Advert key={item.id} advert={item} />
+              ))
+            )}
           </>
         )}
       </main>
       <div className="adverts__pages">
         <Pagination
           total={count}
-          pageSize={9}
+          pageSize={1}
           current={page}
           onChange={(page) => setPage(page)}
         />

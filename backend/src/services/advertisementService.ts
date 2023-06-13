@@ -30,6 +30,7 @@ const create = async (
 };
 
 const getAll = async (query: Request['query']) => {
+  console.log(query);
   const validatedData = advertisementModel.getAllSchema.parse(query);
   const result = await advertisement.read.all(validatedData);
   if (result.isErr) {
