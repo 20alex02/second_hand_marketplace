@@ -6,14 +6,14 @@ import { CategoryHist } from '../../state/atom';
 const Filter = (props: { cat: Category }) => {
   const [catHist, setCatHist] = useRecoilState(CategoryHist);
 
-  const handleClick = (id: string) => {
-    const newArray = catHist;
-    newArray.push(id);
+  const handleClick = (cat: Category) => {
+    const newArray = [...catHist];
+    newArray.push(cat);
     setCatHist(newArray);
   };
 
   return (
-    <li className="filter-list__item" onClick={() => handleClick(props.cat.id)}>
+    <li className="filter-list__item" onClick={() => handleClick(props.cat)}>
       {props.cat.name}
     </li>
   );

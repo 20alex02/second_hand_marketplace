@@ -8,7 +8,7 @@ export const FilteredCategories = selector({
     const catHist = get(CategoryHist);
     let parId: string | null = null;
     if (catHist.length > 0) {
-      parId = catHist[catHist.length - 1];
+      parId = catHist[catHist.length - 1].id;
     }
 
     return categories.filter((c) => c.parentId === parId);

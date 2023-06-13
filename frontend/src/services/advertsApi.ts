@@ -1,7 +1,7 @@
 import axiosInstance from './base';
-import { CategoryResponse } from '../models/advert';
+import { AxiosResponse } from 'axios';
 
 export const getCategories = async () => {
-  const response = await axiosInstance.get<CategoryResponse>('api/category');
+  const response = await axiosInstance.get<AxiosResponse>('api/category');
   return response.data;
 };
