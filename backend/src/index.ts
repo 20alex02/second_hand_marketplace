@@ -58,7 +58,9 @@ app.get('/api/advertisement/types', controllers.advertisement.getTypes);
 
 app.get('/api/advertisement/:id', controllers.advertisement.getOne);
 
-app.get('/api/advertisement', controllers.advertisement.getAll);
+app.get('/api/advertisement', controllers.advertisement.getAll, (req, res) => {
+  return controllers.advertisement.getAll(req, res);
+});
 
 app.post('/api/advertisement', authenticateToken, upload, (req, res) => {
   return controllers.advertisement.create(req, res, secretKey);

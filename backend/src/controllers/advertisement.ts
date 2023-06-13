@@ -28,7 +28,7 @@ const getTypes = async (_req: Request, res: Response) => {
 
 const getAll = async (req: Request, res: Response) => {
   try {
-    const result = await advertisementService.getAll(req.query);
+    const result = await advertisementService.getAll(req.body.query);
     return handleOkResp(
       200,
       { ...result },
