@@ -22,6 +22,10 @@
     background-color: var(--white);
 
 }
+.adverts__pages {
+    position: absolute;
+    bottom: 10%;
+}
 @media only screen and (min-width: 800px) {
     .filters-bar {
         grid-column: 1;
