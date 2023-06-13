@@ -10,7 +10,7 @@ const create = async (req: Request, res: Response, secretKey?: string) => {
     const result = await loginUser(email, password, secretKey);
     return handleOkResp(201, { ...result }, res, 'Token created successfully');
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 

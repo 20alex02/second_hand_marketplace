@@ -4,6 +4,7 @@ import userModel from '../models/userModels';
 import { getUserId } from './authService';
 import { Role } from '@prisma/client';
 import { InvalidAccessRights } from '../errors/controllersErrors';
+import type { Request } from 'express';
 
 async function isAdmin(id: string) {
   const userResult = await user.read.one({ id: id });
@@ -13,22 +14,26 @@ async function isAdmin(id: string) {
   return userResult.value.role === Role.ADMIN;
 }
 
-async function create(data: any) {
-  const { password, ...validatedData } = userModel.createSchema.parse(data);
+async function create(body: Request['body']) {
+  const { password, ...validatedData } = userModel.createSchema.parse(body);
   const hashedPassword = hashPassword(password);
   const result = await user.create({ ...validatedData, ...hashedPassword });
   if (result.isErr) {
     if (result.error.message === 'ConflictingemailinUser') {
       result.error.message =
-        'User with email ' + data.email + ' already exist.';
+        'User with email ' + body.email + ' already exist.';
     }
     throw result.error;
   }
   return result.value.id;
 }
 
-async function update(headers: any, query: any, secret?: string) {
-  const id = getUserId(headers, secret);
+async function update(
+  headers: Request['headers'],
+  query: Request['query'],
+  secret?: string
+) {
+  const id = getUserId(headers.authorization, secret);
   const { password, role, ...validatedData } = userModel.updateSchema.parse({
     id: id,
     ...query,
@@ -44,8 +49,12 @@ async function update(headers: any, query: any, secret?: string) {
   return result.value.id;
 }
 
-async function adminUpdate(headers: any, params: any, secret?: string) {
-  const id = getUserId(headers, secret);
+async function adminUpdate(
+  headers: Request['headers'],
+  params: Request['params'],
+  secret?: string
+) {
+  const id = getUserId(headers.authorization, secret);
   if (!(await isAdmin(id))) {
     throw new InvalidAccessRights();
   }
@@ -59,8 +68,12 @@ async function adminUpdate(headers: any, params: any, secret?: string) {
   return result.value.id;
 }
 
-async function getOne(params: any, headers: any, secret?: string) {
-  const id = getUserId(headers, secret);
+async function getOne(
+  params: Request['params'],
+  headers: Request['headers'],
+  secret?: string
+) {
+  const id = getUserId(headers.authorization, secret);
   if (!(await isAdmin(id))) {
     throw new InvalidAccessRights();
   }
@@ -88,8 +101,8 @@ async function getById(id: string) {
   return result.value;
 }
 
-async function getAll(headers: any, secret?: string) {
-  const id = getUserId(headers, secret);
+async function getAll(headers: Request['headers'], secret?: string) {
+  const id = getUserId(headers.authorization, secret);
   if (!(await isAdmin(id))) {
     throw new InvalidAccessRights();
   }

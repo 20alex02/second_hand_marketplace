@@ -3,9 +3,14 @@ import categoryModel from '../models/categoryModels';
 import { getUserId } from './authService';
 import { InvalidAccessRights } from '../errors/controllersErrors';
 import userService from './userService';
+import type { Request } from 'express';
 
-async function create(body: any, headers: any, secret?: string) {
-  const id = getUserId(headers, secret);
+async function create(
+  body: Request['body'],
+  headers: Request['headers'],
+  secret?: string
+) {
+  const id = getUserId(headers.authorization, secret);
   if (!(await userService.isAdmin(id))) {
     throw new InvalidAccessRights();
   }
@@ -17,9 +22,13 @@ async function create(body: any, headers: any, secret?: string) {
   return result.value.id;
 }
 
-async function getOne(data: any, headers: any, secret?: string) {
-  const validatedData = categoryModel.getOneSchema.parse(data);
-  const id = getUserId(headers, secret);
+async function getOne(
+  params: Request['params'],
+  headers: Request['headers'],
+  secret?: string
+) {
+  const validatedData = categoryModel.getOneSchema.parse(params);
+  const id = getUserId(headers.authorization, secret);
   if (!(await userService.isAdmin(id))) {
     throw new InvalidAccessRights();
   }
@@ -31,7 +40,7 @@ async function getOne(data: any, headers: any, secret?: string) {
   return rest;
 }
 
-async function getAll(query: any) {
+async function getAll(query: Request['query']) {
   const validatedData = categoryModel.getAllSchema.parse(query);
   const result = await category.read.all(validatedData);
   if (result.isErr) {
@@ -40,12 +49,17 @@ async function getAll(query: any) {
   return result.value;
 }
 
-async function update(params: any, query: any, headers: any, secret?: string) {
+async function update(
+  params: Request['params'],
+  query: Request['query'],
+  headers: Request['headers'],
+  secret?: string
+) {
   const validatedData = categoryModel.updateSchema.parse({
     ...params,
     ...query,
   });
-  const id = getUserId(headers, secret);
+  const id = getUserId(headers.authorization, secret);
   if (!(await userService.isAdmin(id))) {
     throw new InvalidAccessRights();
   }
@@ -56,9 +70,13 @@ async function update(params: any, query: any, headers: any, secret?: string) {
   return result.value.id;
 }
 
-async function deleteCategory(params: any, headers: any, secret?: string) {
+async function deleteCategory(
+  params: Request['params'],
+  headers: Request['headers'],
+  secret?: string
+) {
   const validatedData = categoryModel.deleteSchema.parse(params);
-  const id = getUserId(headers, secret);
+  const id = getUserId(headers.authorization, secret);
   if (!(await userService.isAdmin(id))) {
     throw new InvalidAccessRights();
   }

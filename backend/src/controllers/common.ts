@@ -71,7 +71,7 @@ export const getOptionalField = <T>(
   return curField;
 };
 
-export const handleError = (error: unknown, res: Response) => {
+export const handleError = (error: Error, res: Response) => {
   if (error instanceof z.ZodError) {
     return handleValidationErrorResp(error, res);
   }

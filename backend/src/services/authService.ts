@@ -44,9 +44,8 @@ export const hashPassword = (
   return { hashedPassword: hashedPassword, salt: salt };
 };
 
-export const getUserId = (headers: any, secretKey?: string) => {
-  const authHeader = headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+export const getUserId = (authorization?: string, secretKey?: string) => {
+  const token = authorization && authorization.split(' ')[1];
   if (token) {
     try {
       const decodedToken = jwt.verify(token, secretKey ?? 'undefined') as {
