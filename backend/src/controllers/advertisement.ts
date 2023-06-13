@@ -18,7 +18,7 @@ const create = async (req: Request, res: Response, secret?: string) => {
       'Advertisement created successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -36,7 +36,7 @@ const getAll = async (req: Request, res: Response) => {
       'Advertisement searched successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -50,7 +50,7 @@ const getOne = async (req: Request, res: Response) => {
       'Advertisement searched successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -72,7 +72,7 @@ const deleteAdvertisement = async (
       'Advertisement deleted successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -92,7 +92,7 @@ const update = async (req: Request, res: Response, secret?: string) => {
       'Advertisement searched successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 

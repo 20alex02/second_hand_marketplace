@@ -4,21 +4,22 @@ import { getUserId } from './authService';
 import user from '../repositories/user';
 import { Role } from '@prisma/client';
 import { InvalidAccessRights } from '../errors/controllersErrors';
+import type { Request } from 'express';
 
 const create = async (
-  data: any,
-  headers: any,
+  body: Request['body'],
+  headers: Request['headers'],
   files: Express.Multer.File[],
   secret?: string
 ) => {
-  const creatorId = getUserId(headers, secret);
+  const creatorId = getUserId(headers.authorization, secret);
   const images: { path: string }[] = files.map((file: Express.Multer.File) => ({
     path: file.path,
   }));
 
   const validatedData = advertisementModel.createSchema.parse({
     creatorId,
-    ...data,
+    ...body,
     images,
   });
   const result = await advertisement.create(validatedData);
@@ -28,7 +29,7 @@ const create = async (
   return result.value.id;
 };
 
-const getAll = async (query: any) => {
+const getAll = async (query: Request['query']) => {
   const validatedData = advertisementModel.getAllSchema.parse(query);
   const result = await advertisement.read.all(validatedData);
   if (result.isErr) {
@@ -37,7 +38,7 @@ const getAll = async (query: any) => {
   return result.value;
 };
 
-const getOne = async (params: any) => {
+const getOne = async (params: Request['params']) => {
   const validatedData = advertisementModel.getOneSchema.parse(params);
   const result = await advertisement.read.one(validatedData);
   if (result.isErr) {
@@ -48,12 +49,12 @@ const getOne = async (params: any) => {
 };
 
 const deleteAdvertisement = async (
-  params: any,
-  headers: any,
+  params: Request['params'],
+  headers: Request['headers'],
   secret?: string
 ) => {
   const validatedData = advertisementModel.deleteSchema.parse(params);
-  const creatorId = getUserId(headers, secret);
+  const creatorId = getUserId(headers.authorization, secret);
   const userResult = await user.read.one({ id: creatorId });
   if (userResult.isErr) {
     throw userResult.error;
@@ -74,10 +75,10 @@ const deleteAdvertisement = async (
 };
 
 const update = async (
-  body: any,
-  params: any,
+  body: Request['body'],
+  params: Request['params'],
   files: Express.Multer.File[],
-  headers: any,
+  headers: Request['headers'],
   secret?: string
 ) => {
   const createImages: { path: string }[] = files.map(
@@ -90,7 +91,7 @@ const update = async (
     ...params,
     createImages,
   });
-  const creatorId = getUserId(headers, secret);
+  const creatorId = getUserId(headers.authorization, secret);
   const userResult = await user.read.one({ id: creatorId });
   if (userResult.isErr) {
     throw userResult.error;
