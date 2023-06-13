@@ -16,7 +16,7 @@ export const Categories = atom<Category[]>({
   default: [],
 });
 
-export const CategoryHist = atom<string[]>({
+export const CategoryHist = atom<Category[]>({
   key: 'CategoryHist',
   default: [],
 });

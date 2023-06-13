@@ -42,7 +42,19 @@
 }
 
 .filter-list__item {
-    padding-bottom: 1rem;
+    padding: 1rem;
+    width: 100%;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.filter-list__item:hover {
+    background-color: var(--primary-color-dark);
+    cursor: pointer;
+}
+
+.breadcrumbs__item:hover {
+    cursor: pointer;
 }
 
 .filter-list--invisible {
@@ -85,13 +97,13 @@
     background: var(--white);
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 800px) {
     .filters {
         box-shadow: var(--default-shadow);
         display: flex;
         justify-content: center;
         height: 100%;
-        margin: 1rem;
+        margin: 0rem;
     }
 
     .filters:has(.filter-list--visible) {
