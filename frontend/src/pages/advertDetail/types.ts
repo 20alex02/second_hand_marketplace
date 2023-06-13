@@ -2,7 +2,7 @@ type AdvertDetail = {
   id: string;
   createdAt: string;
   title: string;
-  type: AdvertisementType;
+  type: string;
   description: string;
   estimatedPrice?: number;
   creator: Contact;
@@ -11,7 +11,7 @@ type AdvertDetail = {
   categories: Category;
 };
 
-type AdvertisementType = 'OFFER' | 'REQUEST';
+// type AdvertisementType = 'OFFER' | 'REQUEST';
 
 type Contact =
   | {

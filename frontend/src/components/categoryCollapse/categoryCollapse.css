@@ -8,3 +8,9 @@
     max-width: var(--advert-detail-width);
     background-color: var(--white);
 }
+
+.category-collapse .ant-collapse-content-box {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
