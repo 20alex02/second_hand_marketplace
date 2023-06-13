@@ -62,10 +62,10 @@ const data: {
       estimatedPrice: 100,
       images: [
         {
-          path: 'https://example.com/images/guitar1.jpg',
+          path: 'guitar1.jpg',
         },
         {
-          path: 'https://example.com/images/guitar2.jpg',
+          path: 'guitar2.jpg',
         },
       ],
     },
@@ -76,7 +76,7 @@ const data: {
       estimatedPrice: 500,
       images: [
         {
-          path: 'https://example.com/images/apartment1.jpg',
+          path: 'apartment1.jpg',
         },
       ],
     },
@@ -89,7 +89,7 @@ const data: {
       hidden: true,
       images: [
         {
-          path: 'https://example.com/images/car1.jpg',
+          path: 'car1.jpg',
         },
       ],
     },

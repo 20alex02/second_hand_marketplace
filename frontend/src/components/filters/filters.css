@@ -53,6 +53,9 @@
     cursor: pointer;
 }
 
+.breadcrumbs__item {
+    color: var(--white);
+}
 .breadcrumbs__item:hover {
     cursor: pointer;
 }

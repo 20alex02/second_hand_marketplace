@@ -4,9 +4,9 @@ import '../../assets/styles/common.css';
 import Filters from '../../components/filters/Filters';
 import Advert from '../../components/advert/Advert';
 import { Pagination, Spin } from 'antd';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { getAdverts } from '../../services/advertsApi';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { CategoryIdsForAdverts } from '../../state/selector';
 
@@ -15,10 +15,24 @@ const Adverts = () => {
   const [page, setPage] = useState(1);
   const [count, setCount] = useState(0);
   const categories = useRecoilValue(CategoryIdsForAdverts);
+  const client = useQueryClient();
+  const categoriesRef = useRef(categories);
+
+  useEffect(() => {
+    client.invalidateQueries(['adverts']);
+  }, [page]);
+
+  useEffect(() => {
+    categoriesRef.current = categories;
+  }, [categories]);
+
+  useEffect(() => {
+    client.invalidateQueries(['adverts', categories]);
+  }, [categories]);
 
   const { isLoading } = useQuery(
-    ['adverts'],
-    () => getAdverts(page, categories),
+    ['adverts', categories],
+    () => getAdverts(page, categoriesRef.current),
     {
       onSuccess: (data) => {
         const dataArray: AdvertType[] = Object.values(data.data);

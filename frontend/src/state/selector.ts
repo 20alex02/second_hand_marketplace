@@ -32,7 +32,10 @@ export const CategoryIdsForAdverts = selector({
       });
       return filteredIds;
     };
-
-    return filterCategories(parId);
+    const filtered = filterCategories(parId);
+    if (parId) {
+      filtered.push(parId);
+    }
+    return filtered;
   },
 });
