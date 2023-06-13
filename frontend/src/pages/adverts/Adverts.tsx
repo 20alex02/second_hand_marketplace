@@ -50,6 +50,7 @@ const Adverts = () => {
         <Pagination
           total={count}
           pageSize={9}
+          current={page}
           onChange={(page) => setPage(page)}
         />
       </div>
