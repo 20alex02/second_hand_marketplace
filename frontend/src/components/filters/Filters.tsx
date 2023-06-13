@@ -2,6 +2,8 @@ import './filters.css';
 import { FilterOutlined } from '@ant-design/icons';
 import { useQuery } from '@tanstack/react-query';
 import { Button, Spin } from 'antd';
+import { useQuery } from '@tanstack/react-query';
+import { Button, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import { getCategories } from '../../services/advertsApi';
 import { useSetRecoilState, useRecoilValue } from 'recoil';
@@ -66,6 +68,8 @@ const Filters = () => {
   const updateWidth = () => window.innerWidth >= 800;
   const [visibility, setVisibility] = useState<string>(INVISIBLE_MODIFIER);
   const [isDesktop, setDesktop] = useState(updateWidth());
+  const setCategories = useSetRecoilState(Categories);
+  const filteredCategories = useRecoilValue(FilteredCategories);
   const setCategories = useSetRecoilState(Categories);
   const filteredCategories = useRecoilValue(FilteredCategories);
 

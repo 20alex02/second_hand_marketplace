@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
 import { Category } from '../models/advert';
+import { Category } from '../models/advert';
 
 export const AuthToken = atom<string>({
   key: 'token',
