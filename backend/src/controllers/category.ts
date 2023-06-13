@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import categoryService from '../services/categoryService';
 import { handleOkResp, handleError } from './common';
+import category from '../repositories/category';
 
 const create = async (req: Request, res: Response, secret?: string) => {
   try {
@@ -34,9 +35,9 @@ const getOne = async (req: Request, res: Response, secret?: string) => {
   }
 };
 
-const getAll = async (req: Request, res: Response) => {
+const getAll = async (_req: Request, res: Response) => {
   try {
-    const result = await categoryService.getAll(req.query);
+    const result = await category.read.all();
     return handleOkResp(
       200,
       { ...result },
