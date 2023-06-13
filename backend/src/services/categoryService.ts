@@ -46,13 +46,22 @@ async function getOne(
   return rest;
 }
 
+async function getAll(query: Request['query']) {
+  const validatedData = categoryModel.getAllSchema.parse(query);
+  const result = await category.read.all(validatedData);
+  if (result.isErr) {
+    throw result.error;
+  }
+  return result.value;
+}
+
 async function update(
   params: Request['params'],
   query: Request['query'],
   headers: Request['headers'],
   secret?: string
 ) {
-  const validatedData: updateschematype = categoryModel.updateSchema.parse({
+  const validatedData = categoryModel.updateSchema.parse({
     ...params,
     ...query,
   });
