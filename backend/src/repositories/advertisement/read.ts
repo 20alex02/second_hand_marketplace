@@ -1,18 +1,16 @@
 import { Result } from '@badrap/result';
-import type {
-  AdvertisementReadOneData,
-  AdvertisementReadAllData,
-} from '../types/data';
+import type { AdvertisementReadOneData } from '../types/data';
 import type {
   AdvertisementReadOneResult,
   AdvertisementReadAllResult,
 } from '../types/return';
 import client from '../client';
-import { genericError } from '../types';
+import DbResult, { genericError } from '../types';
 import {
   DeletedRecordError,
   NonexistentRecordError,
 } from '../../errors/repositoryErrors';
+import type { readAllAd } from '../../models/advertisementModels';
 
 const readOneAdvertisement = async (
   data: AdvertisementReadOneData
@@ -54,16 +52,16 @@ const readOneAdvertisement = async (
 };
 
 const readAllAdvertisement = async (
-  data: AdvertisementReadAllData
+  data: readAllAd
 ): AdvertisementReadAllResult => {
   const {
     categories,
-    estimatedPrice,
-    created,
+    // estimatedPrice,
+    // created,
     pageNum,
     perPage,
     orderBy,
-    ...filterData
+    // ...filterData
   } = data;
   const categoryFilter = categories
     ? {
@@ -77,30 +75,30 @@ const readAllAdvertisement = async (
       }
     : {};
 
-  const estimatedPriceFilter = estimatedPrice
-    ? {
-        estimatedPrice: {
-          ...(estimatedPrice.from ? { gte: estimatedPrice.from } : {}),
-          ...(estimatedPrice.to ? { lte: estimatedPrice.to } : {}),
-        },
-      }
-    : {};
-  const createdFilter = created
-    ? {
-        createdAt: {
-          ...(created.from ? { gte: created.from } : {}),
-          ...(created.to ? { lte: created.to } : {}),
-        },
-      }
-    : {};
+  // const estimatedPriceFilter = estimatedPrice
+  //   ? {
+  //       estimatedPrice: {
+  //         ...(estimatedPrice.from ? { gte: estimatedPrice.from } : {}),
+  //         ...(estimatedPrice.to ? { lte: estimatedPrice.to } : {}),
+  //       },
+  //     }
+  //   : {};
+  // const createdFilter = created
+  //   ? {
+  //       createdAt: {
+  //         ...(created.from ? { gte: created.from } : {}),
+  //         ...(created.to ? { lte: created.to } : {}),
+  //       },
+  //     }
+  //   : {};
   try {
     const users = await client.advertisement.findMany({
       where: {
-        ...filterData,
+        // ...filterData,
         deletedAt: null,
         ...categoryFilter,
-        ...estimatedPriceFilter,
-        ...createdFilter,
+        // ...estimatedPriceFilter,
+        // ...createdFilter,
       },
       orderBy: orderBy ?? {},
       skip: (pageNum - 1) * perPage,
@@ -115,7 +113,19 @@ const readAllAdvertisement = async (
   }
 };
 
+const allWithoutFilters = async (): DbResult<number> => {
+  try {
+    const users = await client.advertisement.findMany({
+      where: {},
+    });
+    return Result.ok(users.length);
+  } catch (e) {
+    return genericError;
+  }
+};
+
 export default {
   one: readOneAdvertisement,
   all: readAllAdvertisement,
+  allWithoutFilters,
 };
