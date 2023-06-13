@@ -8,7 +8,7 @@ const create = async (req: Request, res: Response) => {
     const id: string = await userService.create(req.body);
     return handleOkResp(201, { uuid: id }, res, 'User created successfully');
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -17,7 +17,7 @@ const update = async (req: Request, res: Response, secret?: string) => {
     const id: string = await userService.update(req.headers, req.body, secret);
     return handleOkResp(200, { uuid: id }, res, 'User updated successfully');
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -30,7 +30,7 @@ const adminUpdate = async (req: Request, res: Response, secret?: string) => {
     );
     return handleOkResp(200, { uuid: id }, res, 'User updated successfully');
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -39,7 +39,7 @@ const getOne = async (req: Request, res: Response, secret?: string) => {
     const result = await userService.getOne(req.params, req.headers, secret);
     return handleOkResp(200, { ...result }, res, 'User searched successfully');
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -48,17 +48,17 @@ const getAll = async (req: Request, res: Response, secret?: string) => {
     const result = await userService.getAll(req.headers, secret);
     return handleOkResp(200, { ...result }, res, 'Users searched successfully');
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
 const getMe = async (req: Request, res: Response, secret?: string) => {
   try {
-    const userId = getUserId(req.headers, secret);
+    const userId = getUserId(req.headers.authorization, secret);
     const result = await userService.getById(userId);
     return handleOkResp(200, { ...result }, res, 'User searched successfully');
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
