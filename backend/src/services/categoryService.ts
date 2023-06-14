@@ -52,7 +52,7 @@ async function update(
   headers: Request['headers'],
   secret?: string
 ) {
-  const validatedData: updateschematype = categoryModel.updateSchema.parse({
+  const validatedData = categoryModel.updateSchema.parse({
     ...params,
     ...query,
   });

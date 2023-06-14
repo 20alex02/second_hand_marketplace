@@ -65,7 +65,7 @@ const Advert = (props: { advert?: AdvertType; state?: string }) => {
         onMouseLeave={imageOnLeave}
         className="advert__image"
         alt="Photo of advert"
-        src={imagePath}
+        src={`http://localhost:3001/api/images/${imagePath}`}
       />
       <div className="advert__info">
         <span className="advert__title">{props.advert.title}</span>

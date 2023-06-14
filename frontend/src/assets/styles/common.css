@@ -46,7 +46,7 @@
     background: var(--primary-color);
 }
 
-@media only screen and (min-width: 600px) {
+@media only screen and (min-width: 800px) {
     .container, .my-container {
         grid-template-columns: var(--sidebar-width) auto;
         height: 100%;
@@ -55,7 +55,7 @@
     .container {
         grid-column: 1;
         grid-row: 2;
-        grid-template-rows: calc(100vh - var(--navbar-height));
+        grid-template-rows: calc(90vh - var(--navbar-height));
     }
 
     .my-container {

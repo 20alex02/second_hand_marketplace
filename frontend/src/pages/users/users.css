@@ -21,4 +21,5 @@
 }
 .users-error {
     margin-top: 3em;
+    width: fit-content;
 }

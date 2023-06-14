@@ -14,10 +14,38 @@
     gap: 1.2rem;
 }
 
-@media only screen and (min-width: 600px) {
+.breadCrumbs {
+    margin: 0.5em 1em 0em;
+    position: sticky;
+}
+.adverts-section {
+    background-color: var(--white);
+
+}
+
+.adverts__pages {
+    text-align: center;
+    grid-row: 3;
+    grid-column: 1;
+}
+
+.adverts-error {
+    margin-top: 3em;
+    width: fit-content;
+    height: fit-content;
+}
+
+
+@media only screen and (min-width: 800px) {
     .filters-bar {
         grid-column: 1;
         width: var(--sidebar-width);
         height: 100%;
+    }
+
+    .adverts__pages {
+        text-align: center;
+        grid-row: 3;
+        grid-column: 2;
     }
 }
