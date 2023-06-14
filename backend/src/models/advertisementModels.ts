@@ -1,17 +1,23 @@
 import { z } from 'zod';
 import { AdvertisementType } from '@prisma/client';
 
-const createSchema = z
-  .object({
-    title: z.string().min(3),
-    type: z.nativeEnum(AdvertisementType),
-    description: z.string(),
-    creatorId: z.string().uuid(),
-    images: z.array(z.object({ path: z.string() })),
-    categories: z.array(z.object({ id: z.string().uuid() })),
-  })
-  .and(z.object({ estimatedPrice: z.number().positive() }).optional())
-  .and(z.object({ hidden: z.boolean() }).optional());
+const createSchema = z.object({
+  title: z.string().min(3),
+  type: z.nativeEnum(AdvertisementType),
+  description: z.string(),
+  creatorId: z.string().uuid(),
+  images: z.array(z.object({ path: z.string() })),
+  categories: z.array(z.object({ id: z.string().uuid() })),
+  estimatedPrice: z
+    .string()
+    .regex(/^\d+$/)
+    .transform(Number)
+    .refine((estimatedPrice) => estimatedPrice >= 0, {
+      message: 'estimatedPrice must be greater than 0',
+      path: ['estimatedPrice'],
+    }),
+  hidden: z.boolean().optional(),
+});
 
 const orderBySchema = z.union([
   z.object({ title: z.literal('asc' || 'desc') }),
