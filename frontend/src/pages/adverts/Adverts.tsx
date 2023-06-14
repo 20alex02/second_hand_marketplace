@@ -100,7 +100,7 @@ const Adverts = () => {
             )}
           </>
         )}
-        <ManageFloatButtons isAdmin={false} />
+        <ManageFloatButtons />
       </main>
       <div className="adverts__pages">
         <Pagination

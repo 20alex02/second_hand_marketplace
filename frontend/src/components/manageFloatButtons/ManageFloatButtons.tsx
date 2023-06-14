@@ -14,8 +14,10 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { Option } from 'antd/es/mentions';
 import stringUtil from '../../utils/stringUtil';
+import { useRecoilValue } from 'recoil';
+import { AuthToken, UserRole } from '../../state/atom';
 
-const ManageFloatButtons = (props: { isAdmin: boolean }) => {
+const FloatButtons = (props: { isAdmin: boolean }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [radioValue, setRadioValue] = useState<string>('Delete');
@@ -64,7 +66,11 @@ const ManageFloatButtons = (props: { isAdmin: boolean }) => {
         onCancel={handleCancel}
         closable={false}
       >
-        <Select className="manage-category__select" placeholder="Categories" onChange={setSelectedIndex}>
+        <Select
+          className="manage-category__select"
+          placeholder="Categories"
+          onChange={setSelectedIndex}
+        >
           {categoriesPlaceholder.map((option, index) => (
             <Option key={option.id} value={index.toString()}>
               {stringUtil.capitalizeWord(option.name)}
@@ -89,6 +95,17 @@ const ManageFloatButtons = (props: { isAdmin: boolean }) => {
         />
       </Modal>
     </FloatButton.Group>
+  );
+};
+
+const ManageFloatButtons = () => {
+  const token = useRecoilValue(AuthToken);
+  const role = useRecoilValue(UserRole);
+
+  return token === null || token === '' ? (
+    <></>
+  ) : (
+    <FloatButtons isAdmin={role === 'ADMIN'} />
   );
 };
 

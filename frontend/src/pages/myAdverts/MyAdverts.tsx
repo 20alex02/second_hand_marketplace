@@ -34,7 +34,7 @@ const MyAdverts = () => {
   const Role = useRecoilValue(UserRole);
   const Token = useRecoilValue(AuthToken);
   const [isLoading, SetIsLoading] = useState(true);
-  const isAdmin = Role === 'ADMIN';
+  const hidden = Role !== 'ADMIN';
 
   const { id, name } = useParams();
   useEffect(() => {
@@ -49,7 +49,7 @@ const MyAdverts = () => {
     client.invalidateQueries(['myAdverts']);
   }, [categories, page]);
 
-  if (!isAdmin || !id) {
+  if (hidden || !id) {
     useQuery(
       ['myAdverts'],
       () => getAllMe(Token, pageRef.current, categoriesRef.current),
@@ -91,7 +91,7 @@ const MyAdverts = () => {
 
   return (
     <div className="my-container">
-      <div className="title-user">{!isAdmin && id ? '' : name}</div>
+      <div className="title-user">{hidden && id ? '' : name}</div>
       <aside className="filters-bar">
         <Filters />
       </aside>
@@ -126,7 +126,7 @@ const MyAdverts = () => {
             </>
           )}
         </div>
-        <ManageFloatButtons isAdmin={isAdmin} />
+        <ManageFloatButtons />
       </main>
       <div className="adverts__pages">
         <Pagination
