@@ -6,10 +6,17 @@ import AdvertDetail from './pages/advertDetail/AdvertDetail';
 import Navbar from './components/navbar/Navbar';
 import './index.css';
 import AdvertCreate from './pages/advertCreate/AdvertCreate';
+import { ConfigProvider } from 'antd';
 
 export const App: FC = () => {
   return (
-    <>
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#0CBAE8',
+        },
+      }}
+    >
       <Navbar />
       <Routes>
         <Route path="/" element={<Adverts />} />
@@ -17,6 +24,6 @@ export const App: FC = () => {
         <Route path="/advert-creation" element={<AdvertCreate />} />
         <Route path="/Login" element={<Login />} />
       </Routes>
-    </>
+    </ConfigProvider>
   );
 };
