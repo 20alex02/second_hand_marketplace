@@ -1,5 +1,3 @@
-import categoriesPlaceholder from '../../assets/categoriesPlaceholder.json';
-
 import './categoryCollapse.css';
 
 import { Breadcrumb, Button, Collapse, Modal, Select } from 'antd';
@@ -12,6 +10,11 @@ import {
   BreadcrumbSeparatorType,
 } from 'antd/es/breadcrumb/Breadcrumb';
 import { Option } from 'antd/es/mentions';
+import { Category } from '../../models/advert';
+import { useRecoilState } from 'recoil';
+import { Categories } from '../../state/atom';
+import { useQuery } from '@tanstack/react-query';
+import { getCategories } from '../../services/advertsApi';
 
 type BreadcrumbItems =
   | Partial<BreadcrumbItemType & BreadcrumbSeparatorType>[]
@@ -67,7 +70,16 @@ const getAllCategoriesFromList = (
 const CategoryCollapse = (props: {
   categories?: Category[];
   edit?: boolean;
+  onSelectChange?: (value: string) => void;
 }) => {
+  const [categories, setCategories] = useRecoilState(Categories);
+  useQuery(['categories'], () => getCategories(), {
+    onSuccess: (data) => {
+      const dataArray: Category[] = Object.values(data.data.value);
+      setCategories(dataArray);
+    },
+  });
+
   const [categoryItems, setCategoryItems] = useState<BreadcrumbItems>(
     getAllCategories(props.categories)
   );
@@ -80,10 +92,7 @@ const CategoryCollapse = (props: {
 
   const handleOk = () => {
     setCategoryItems(
-      getAllCategoriesFromList(
-        categoriesPlaceholder,
-        categoriesPlaceholder[selectedIndex]
-      )
+      getAllCategoriesFromList(categories, categories[selectedIndex])
     );
     setIsModalOpen(false);
   };
@@ -99,7 +108,7 @@ const CategoryCollapse = (props: {
         {props.edit ? (
           <Button
             size="small"
-            icon={<PlusOutlined rev />}
+            icon={<PlusOutlined rev={undefined} />}
             onClick={showModal}
           />
         ) : (
@@ -115,9 +124,13 @@ const CategoryCollapse = (props: {
         >
           <Select
             className="category-modal__select"
-            onChange={setSelectedIndex}
+            onChange={(value) => {
+              setSelectedIndex(value);
+              if (props.onSelectChange !== undefined)
+                props.onSelectChange(value);
+            }}
           >
-            {categoriesPlaceholder.map((option, index) => (
+            {categories.map((option, index) => (
               <Option key={option.id} value={index.toString()}>
                 {stringUtil.capitalizeWord(option.name)}
               </Option>

@@ -2,13 +2,14 @@ import './advertCreation.css';
 import '../../assets/styles/common.css';
 
 import CategoryCollapse from '../categoryCollapse/CategoryCollapse';
-import Advertiser from '../advertiser/Advertiser';
 
 import {
   Button,
   Form,
+  FormInstance,
   Input,
   InputNumber,
+  Modal,
   Select,
   Upload,
   UploadFile,
@@ -20,8 +21,20 @@ import {
 } from '@ant-design/icons';
 import React from 'react';
 import stringUtil from '../../utils/stringUtil';
+import { AdvertDetail, CreateAdvertType } from '../../models/advertDetail';
+import { useMutation } from '@tanstack/react-query';
+import { ApiError } from '../../models/error';
+import { useRecoilValue } from 'recoil';
+import { AuthToken, Categories } from '../../state/atom';
+import { createAdvert } from '../../services/advertsApi';
 
 const { TextArea } = Input;
+
+function mapOthers<T extends object>(obj: T, formdata: FormData) {
+  Object.keys(obj).forEach((key) => {
+    formdata.append(key, obj[key as keyof T]);
+  });
+}
 
 const EditButtons = (props: {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -30,23 +43,32 @@ const EditButtons = (props: {
     <div className="advert-creation__buttons edit-button">
       <Button
         className="edit-button__edit"
-        icon={<CheckOutlined rev />}
+        icon={<CheckOutlined rev={undefined} />}
         onClick={() => props.setIsEditing(true)}
       />
       <Button
         className="edit-button__close"
-        icon={<CloseOutlined rev />}
+        icon={<CloseOutlined rev={undefined} />}
         onClick={() => props.setIsEditing(false)}
       />
     </div>
   );
 };
 
-const CreateButtons = () => {
+const CreateButtons = (props: { form: FormInstance }) => {
   return (
     <div className="advert-creation__buttons edit-button">
-      <Button className="edit-button__edit" icon={<CheckOutlined rev />} />
-      <Button className="edit-button__close" icon={<CloseOutlined rev />} />
+      <Button
+        className="edit-button__edit"
+        htmlType="submit"
+        icon={<CheckOutlined rev={undefined} />}
+      />
+      <Button
+        className="edit-button__close"
+        htmlType="button"
+        onClick={() => props.form.resetFields()}
+        icon={<CloseOutlined rev={undefined} />}
+      />
     </div>
   );
 };
@@ -56,6 +78,9 @@ const AdvertCreation = (props: {
   setIsEditing?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [form] = Form.useForm();
+  const [modal, confirmation] = Modal.useModal();
+  const categories = useRecoilValue(Categories);
+  const Token = useRecoilValue(AuthToken);
   const fileList: UploadFile[] =
     props.advert?.images.map((item: Image) => {
       return {
@@ -64,15 +89,55 @@ const AdvertCreation = (props: {
         name: '',
       };
     }) ?? [];
+  const handleSelectChange = (value: string) => {
+    form.setFieldsValue({ category: categories[Number(value)].id });
+  };
 
+  const { mutate: create } = useMutation(
+    (data: FormData) => createAdvert(Token, data),
+    {
+      onSuccess: () => {
+        modal.success({
+          title: 'Advert was succesfully created',
+        });
+      },
+      onError: (error: ApiError) => {
+        modal.error({
+          title: 'Unable to create advert',
+          content: error.response.data.message,
+        });
+      },
+    }
+  );
+  const onFinish = (values: CreateAdvertType) => {
+    const formData = new FormData();
+    const { images, ...other } = values;
+    mapOthers(other, formData);
+    images.fileList.forEach((file) => {
+      formData.append('file', file);
+    });
+    create(formData);
+  };
   return (
-    <Form className="advert-creation" form={form} layout="vertical">
+    <Form
+      className="advert-creation"
+      form={form}
+      layout="vertical"
+      onFinish={onFinish}
+    >
       {props.advert && props.setIsEditing ? (
         <EditButtons setIsEditing={props.setIsEditing} />
       ) : (
-        <CreateButtons />
+        <CreateButtons form={form} />
       )}
-      <CategoryCollapse categories={props.advert?.categories} edit />
+      <Form.Item name="category" className="advert-creation__category">
+        <CategoryCollapse
+          categories={props.advert?.categories}
+          edit
+          onSelectChange={handleSelectChange}
+        />
+      </Form.Item>
+
       <Form.Item
         className="advert-creation__type"
         name="type"
@@ -82,8 +147,8 @@ const AdvertCreation = (props: {
       >
         <Select
           options={[
-            { value: 'Offer', label: 'Offer' },
-            { value: 'Request', label: 'Request' },
+            { value: 'OFFER', label: 'Offer' },
+            { value: 'REQUEST', label: 'Request' },
           ]}
         />
       </Form.Item>
@@ -97,13 +162,17 @@ const AdvertCreation = (props: {
         <Input />
       </Form.Item>
       <span className="advert-creation__date">{`${new Date().toLocaleDateString()}`}</span>
-      <Upload
-        className="advert-creation__image"
-        listType="picture"
-        defaultFileList={fileList}
-      >
-        <Button icon={<UploadOutlined rev />}>Upload image</Button>
-      </Upload>
+      <Form.Item name="images">
+        <Upload
+          className="advert-creation__image"
+          listType="picture"
+          defaultFileList={fileList}
+        >
+          <Button icon={<UploadOutlined rev={undefined} />}>
+            Upload image
+          </Button>
+        </Upload>
+      </Form.Item>
       <Form.Item
         className="advert-creation__description"
         name="description"
@@ -120,7 +189,7 @@ const AdvertCreation = (props: {
       >
         <InputNumber min={1} addonAfter="CZK" />
       </Form.Item>
-      <Advertiser creator={props.advert?.creator} edit />
+      {confirmation}
     </Form>
   );
 };
