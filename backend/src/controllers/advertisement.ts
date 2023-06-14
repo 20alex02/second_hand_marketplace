@@ -13,12 +13,12 @@ const create = async (req: Request, res: Response, secret?: string) => {
     );
     return handleOkResp(
       201,
-      { ...result },
+      { uuid: result },
       res,
       'Advertisement created successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -36,7 +36,44 @@ const getAll = async (req: Request, res: Response) => {
       'Advertisement searched successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
+  }
+};
+
+const adminGetAll = async (req: Request, res: Response, secret?: string) => {
+  try {
+    const result = await advertisementService.adminGetAll(
+      req.params,
+      req.query,
+      req.headers,
+      secret
+    );
+    return handleOkResp(
+      200,
+      { ...result },
+      res,
+      'Advertisement searched successfully'
+    );
+  } catch (error) {
+    return handleError(error as Error, res);
+  }
+};
+
+const getAllMe = async (req: Request, res: Response, secret?: string) => {
+  try {
+    const result = await advertisementService.getAllMe(
+      req.query,
+      req.headers,
+      secret
+    );
+    return handleOkResp(
+      200,
+      { ...result },
+      res,
+      'Advertisement searched successfully'
+    );
+  } catch (error) {
+    return handleError(error as Error, res);
   }
 };
 
@@ -50,7 +87,7 @@ const getOne = async (req: Request, res: Response) => {
       'Advertisement searched successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -67,12 +104,12 @@ const deleteAdvertisement = async (
     );
     return handleOkResp(
       200,
-      { ...result },
+      { uuid: result },
       res,
       'Advertisement deleted successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -87,12 +124,12 @@ const update = async (req: Request, res: Response, secret?: string) => {
     );
     return handleOkResp(
       200,
-      { ...result },
+      { uuid: result },
       res,
       'Advertisement searched successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -100,6 +137,8 @@ export default {
   create,
   getTypes,
   getAll,
+  adminGetAll,
+  getAllMe,
   getOne,
   delete: deleteAdvertisement,
   update,

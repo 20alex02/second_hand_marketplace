@@ -5,13 +5,14 @@ import { COUNT, STATUS } from './states';
 import { useNavigate } from 'react-router-dom';
 
 import priceUtil from '../../utils/priceUtil';
+import { AdvertDetail } from '../../models/advertDetail';
 
 const NONE_MODIFIER = ' advert-stats--none';
 
 const ParticipantState = (props: { count: number }) => {
   return (
     <div className="advert-stats__count">
-      <UserOutlined rev />
+      <UserOutlined rev={undefined} />
       {props.count}
     </div>
   );
@@ -20,17 +21,24 @@ const ParticipantState = (props: { count: number }) => {
 const AdvertState = (props: { hidden: boolean }) => {
   return (
     <div className="advert-stats__status">
-      {props.hidden ? <CheckOutlined rev /> : <StopOutlined rotate={270} rev />}
+      {props.hidden ? (
+        <CheckOutlined rev={undefined} />
+      ) : (
+        <StopOutlined rotate={270} rev={undefined} />
+      )}
     </div>
   );
 };
 
-const Advert = (props: { advert?: AdvertType; state?: string }) => {
+const Advert = (props: { advert?: AdvertDetail; state?: string }) => {
   if (!props.advert) {
     return <></>;
   }
 
-  const stats = getStatsModifier(props.advert.participantCount, props.state);
+  const stats = getStatsModifier(
+    props.state ? props.advert.participants.length : 0,
+    props.state
+  );
   const imageCount = props.advert.images.length;
 
   let index = 0;
@@ -65,7 +73,7 @@ const Advert = (props: { advert?: AdvertType; state?: string }) => {
         onMouseLeave={imageOnLeave}
         className="advert__image"
         alt="Photo of advert"
-        src={imagePath}
+        src={`http://localhost:3001/api/images/${imagePath}`}
       />
       <div className="advert__info">
         <span className="advert__title">{props.advert.title}</span>
@@ -77,10 +85,10 @@ const Advert = (props: { advert?: AdvertType; state?: string }) => {
   );
 };
 
-const switchStats = (advert: AdvertType, state?: string) => {
+const switchStats = (advert: AdvertDetail, state?: string) => {
   switch (state) {
     case COUNT:
-      return <ParticipantState count={advert.participantCount} />;
+      return <ParticipantState count={advert.participants.length} />;
     case STATUS:
       return <AdvertState hidden={advert.hidden} />;
     default:

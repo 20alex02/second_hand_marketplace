@@ -1,6 +1,7 @@
 import type { Request, Response } from 'express';
 import categoryService from '../services/categoryService';
 import { handleOkResp, handleError } from './common';
+import category from '../repositories/category';
 
 const create = async (req: Request, res: Response, secret?: string) => {
   try {
@@ -12,7 +13,7 @@ const create = async (req: Request, res: Response, secret?: string) => {
       'Category created successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -30,13 +31,13 @@ const getOne = async (req: Request, res: Response, secret?: string) => {
       'Category searched successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
-const getAll = async (req: Request, res: Response) => {
+const getAll = async (_req: Request, res: Response) => {
   try {
-    const result = await categoryService.getAll(req.query);
+    const result = await category.read.all();
     return handleOkResp(
       200,
       { ...result },
@@ -44,7 +45,7 @@ const getAll = async (req: Request, res: Response) => {
       'Category searched successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -58,12 +59,12 @@ const update = async (req: Request, res: Response, secret?: string) => {
     );
     return handleOkResp(
       200,
-      { ...result },
+      { uuid: result },
       res,
       'Category updated successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 
@@ -76,12 +77,12 @@ const deleteCategory = async (req: Request, res: Response, secret?: string) => {
     );
     return handleOkResp(
       200,
-      { ...result },
+      { uuid: result },
       res,
       'Category deleted successfully'
     );
   } catch (error) {
-    return handleError(error, res);
+    return handleError(error as Error, res);
   }
 };
 

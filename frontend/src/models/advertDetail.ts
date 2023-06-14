@@ -1,4 +1,4 @@
-type AdvertDetail = {
+export type AdvertDetail = {
   id: string;
   createdAt: string;
   title: string;
@@ -8,12 +8,13 @@ type AdvertDetail = {
   creator: Contact;
   participants: Contact[];
   images: Image[];
-  categories: Category[];
+  categories: Category;
+  hidden: boolean;
 };
 
-// type AdvertisementType = 'OFFER' | 'REQUEST';
+// export type AdvertisementType = 'OFFER' | 'REQUEST';
 
-type Contact =
+export type Contact =
   | {
       email: string;
       phoneNumber: string;
@@ -21,7 +22,7 @@ type Contact =
   | { email: string }
   | { phoneNumber: string };
 
-type Category = {
+export type Category = {
   id: string;
   name: string;
   parentId: string | null;

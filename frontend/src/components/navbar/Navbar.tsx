@@ -1,25 +1,28 @@
 import { Drawer, Menu, MenuProps } from 'antd';
 import './navbar.css';
 import { useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import { AuthToken, UserRole } from '../../state/atom';
 import { LogoutOutlined, LoginOutlined, MenuOutlined } from '@ant-design/icons';
 
 function Navbar() {
   const [current, setCurrent] = useState('');
-  const [token, setToken] = useRecoilState(AuthToken);
+  const [token] = useRecoilState(AuthToken);
   const userRole = useRecoilValue(UserRole);
   const [openMenu, setOpenMenu] = useState(false);
   const location = useLocation(); // once ready it returns the 'window.location' object
   const [url, setUrl] = useState<string | null>(null);
+  const navigator = useNavigate();
 
   useEffect(() => {
     setUrl(location.pathname.toUpperCase());
   });
 
   const logout = () => {
-    setToken('');
+    localStorage.clear();
+    navigator('/');
+    navigator(0);
   };
   const onClick: MenuProps['onClick'] = (e) => {
     setCurrent(e.key);
@@ -34,7 +37,7 @@ function Navbar() {
     },
   ];
 
-  if (token === '') {
+  if (token === null || token === '') {
     items.push({
       label: (
         <NavLink to="/Login">
@@ -65,13 +68,6 @@ function Navbar() {
       });
     }
     items.push(
-      {
-        label: <NavLink to="/InterestedIn">Interested in</NavLink>,
-        key: 'interest',
-        className:
-          'navbar__item ' +
-          (url === '/InterestedIn'.toUpperCase() ? 'navbar__item--active' : ''),
-      },
       {
         label: <NavLink to="/Edit">Edit</NavLink>,
         key: 'edit',

@@ -8,7 +8,7 @@ import type {
   AdvertisementReadAllResult,
 } from '../types/return';
 import client from '../client';
-import { genericError } from '../types';
+import DbResult, { genericError } from '../types';
 import {
   DeletedRecordError,
   NonexistentRecordError,
@@ -57,12 +57,84 @@ const readAllAdvertisement = async (
   data: AdvertisementReadAllData
 ): AdvertisementReadAllResult => {
   const {
-    categories,
-    estimatedPrice,
-    created,
     pageNum,
     perPage,
-    orderBy,
+    categories,
+    estimatedPriceFrom,
+    estimatedPriceTo,
+    // createdFrom,
+    // createdTo,
+    orderByPrice,
+    orderByTitle,
+    ...filterData
+  } = data;
+  const orderBy =
+    orderByPrice || orderByTitle
+      ? {
+          ...(orderByPrice ? { estimatedPrice: orderByPrice } : {}),
+          ...(orderByTitle ? { title: orderByTitle } : {}),
+        }
+      : {};
+  const categoryFilter = categories
+    ? {
+        categories: {
+          some: {
+            id: {
+              in: categories,
+            },
+          },
+        },
+      }
+    : {};
+
+  const estimatedPrice =
+    estimatedPriceFrom || estimatedPriceTo
+      ? {
+          ...(estimatedPriceFrom ? { gte: estimatedPriceFrom } : {}),
+          ...(estimatedPriceTo ? { lte: estimatedPriceTo } : {}),
+        }
+      : {};
+  // const createdAt =
+  //   createdFrom || createdTo
+  //     ? {
+  //         ...(createdFrom ? { gte: createdFrom } : {}),
+  //         ...(createdTo ? { lte: createdTo } : {}),
+  //       }
+  //     : {};
+  try {
+    const users = await client.advertisement.findMany({
+      where: {
+        ...filterData,
+        deletedAt: null,
+        ...categoryFilter,
+        estimatedPrice,
+        // createdAt,
+      },
+      orderBy,
+      take: perPage,
+      skip: (pageNum - 1) * perPage,
+      include: {
+        images: true,
+        participants: true,
+      },
+    });
+    return Result.ok(users);
+  } catch (e) {
+    return genericError;
+  }
+};
+
+const readAllCount = async (
+  data: AdvertisementReadAllData
+): DbResult<number> => {
+  const {
+    pageNum,
+    perPage,
+    categories,
+    estimatedPriceFrom,
+    estimatedPriceTo,
+    orderByPrice,
+    orderByTitle,
     ...filterData
   } = data;
   const categoryFilter = categories
@@ -77,36 +149,23 @@ const readAllAdvertisement = async (
       }
     : {};
 
-  const estimatedPriceFilter = estimatedPrice
-    ? {
-        estimatedPrice: {
-          ...(estimatedPrice.from ? { gte: estimatedPrice.from } : {}),
-          ...(estimatedPrice.to ? { lte: estimatedPrice.to } : {}),
-        },
-      }
-    : {};
-  const createdFilter = created
-    ? {
-        createdAt: {
-          ...(created.from ? { gte: created.from } : {}),
-          ...(created.to ? { lte: created.to } : {}),
-        },
-      }
-    : {};
+  const estimatedPrice =
+    estimatedPriceFrom || estimatedPriceTo
+      ? {
+          ...(estimatedPriceFrom ? { gte: estimatedPriceFrom } : {}),
+          ...(estimatedPriceTo ? { lte: estimatedPriceTo } : {}),
+        }
+      : {};
   try {
     const users = await client.advertisement.findMany({
       where: {
         ...filterData,
         deletedAt: null,
         ...categoryFilter,
-        ...estimatedPriceFilter,
-        ...createdFilter,
+        estimatedPrice,
       },
-      orderBy: orderBy ?? {},
-      skip: (pageNum - 1) * perPage,
-      take: perPage,
     });
-    return Result.ok(users);
+    return Result.ok(users.length);
   } catch (e) {
     return genericError;
   }
@@ -115,4 +174,5 @@ const readAllAdvertisement = async (
 export default {
   one: readOneAdvertisement,
   all: readAllAdvertisement,
+  allCount: readAllCount,
 };

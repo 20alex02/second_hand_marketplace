@@ -60,7 +60,18 @@ export const getRequiredField = <T>(
   return curField;
 };
 
-export const handleError = (error: unknown, res: Response) => {
+export const getOptionalField = <T>(
+  data: { [x: string]: T | null },
+  field: string
+) => {
+  const curField = data[field];
+  if (curField === null || curField === undefined) {
+    return null;
+  }
+  return curField;
+};
+
+export const handleError = (error: Error, res: Response) => {
   if (error instanceof z.ZodError) {
     return handleValidationErrorResp(error, res);
   }
@@ -87,3 +98,11 @@ export const handleError = (error: unknown, res: Response) => {
   }
   return handleErrorResp(500, res, 'Unknown error');
 };
+
+export function deleteUndefined<T extends object>(obj: T) {
+  Object.keys(obj).forEach((key) => {
+    if (obj[key as keyof T] === undefined) {
+      delete obj[key as keyof T];
+    }
+  });
+}

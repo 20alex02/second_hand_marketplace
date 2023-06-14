@@ -57,7 +57,12 @@ export type AdvertisementReadOneResult = DbResult<
   Advertisement & AdvertisementAdditionalData
 >;
 
-export type AdvertisementReadAllResult = DbResult<Advertisement[]>;
+export type AdvertisementReadAllResult = DbResult<
+  (Advertisement & {
+    images: AdvertisementImage[];
+    participants: Participant[];
+  })[]
+>;
 
 export type AdvertisementUpdateResult = DbResult<
   Advertisement & AdvertisementAdditionalData

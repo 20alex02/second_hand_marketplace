@@ -12,8 +12,8 @@ export type UserCreateData = {
 export type UserReadOneData = { id: string } | { email: string };
 
 export type UserReadAllData = {
-  pageNum: number;
-  perPage: number;
+  // pageNum: number;
+  // perPage: number;
   // role?: Role;
   // TODO filters
 };
@@ -78,9 +78,12 @@ export type AdvertisementReadAllData = {
   hidden?: boolean;
   creatorId?: string;
   categories?: string[];
-  estimatedPrice?: { from: number | undefined; to: number | undefined };
-  created?: { from: Date | undefined; to: Date | undefined };
-  orderBy?: { title: 'asc' | 'desc' } | { estimatedPrice: 'asc' | 'desc' };
+  estimatedPriceFrom?: number;
+  estimatedPriceTo?: number;
+  // createdFrom?: Date;
+  // createdTo?: Date;
+  orderByTitle?: 'asc' | 'desc';
+  orderByPrice?: 'asc' | 'desc';
 };
 
 export type AdvertisementUpdateData = {
@@ -133,11 +136,10 @@ export type CategoryReadOneData = {
   id: string;
 };
 
-export type CategoryReadAllData = {
-  pageNum: number;
-  perPage: number;
-  advertisementId?: string;
-};
+// export type CategoryReadAllData = {
+// pageNum: number;
+// perPage: number;
+// };
 
 export type CategoryUpdateData =
   | { id: string; name: string; parentId?: string }
