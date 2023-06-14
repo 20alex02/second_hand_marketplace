@@ -14,7 +14,7 @@ import {
   FileOutlined,
   UserAddOutlined,
 } from '@ant-design/icons';
-import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 interface DataType {
   email: string;
@@ -26,7 +26,6 @@ interface DataType {
 function Users() {
   const Token = useRecoilValue(AuthToken);
   const Role = useRecoilValue(UserRole);
-  const navigate = useNavigate();
   const [modal, errorModal] = Modal.useModal();
   const [err, setError] = useState<string>('');
   const [users, setUsers] = useState<DataType[]>();
@@ -88,11 +87,10 @@ function Users() {
               rev={undefined}
             />
           )}
-          <FileOutlined
-            className="action__icon"
-            onClick={() => navigate(`/MyAdverts/${record.id}/${record.email}`)}
-            rev={undefined}
-          />
+          <NavLink to={`/MyAdverts/${record.id}/${record.email}`}>
+            <FileOutlined className="action__icon" rev={undefined} />
+          </NavLink>
+
           <CloseCircleTwoTone
             rev={undefined}
             twoToneColor="red"

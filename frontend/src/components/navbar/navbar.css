@@ -4,11 +4,6 @@
   color: var(--white);
 }
 
-.navbar__item--active {
-  background-color: var(--primary-color-dark) !important;
-  border-bottom-width: 0px !important;
-}
-
 .navbar__item:hover {
   cursor: pointer;
 }
@@ -59,7 +54,11 @@
   background-color: var(--primary-color);
   height: 100%;
 }
-
+:where(.css-dev-only-do-not-override-1f4urz3).ant-menu-light.ant-menu-horizontal >.ant-menu-item-selected {
+  color: var(--white);
+  background-color: var(--primary-color-dark) !important;
+  border-bottom-width: 0px !important;
+}
 .ant-drawer-header-title {
   justify-content: right !important;
 }
