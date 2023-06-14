@@ -4,6 +4,9 @@ import { AdvertisementType } from '@prisma/client';
 import advertisementService from '../services/advertisementService';
 
 const create = async (req: Request, res: Response, secret?: string) => {
+  console.log(req.body.files);
+  console.log(req.files);
+  console.log(req);
   try {
     const result = await advertisementService.create(
       req.body,
