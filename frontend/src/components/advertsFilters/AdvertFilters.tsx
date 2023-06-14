@@ -25,14 +25,9 @@ const AdvertFilters = () => {
   const formRef = React.useRef<FormInstance>(null);
 
   const onFinish = (values: FilterForm) => {
-    if (values.maxPrice !== undefined && values.minPrice !== undefined) {
-      setMin(values.minPrice);
-      setMax(values.maxPrice);
-      setInterested(values.interested);
-    } else {
-      setMin(undefined);
-      setMax(undefined);
-    }
+    setMin(values.minPrice);
+    setMax(values.maxPrice);
+    setInterested(values.interested);
   };
 
   const onReset = () => {

@@ -13,7 +13,7 @@ export const getAdverts = async (
   maxPrice: number | undefined
 ) => {
   let params;
-  if (minPrice === undefined || maxPrice === undefined) {
+  if (minPrice === undefined && maxPrice === undefined) {
     params = {
       pageNum: pageNum,
       perPage: 9,
@@ -24,8 +24,8 @@ export const getAdverts = async (
       pageNum: pageNum,
       perPage: 9,
       categories: categoryIds,
-      estimatedPriceFrom: minPrice,
-      estimatedPriceTo: maxPrice,
+      estimatedPriceFrom: minPrice ?? 0,
+      estimatedPriceTo: maxPrice ?? 0,
     };
   }
 
