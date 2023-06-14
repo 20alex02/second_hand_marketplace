@@ -24,6 +24,7 @@ export const getAdverts = async (
 
     return config;
   });
+
   let params;
   if (minPrice === undefined || maxPrice === undefined) {
     params = {
@@ -36,12 +37,9 @@ export const getAdverts = async (
       pageNum: pageNum,
       perPage: 9,
       categories: categoryIds,
-      estimatedPrice: {
-        from: minPrice,
-        to: maxPrice,
-      },
     };
   }
+
   const response = await axiosInstance.get<AxiosResponse>('api/advertisement', {
     params: params,
   });
