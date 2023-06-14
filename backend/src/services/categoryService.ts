@@ -1,5 +1,5 @@
 import category from '../repositories/category';
-import categoryModel, { updateschematype } from '../models/categoryModels';
+import categoryModel from '../models/categoryModels';
 import { getUserId } from './authService';
 import { InvalidAccessRights } from '../errors/controllersErrors';
 import userService from './userService';
