@@ -21,7 +21,10 @@ import {
 } from '@ant-design/icons';
 import React from 'react';
 import stringUtil from '../../utils/stringUtil';
-import { AdvertDetail, CreateAdvertType } from '../../models/advertDetail';
+import {
+  CreateAdvertType,
+  AdvertDetailType,
+} from '../../models/advertDetailType';
 import { useMutation } from '@tanstack/react-query';
 import { ApiError } from '../../models/error';
 import { useRecoilValue } from 'recoil';

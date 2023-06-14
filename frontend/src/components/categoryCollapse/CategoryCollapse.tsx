@@ -11,7 +11,6 @@ import {
   BreadcrumbSeparatorType,
 } from 'antd/es/breadcrumb/Breadcrumb';
 import { Option } from 'antd/es/mentions';
-import { Category } from '../../models/advert';
 import { useRecoilState } from 'recoil';
 import { Categories } from '../../state/atom';
 import { useQuery } from '@tanstack/react-query';
