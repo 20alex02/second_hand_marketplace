@@ -98,3 +98,11 @@ export const handleError = (error: Error, res: Response) => {
   }
   return handleErrorResp(500, res, 'Unknown error');
 };
+
+export function deleteUndefined<T extends object>(obj: T) {
+  Object.keys(obj).forEach((key) => {
+    if (obj[key as keyof T] === undefined) {
+      delete obj[key as keyof T];
+    }
+  });
+}
