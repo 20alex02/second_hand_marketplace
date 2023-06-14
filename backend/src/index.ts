@@ -60,11 +60,15 @@ app.get('/api/advertisement/me', authenticateToken, (req, res) => {
   return controllers.advertisement.getAllMe(req, res, secretKey);
 });
 
-app.get('/api/advertisement/:id', controllers.advertisement.getOne);
+app.get(
+  '/api/advertisement/admin/:creatorId',
+  authenticateToken,
+  (req, res) => {
+    return controllers.advertisement.adminGetAll(req, res, secretKey);
+  }
+);
 
-app.get('/api/advertisement/:creatorId', authenticateToken, (req, res) => {
-  return controllers.advertisement.adminGetAll(req, res, secretKey);
-});
+app.get('/api/advertisement/:id', controllers.advertisement.getOne);
 
 app.get('/api/advertisement', controllers.advertisement.getAll, (req, res) => {
   return controllers.advertisement.getAll(req, res);
