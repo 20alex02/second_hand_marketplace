@@ -1,6 +1,5 @@
 import axiosInstance from './base';
 import { AxiosResponse } from 'axios';
-import Qs from 'qs';
 
 export const getCategories = async () => {
   const response = await axiosInstance.get<AxiosResponse>('api/category');
