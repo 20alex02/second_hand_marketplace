@@ -56,7 +56,9 @@ function Navbar() {
       key: 'myAdverts',
       className:
         'navbar__item ' +
-        (url === '/MyAdverts'.toUpperCase() ? 'navbar__item--active' : ''),
+        (url?.startsWith('/MyAdverts'.toUpperCase())
+          ? 'navbar__item--active'
+          : ''),
     });
     if (userRole === 'ADMIN') {
       items.push({
