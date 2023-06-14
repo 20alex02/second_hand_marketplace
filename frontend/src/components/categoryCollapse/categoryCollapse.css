@@ -8,3 +8,17 @@
     max-width: var(--advert-detail-width);
     background-color: var(--white);
 }
+
+.category-collapse .ant-collapse-content-box {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.category-modal .ant-btn-primary {
+    background-color: var(--primary-color);
+}
+
+.category-modal__select {
+    width: 100%;
+}

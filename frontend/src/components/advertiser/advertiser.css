@@ -4,6 +4,24 @@
     row-gap: 0.4rem;
 }
 
+.advertiser .ant-form-item-label {
+    flex-basis: auto !important;
+}
+
+.advertiser .ant-row {
+    flex-flow: unset;
+    flex-direction: column;
+}
+
 .advertiser__email, .advertiser__phone {
     font-size: 1.1rem;
+}
+
+.advertiser label.ant-form-item-required {
+    font-size: 1.5rem;
+}
+
+.advertiser__checkbox-group {
+    display: flex;
+    flex-direction: column;
 }

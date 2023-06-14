@@ -4,6 +4,8 @@ import '../../assets/styles/common.css';
 
 import Filters from '../../components/filters/Filters';
 import Advert from '../../components/advert/Advert';
+import { AdvertDetail } from '../../models/advertDetail';
+import ManageFloatButtons from '../../components/manageFloatButtons/ManageFloatButtons';
 
 import { COUNT, STATUS } from '../../components/advert/states';
 import { useEffect, useRef, useState } from 'react';
@@ -15,7 +17,6 @@ import { ApiError } from '../../models/error';
 import { getAllMe, getAllMeAdmin } from '../../services/advertsApi';
 import { CategoryIdsForAdverts } from '../../state/selector';
 import { useParams } from 'react-router-dom';
-import { AdvertDetail } from '../../models/advertDetail';
 
 const ACTIVE = 'Active';
 const CLOSED = 'Closed';
@@ -125,6 +126,7 @@ const MyAdverts = () => {
             </>
           )}
         </div>
+        <ManageFloatButtons />
       </main>
       <div className="adverts__pages">
         <Pagination

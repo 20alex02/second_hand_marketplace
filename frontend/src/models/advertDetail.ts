@@ -2,7 +2,7 @@ export type AdvertDetail = {
   id: string;
   createdAt: string;
   title: string;
-  type: AdvertisementType;
+  type: string;
   description: string;
   estimatedPrice?: number;
   creator: Contact;
@@ -12,7 +12,7 @@ export type AdvertDetail = {
   hidden: boolean;
 };
 
-export type AdvertisementType = 'OFFER' | 'REQUEST';
+// export type AdvertisementType = 'OFFER' | 'REQUEST';
 
 export type Contact =
   | {
@@ -23,7 +23,7 @@ export type Contact =
   | { phoneNumber: string };
 
 export type Category = {
-  name: string;
   id: string;
+  name: string;
   parentId: string | null;
 };

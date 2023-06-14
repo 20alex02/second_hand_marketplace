@@ -13,6 +13,7 @@ import AdvertFilters from '../../components/advertsFilters/AdvertFilters';
 import { FiltersMin, FiltersMax } from '../../state/atom';
 import { ApiError } from '../../models/error';
 import { AdvertDetail } from '../../models/advertDetail';
+import ManageFloatButtons from '../../components/manageFloatButtons/ManageFloatButtons';
 
 const Adverts = () => {
   const [adverts, setAdverts] = useState<AdvertDetail[]>([]);
@@ -99,6 +100,7 @@ const Adverts = () => {
             )}
           </>
         )}
+        <ManageFloatButtons />
       </main>
       <div className="adverts__pages">
         <Pagination
