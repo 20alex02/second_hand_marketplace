@@ -1,4 +1,4 @@
-export type AdvertDetail = {
+export type AdvertDetailType = {
   id: string;
   createdAt: string;
   title: string;
@@ -8,7 +8,7 @@ export type AdvertDetail = {
   creator: Contact;
   participants: Contact[];
   images: Image[];
-  categories: Category;
+  categories: Category[];
   hidden: boolean;
 };
 

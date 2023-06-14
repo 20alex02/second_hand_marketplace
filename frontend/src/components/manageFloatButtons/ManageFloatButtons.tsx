@@ -7,7 +7,7 @@ import {
   Select,
   Radio,
   RadioChangeEvent,
-  Input,
+  Input, Form,
 } from 'antd';
 import { FileAddOutlined, FormOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
@@ -66,6 +66,8 @@ const FloatButtons = (props: { isAdmin: boolean }) => {
         onCancel={handleCancel}
         closable={false}
       >
+        <Form>
+
         <Select
           className="manage-category__select"
           placeholder="Categories"
@@ -93,6 +95,7 @@ const FloatButtons = (props: { isAdmin: boolean }) => {
           placeholder="Category name"
           disabled={radioValue === 'Delete'}
         />
+        </Form>
       </Modal>
     </FloatButton.Group>
   );

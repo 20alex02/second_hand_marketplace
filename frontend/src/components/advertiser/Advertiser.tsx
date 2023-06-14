@@ -2,6 +2,7 @@ import './advertiser.css';
 import '../../assets/styles/common.css';
 
 import { Form, Checkbox } from 'antd';
+import { Contact } from '../../models/advertDetailType';
 
 const AdvertiserForm = (props: { creator?: Contact }) => {
   const defaultValues: string[] = [];

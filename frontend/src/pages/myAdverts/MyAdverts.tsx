@@ -4,7 +4,7 @@ import '../../assets/styles/common.css';
 
 import Filters from '../../components/filters/Filters';
 import Advert from '../../components/advert/Advert';
-import { AdvertDetail } from '../../models/advertDetail';
+import { AdvertDetailType } from '../../models/advertDetailType';
 import ManageFloatButtons from '../../components/manageFloatButtons/ManageFloatButtons';
 
 import { COUNT, STATUS } from '../../components/advert/states';
@@ -23,7 +23,7 @@ const CLOSED = 'Closed';
 
 const MyAdverts = () => {
   const [advertStatus, setAdvertStatus] = useState<string | undefined>(COUNT);
-  const [adverts, setAdverts] = useState<AdvertDetail[]>([]);
+  const [adverts, setAdverts] = useState<AdvertDetailType[]>([]);
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState(0);
   const categories = useRecoilValue(CategoryIdsForAdverts);
@@ -55,7 +55,7 @@ const MyAdverts = () => {
       () => getAllMe(Token, pageRef.current, categoriesRef.current),
       {
         onSuccess: (data) => {
-          const dataArray: AdvertDetail[] = Object.values(
+          const dataArray: AdvertDetailType[] = Object.values(
             data.data.advertisements
           );
           setAdverts(dataArray);
@@ -74,7 +74,7 @@ const MyAdverts = () => {
       () => getAllMeAdmin(Token, id, pageRef.current, categoriesRef.current),
       {
         onSuccess: (data) => {
-          const dataArray: AdvertDetail[] = Object.values(
+          const dataArray: AdvertDetailType[] = Object.values(
             data.data.advertisements
           );
           setAdverts(dataArray);
@@ -119,7 +119,7 @@ const MyAdverts = () => {
                   showIcon
                 />
               ) : (
-                adverts.map((item: AdvertDetail) => (
+                adverts.map((item: AdvertDetailType) => (
                   <Advert key={item.id} advert={item} state={advertStatus} />
                 ))
               )}

@@ -12,11 +12,11 @@ import { CategoryIdsForAdverts } from '../../state/selector';
 import AdvertFilters from '../../components/advertsFilters/AdvertFilters';
 import { FiltersMin, FiltersMax } from '../../state/atom';
 import { ApiError } from '../../models/error';
-import { AdvertDetail } from '../../models/advertDetail';
+import { AdvertDetailType } from '../../models/advertDetailType';
 import ManageFloatButtons from '../../components/manageFloatButtons/ManageFloatButtons';
 
 const Adverts = () => {
-  const [adverts, setAdverts] = useState<AdvertDetail[]>([]);
+  const [adverts, setAdverts] = useState<AdvertDetailType[]>([]);
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState(0);
   const minPrice = useRecoilValue(FiltersMin);
@@ -60,7 +60,7 @@ const Adverts = () => {
       ),
     {
       onSuccess: (data) => {
-        const dataArray: AdvertDetail[] = Object.values(
+        const dataArray: AdvertDetailType[] = Object.values(
           data.data.advertisements
         );
         setAdverts(dataArray);
@@ -94,7 +94,7 @@ const Adverts = () => {
                 showIcon
               />
             ) : (
-              adverts.map((item: AdvertDetail) => (
+              adverts.map((item: AdvertDetailType) => (
                 <Advert key={item.id} advert={item} />
               ))
             )}

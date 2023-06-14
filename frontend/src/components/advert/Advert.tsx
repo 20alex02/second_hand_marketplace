@@ -5,7 +5,7 @@ import { COUNT, STATUS } from './states';
 import { useNavigate } from 'react-router-dom';
 
 import priceUtil from '../../utils/priceUtil';
-import { AdvertDetail } from '../../models/advertDetail';
+import { AdvertDetailType } from '../../models/advertDetailType';
 
 const NONE_MODIFIER = ' advert-stats--none';
 
@@ -30,7 +30,7 @@ const AdvertState = (props: { hidden: boolean }) => {
   );
 };
 
-const Advert = (props: { advert?: AdvertDetail; state?: string }) => {
+const Advert = (props: { advert?: AdvertDetailType; state?: string }) => {
   if (!props.advert) {
     return <></>;
   }
@@ -85,7 +85,7 @@ const Advert = (props: { advert?: AdvertDetail; state?: string }) => {
   );
 };
 
-const switchStats = (advert: AdvertDetail, state?: string) => {
+const switchStats = (advert: AdvertDetailType, state?: string) => {
   switch (state) {
     case COUNT:
       return <ParticipantState count={advert.participants.length} />;

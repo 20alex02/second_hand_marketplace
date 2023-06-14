@@ -20,6 +20,7 @@ import {
 } from '@ant-design/icons';
 import React from 'react';
 import stringUtil from '../../utils/stringUtil';
+import { AdvertDetailType } from '../../models/advertDetailType';
 
 const { TextArea } = Input;
 
@@ -52,7 +53,7 @@ const CreateButtons = () => {
 };
 
 const AdvertCreation = (props: {
-  advert?: AdvertDetail;
+  advert?: AdvertDetailType;
   setIsEditing?: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [form] = Form.useForm();

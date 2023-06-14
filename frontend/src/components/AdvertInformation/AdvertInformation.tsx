@@ -4,13 +4,13 @@ import '../../assets/styles/common.css';
 import Advertiser from '../advertiser/Advertiser';
 import ParticipantTable from '../participantTable/ParticipantTable';
 import ContactAdvertiser from '../contactAdvertiser/ContactAdvertiser';
-import AdvertDetail from '../../pages/advertDetail/AdvertDetail';
 import CategoryCollapse from '../categoryCollapse/CategoryCollapse';
 
 import React, { useState } from 'react';
 import { Button, Carousel, Image, Modal } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import priceUtil from '../../utils/priceUtil';
+import { AdvertDetailType } from '../../models/advertDetailType';
 
 const EditButtons = (props: {
   setEditing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -70,7 +70,7 @@ const EditButtons = (props: {
 };
 
 const AdvertInformation = (props: {
-  advert: AdvertDetail;
+  advert: AdvertDetailType;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const isUsersAdvert = true; // TODO

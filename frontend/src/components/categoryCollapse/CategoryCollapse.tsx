@@ -1,6 +1,7 @@
 import categoriesPlaceholder from '../../assets/categoriesPlaceholder.json';
 
 import './categoryCollapse.css';
+import { Category } from '../../models/advertDetailType';
 
 import { Breadcrumb, Button, Collapse, Modal, Select } from 'antd';
 
