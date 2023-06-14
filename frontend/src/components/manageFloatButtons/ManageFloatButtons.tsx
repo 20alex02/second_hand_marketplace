@@ -1,4 +1,3 @@
-import categoriesPlaceholder from '../../assets/categoriesPlaceholder.json';
 import './manageFloatButtons.css';
 
 import {
@@ -9,43 +8,85 @@ import {
   RadioChangeEvent,
   Input,
   Form,
+  FormInstance,
+  Spin,
 } from 'antd';
 import { FileAddOutlined, FormOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
-import { Option } from 'antd/es/mentions';
+import React, { useState } from 'react';
 import stringUtil from '../../utils/stringUtil';
 import { useRecoilValue } from 'recoil';
 import { AuthToken, UserRole } from '../../state/atom';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import { getCategories } from '../../services/advertsApi';
+import { Category } from '../../models/advertDetailType';
+import { createCategory, deleteCategory } from '../../services/categoriesApi';
 
-const CategoryForm = () => {
-  const [radioValue, setRadioValue] = useState<string>('Delete');
+const ADD = 'Add';
+const DELETE = 'Delete';
+
+type CategoryFormType = {
+  categoryName: string;
+  categorySelect: number;
+};
+
+const CategoryForm = (props: {
+  form: FormInstance;
+  categories: Category[];
+  setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const [radioValue, setRadioValue] = useState<string>(DELETE);
+  const token = useRecoilValue(AuthToken);
+  const mutationCreate = useMutation({
+    mutationFn: (values: CategoryFormType) =>
+      createCategory(
+        token,
+        values.categoryName,
+        values.categorySelect
+          ? props.categories[values.categorySelect].id
+          : undefined
+      ),
+  });
+  const mutationDelete = useMutation({
+    mutationFn: (values: CategoryFormType) =>
+      deleteCategory(token, props.categories[values.categorySelect].id),
+  });
 
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     setRadioValue(value);
   };
 
+  const onFinish = (values: CategoryFormType) => {
+    console.log(values.categorySelect);
+    if (radioValue === ADD) {
+      mutationCreate.mutate(values);
+    } else {
+      mutationDelete.mutate(values);
+    }
+    props.setIsModalOpen(false);
+  };
+
   return (
-    <Form className="category-form">
+    <Form className="category-form" form={props.form} onFinish={onFinish}>
       <Form.Item
         className="category-form__select"
-        name="category-select"
+        name="categorySelect"
         label="Categories"
-        rules={[{ required: true }]}
+        rules={[{ required: radioValue === DELETE }]}
       >
-        <Select>
-          {categoriesPlaceholder.map((option, index) => (
-            <Option key={option.id} value={index.toString()}>
+        <Select allowClear={true}>
+          {props.categories.map((option, index) => (
+            <Select.Option key={option.id} value={index.toString()}>
               {stringUtil.capitalizeWord(option.name)}
-            </Option>
+            </Select.Option>
           ))}
         </Select>
       </Form.Item>
       <Radio.Group
         className="category-form__radio"
         options={[
-          { label: 'Delete', value: 'Delete' },
-          { label: 'Add', value: 'Add' },
+          { label: 'Delete', value: DELETE },
+          { label: 'Add', value: ADD },
         ]}
         onChange={onChange}
         value={radioValue}
@@ -54,13 +95,13 @@ const CategoryForm = () => {
       />
       <Form.Item
         className="category-form__input"
-        name="Category name"
-        rules={[{ required: radioValue === 'Add' }]}
+        name="categoryName"
+        rules={[{ required: radioValue === ADD }]}
       >
         <Input
           className="category-form__input"
           placeholder="Category name"
-          disabled={radioValue === 'Delete'}
+          disabled={radioValue === DELETE}
         />
       </Form.Item>
     </Form>
@@ -68,27 +109,32 @@ const CategoryForm = () => {
 };
 
 const FloatButtons = (props: { isAdmin: boolean }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const { isLoading, data } = useQuery({
+    queryKey: ['get-category'],
+    queryFn: () => getCategories(),
+  });
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
   const handleOk = () => {
-    setIsModalOpen(false);
+    form.submit();
   };
 
   const handleCancel = () => {
     setIsModalOpen(false);
   };
 
-  const navigate = useNavigate();
   return (
     <FloatButton.Group className="manage-buttons" shape="square">
       {props.isAdmin ? (
         <FloatButton
           className="manage-buttons__category"
-          icon={<FormOutlined rev />}
+          icon={<FormOutlined rev={undefined} />}
           tooltip={'Manage categories'}
           onClick={showModal}
         />
@@ -97,7 +143,7 @@ const FloatButtons = (props: { isAdmin: boolean }) => {
       )}
       <FloatButton
         className="manage-buttons__advert"
-        icon={<FileAddOutlined rev />}
+        icon={<FileAddOutlined rev={undefined} />}
         tooltip={'Create advert'}
         onClick={() => navigate('/advert-creation')}
       />
@@ -109,7 +155,15 @@ const FloatButtons = (props: { isAdmin: boolean }) => {
         onCancel={handleCancel}
         closable={false}
       >
-        <CategoryForm />
+        {isLoading ? (
+          <Spin />
+        ) : (
+          <CategoryForm
+            form={form}
+            categories={data?.data.value}
+            setIsModalOpen={setIsModalOpen}
+          />
+        )}
       </Modal>
     </FloatButton.Group>
   );
