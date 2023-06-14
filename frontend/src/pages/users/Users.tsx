@@ -43,7 +43,13 @@ function Users() {
       onError: (error) => setError(error.response?.data?.message as string),
       onSuccess: (data) => {
         const dataArray: DataType[] = Object.values(data.data);
-        setUsers(dataArray);
+        const updatedData = dataArray.map((item) => {
+          return {
+            ...item,
+            key: item.id,
+          };
+        });
+        setUsers(updatedData);
       },
     }
   );
@@ -84,12 +90,7 @@ function Users() {
           )}
           <FileOutlined
             className="action__icon"
-            onClick={() =>
-              navigate({
-                pathname: '/MyAdverts',
-                search: `?id=${id}`,
-              })
-            }
+            onClick={() => navigate(`/MyAdverts/${record.id}/${record.email}`)}
             rev={undefined}
           />
           <CloseCircleTwoTone

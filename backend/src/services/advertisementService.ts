@@ -11,6 +11,7 @@ import type {
   AdvertisementReadAllData,
   AdvertisementUpdateData,
 } from '../repositories/types/data';
+import userService from './userService';
 
 const create = async (
   body: Request['body'],
@@ -47,9 +48,65 @@ const getAll = async (query: Request['query']) => {
   if (result.isErr) {
     throw result.error;
   }
-  const adCount = await advertisement.read.allWithoutFilters(
+  const withoutParticipants = result.value.map(
+    ({ participants, ...rest }) => rest
+  );
+  const adCount = await advertisement.read.allCount(
     validatedData as AdvertisementReadAllData
   );
+  if (adCount.isErr) {
+    throw adCount.error;
+  }
+  return {
+    advertisements: withoutParticipants,
+    advertisementCount: adCount.value,
+  };
+};
+
+const adminGetAll = async (
+  params: Request['params'],
+  query: Request['query'],
+  headers: Request['headers'],
+  secret?: string
+) => {
+  const id = getUserId(headers.authorization, secret);
+  if (!(await userService.isAdmin(id))) {
+    throw new InvalidAccessRights();
+  }
+  const userResult = await user.read.one({ id: id });
+  if (userResult.isErr) {
+    throw userResult.error;
+  }
+  const validatedData = advertisementModel.getAllForCreatorSchema.parse({
+    ...params,
+    ...query,
+  });
+  const result = await advertisement.read.all(validatedData);
+  if (result.isErr) {
+    throw result.error;
+  }
+  const adCount = await advertisement.read.allCount(validatedData);
+  if (adCount.isErr) {
+    throw adCount.error;
+  }
+  return { advertisements: result.value, advertisementCount: adCount.value };
+};
+
+const getAllMe = async (
+  query: Request['query'],
+  headers: Request['headers'],
+  secret?: string
+) => {
+  const id = getUserId(headers.authorization, secret);
+  const validatedData = advertisementModel.getAllForCreatorSchema.parse({
+    creatorId: id,
+    ...query,
+  });
+  const result = await advertisement.read.all(validatedData);
+  if (result.isErr) {
+    throw result.error;
+  }
+  const adCount = await advertisement.read.allCount(validatedData);
   if (adCount.isErr) {
     throw adCount.error;
   }
@@ -134,6 +191,8 @@ const update = async (
 export default {
   create,
   getAll,
+  adminGetAll,
+  getAllMe,
   getOne,
   delete: deleteAdvertisement,
   update,
