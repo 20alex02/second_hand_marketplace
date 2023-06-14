@@ -44,7 +44,6 @@ const getAllSchema = z
       }),
     categories: z.array(z.string().uuid()).optional(),
     hidden: z.boolean().optional(),
-    creatorId: z.string().uuid().optional(),
     type: z.nativeEnum(AdvertisementType).optional(),
     orderBy: orderBySchema.optional(),
     createdFrom: z
@@ -108,7 +107,25 @@ const getAllSchema = z
     }
   );
 
-export type readAllAd = z.infer<typeof getAllSchema>;
+const getAllForCreatorSchema = z.object({
+  pageNum: z
+    .string()
+    .regex(/^\d+$/)
+    .transform(Number)
+    .refine((pageNum) => pageNum > 0, {
+      message: 'pageNum must be greater than 0',
+      path: ['pageNum'],
+    }),
+  perPage: z
+    .string()
+    .regex(/^\d+$/)
+    .transform(Number)
+    .refine((perPage) => perPage > 0, {
+      message: 'perPage must be greater than 0',
+      path: ['perPage'],
+    }),
+  creatorId: z.string().uuid(),
+});
 
 const deleteSchema = z.object({
   id: z.string().uuid(),
@@ -145,6 +162,7 @@ const updateSchema = z.object({
 export default {
   createSchema,
   getAllSchema,
+  getAllForCreatorSchema,
   getOneSchema,
   deleteSchema,
   updateSchema,

@@ -115,6 +115,7 @@ const readAllAdvertisement = async (
       skip: (pageNum - 1) * perPage,
       include: {
         images: true,
+        participants: true,
       },
     });
     return Result.ok(users);
@@ -123,7 +124,7 @@ const readAllAdvertisement = async (
   }
 };
 
-const allWithoutFilters = async (
+const readAllCount = async (
   data: AdvertisementReadAllData
 ): DbResult<number> => {
   const {
@@ -173,5 +174,5 @@ const allWithoutFilters = async (
 export default {
   one: readOneAdvertisement,
   all: readAllAdvertisement,
-  allWithoutFilters,
+  allCount: readAllCount,
 };

@@ -40,6 +40,43 @@ const getAll = async (req: Request, res: Response) => {
   }
 };
 
+const adminGetAll = async (req: Request, res: Response, secret?: string) => {
+  try {
+    const result = await advertisementService.adminGetAll(
+      req.params,
+      req.query,
+      req.headers,
+      secret
+    );
+    return handleOkResp(
+      200,
+      { ...result },
+      res,
+      'Advertisement searched successfully'
+    );
+  } catch (error) {
+    return handleError(error as Error, res);
+  }
+};
+
+const getAllMe = async (req: Request, res: Response, secret?: string) => {
+  try {
+    const result = await advertisementService.getAllMe(
+      req.query,
+      req.headers,
+      secret
+    );
+    return handleOkResp(
+      200,
+      { ...result },
+      res,
+      'Advertisement searched successfully'
+    );
+  } catch (error) {
+    return handleError(error as Error, res);
+  }
+};
+
 const getOne = async (req: Request, res: Response) => {
   try {
     const result = await advertisementService.getOne(req.params);
@@ -100,6 +137,8 @@ export default {
   create,
   getTypes,
   getAll,
+  adminGetAll,
+  getAllMe,
   getOne,
   delete: deleteAdvertisement,
   update,
