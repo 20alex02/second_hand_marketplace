@@ -75,7 +75,7 @@
 
     .my-container {
         grid-template-columns: var(--sidebar-width) auto;
-        grid-template-rows: var(--navbar-height) calc(100vh - var(--navbar-height));
+        grid-template-rows: var(--navbar-height) calc(90vh - var(--navbar-height));
     }
 
     .adverts {

@@ -87,7 +87,7 @@ function Users() {
             onClick={() =>
               navigate({
                 pathname: '/MyAdverts',
-                search: `?id=${id}`,
+                search: `?id=${id};name=${record.email}`,
               })
             }
             rev={undefined}
