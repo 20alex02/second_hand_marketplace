@@ -7,7 +7,8 @@ import {
   Select,
   Radio,
   RadioChangeEvent,
-  Input, Form,
+  Input,
+  Form,
 } from 'antd';
 import { FileAddOutlined, FormOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
@@ -67,34 +68,33 @@ const FloatButtons = (props: { isAdmin: boolean }) => {
         closable={false}
       >
         <Form>
-
-        <Select
-          className="manage-category__select"
-          placeholder="Categories"
-          onChange={setSelectedIndex}
-        >
-          {categoriesPlaceholder.map((option, index) => (
-            <Option key={option.id} value={index.toString()}>
-              {stringUtil.capitalizeWord(option.name)}
-            </Option>
-          ))}
-        </Select>
-        <Radio.Group
-          className="manage-category__radio"
-          options={[
-            { label: 'Delete', value: 'Delete' },
-            { label: 'Add', value: 'Add' },
-          ]}
-          onChange={onChange}
-          value={radioValue}
-          optionType="button"
-          buttonStyle="solid"
-        />
-        <Input
-          className="manage-category__input"
-          placeholder="Category name"
-          disabled={radioValue === 'Delete'}
-        />
+          <Select
+            className="manage-category__select"
+            placeholder="Categories"
+            onChange={setSelectedIndex}
+          >
+            {categoriesPlaceholder.map((option, index) => (
+              <Option key={option.id} value={index.toString()}>
+                {stringUtil.capitalizeWord(option.name)}
+              </Option>
+            ))}
+          </Select>
+          <Radio.Group
+            className="manage-category__radio"
+            options={[
+              { label: 'Delete', value: 'Delete' },
+              { label: 'Add', value: 'Add' },
+            ]}
+            onChange={onChange}
+            value={radioValue}
+            optionType="button"
+            buttonStyle="solid"
+          />
+          <Input
+            className="manage-category__input"
+            placeholder="Category name"
+            disabled={radioValue === 'Delete'}
+          />
         </Form>
       </Modal>
     </FloatButton.Group>
