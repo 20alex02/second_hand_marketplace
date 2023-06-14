@@ -77,15 +77,19 @@ const adminGetAll = async (
   if (userResult.isErr) {
     throw userResult.error;
   }
-  const validatedData = advertisementModel.getAllForCreatorSchema.parse({
+  const validatedData = advertisementModel.getAllAdminSchema.parse({
     ...params,
     ...query,
   });
-  const result = await advertisement.read.all(validatedData);
+  const result = await advertisement.read.all(
+    validatedData as AdvertisementReadAllData
+  );
   if (result.isErr) {
     throw result.error;
   }
-  const adCount = await advertisement.read.allCount(validatedData);
+  const adCount = await advertisement.read.allCount(
+    validatedData as AdvertisementReadAllData
+  );
   if (adCount.isErr) {
     throw adCount.error;
   }

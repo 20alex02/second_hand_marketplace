@@ -16,7 +16,6 @@ const createSchema = z.object({
       message: 'estimatedPrice must be greater than 0',
       path: ['estimatedPrice'],
     }),
-  hidden: z.boolean().optional(),
 });
 
 const orderBySchema = z.union([
@@ -43,7 +42,6 @@ const getAllSchema = z
         path: ['perPage'],
       }),
     categories: z.array(z.string().uuid()).optional(),
-    hidden: z.boolean().optional(),
     type: z.nativeEnum(AdvertisementType).optional(),
     orderBy: orderBySchema.optional(),
     createdFrom: z
@@ -127,6 +125,27 @@ const getAllForCreatorSchema = z.object({
   creatorId: z.string().uuid(),
 });
 
+const getAllAdminSchema = z.object({
+  pageNum: z
+    .string()
+    .regex(/^\d+$/)
+    .transform(Number)
+    .refine((pageNum) => pageNum > 0, {
+      message: 'pageNum must be greater than 0',
+      path: ['pageNum'],
+    }),
+  perPage: z
+    .string()
+    .regex(/^\d+$/)
+    .transform(Number)
+    .refine((perPage) => perPage > 0, {
+      message: 'perPage must be greater than 0',
+      path: ['perPage'],
+    }),
+  creatorId: z.string().uuid(),
+  hidden: z.boolean().optional(),
+});
+
 const deleteSchema = z.object({
   id: z.string().uuid(),
 });
@@ -165,5 +184,6 @@ export default {
   getAllForCreatorSchema,
   getOneSchema,
   deleteSchema,
+  getAllAdminSchema,
   updateSchema,
 };
