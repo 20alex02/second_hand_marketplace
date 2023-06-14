@@ -7,7 +7,13 @@
     height: 100vh;
 }
 
-.adverts, .my-adverts {
+.adverts {
+    grid-row: 3;
+    padding: 1rem;
+    overflow-y: scroll;
+}
+
+.my-adverts {
     grid-row: 2;
     padding: 1rem;
     overflow-y: scroll;
@@ -55,7 +61,7 @@
     .container {
         grid-column: 1;
         grid-row: 2;
-        grid-template-rows: calc(90vh - var(--navbar-height));
+        grid-template-rows: 3em calc(80vh - var(--navbar-height)) 3em;
     }
 
     .my-container {
@@ -64,8 +70,7 @@
     }
 
     .adverts {
-        grid-column: 2;
-        grid-row: 1;
+        grid-area: 2 / 2
     }
 
     .my-adverts {

@@ -2,13 +2,20 @@ import { Drawer, Menu, MenuProps } from 'antd';
 import './navbar.css';
 import { useEffect, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { AuthToken, UserRole } from '../../state/atom';
+import {
+  useRecoilState,
+  useRecoilValue, //useSetRecoilState
+} from 'recoil';
+import {
+  AuthToken, //Interested,
+  UserRole,
+} from '../../state/atom';
 import { LogoutOutlined, LoginOutlined, MenuOutlined } from '@ant-design/icons';
 
 function Navbar() {
   const [current, setCurrent] = useState('');
   const [token, setToken] = useRecoilState(AuthToken);
+  //const setInterested = useSetRecoilState(Interested);
   const userRole = useRecoilValue(UserRole);
   const [openMenu, setOpenMenu] = useState(false);
   const location = useLocation(); // once ready it returns the 'window.location' object
@@ -20,6 +27,7 @@ function Navbar() {
 
   const logout = () => {
     setToken('');
+    //setInterested(false);
   };
   const onClick: MenuProps['onClick'] = (e) => {
     setCurrent(e.key);
