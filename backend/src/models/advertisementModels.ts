@@ -7,7 +7,7 @@ const createSchema = z.object({
   description: z.string(),
   creatorId: z.string().uuid(),
   images: z.array(z.object({ path: z.string() })),
-  categories: z.array(z.object({ id: z.string().uuid() })),
+  category: z.string().uuid(),
   estimatedPrice: z
     .string()
     .regex(/^\d+$/)

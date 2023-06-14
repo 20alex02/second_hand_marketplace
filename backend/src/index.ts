@@ -60,14 +60,6 @@ app.get('/api/advertisement/me', authenticateToken, (req, res) => {
   return controllers.advertisement.getAllMe(req, res, secretKey);
 });
 
-// app.get(
-//   '/api/advertisement/admin/:creatorId',
-//   authenticateToken,
-//   (req, res) => {
-//     return controllers.advertisement.adminGetAll(req, res, secretKey);
-//   }
-// );
-
 app.get(
   '/api/advertisement/admin/:creatorId',
   authenticateToken,
