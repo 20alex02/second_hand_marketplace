@@ -45,7 +45,7 @@ const FloatButtons = (props: { isAdmin: boolean }) => {
       {props.isAdmin ? (
         <FloatButton
           className="manage-buttons__category"
-          icon={<FormOutlined rev />}
+          icon={<FormOutlined rev={undefined} />}
           tooltip={'Manage categories'}
           onClick={showModal}
         />
@@ -54,7 +54,7 @@ const FloatButtons = (props: { isAdmin: boolean }) => {
       )}
       <FloatButton
         className="manage-buttons__advert"
-        icon={<FileAddOutlined rev />}
+        icon={<FileAddOutlined rev={undefined} />}
         tooltip={'Create advert'}
         onClick={() => navigate('/advert-creation')}
       />
