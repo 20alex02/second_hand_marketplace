@@ -20,3 +20,18 @@ export const CategoryHist = atom<Category[]>({
   key: 'CategoryHist',
   default: [],
 });
+
+export const FiltersMin = atom<number | undefined>({
+  key: 'min',
+  default: undefined,
+});
+
+export const FiltersMax = atom<number | undefined>({
+  key: 'max',
+  default: undefined,
+});
+
+export const Interested = atom<boolean>({
+  key: 'interesTed',
+  default: false,
+});
