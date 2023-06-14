@@ -100,7 +100,7 @@ const Adverts = () => {
       <div className="adverts__pages">
         <Pagination
           total={count}
-          pageSize={1}
+          pageSize={9}
           current={page}
           onChange={(page: number) => setPage(page)}
         />

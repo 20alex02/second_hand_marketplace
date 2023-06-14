@@ -29,7 +29,7 @@ export const getAdverts = async (
   if (minPrice === undefined || maxPrice === undefined) {
     params = {
       pageNum: pageNum,
-      perPage: 1,
+      perPage: 9,
       categories: categoryIds,
     };
   } else {
