@@ -55,11 +55,11 @@ const data: {
   ],
   advertisements: [
     {
-      title: 'Selling my old guitar',
+      title: 'Selling my Nokia',
       type: AdvertisementType.OFFER,
       description:
-        'I am selling my old guitar, which is still in great condition.',
-      estimatedPrice: 100,
+        'I am selling my old nokia 3310',
+      estimatedPrice: 1000,
       images: [
         {
           path: 'guitar1.jpg',
@@ -70,23 +70,133 @@ const data: {
       ],
     },
     {
-      title: 'Looking for a roommate',
+      title: 'Looking for an old phone',
       type: AdvertisementType.REQUEST,
-      description: 'I am looking for a roommate to share my apartment with.',
-      estimatedPrice: 500,
+      description: 'I am looking for an old phone.',
+      estimatedPrice: 1000,
       images: [
         {
           path: 'apartment1.jpg',
         },
+        {
+          path: 'car1.jpg',
+        },
       ],
     },
     {
-      title: 'Selling my car',
+      title: 'Selling my Xiaomi band',
       type: AdvertisementType.OFFER,
       description:
-        'I am selling my car, which has low mileage and is in excellent condition.',
-      estimatedPrice: 15000,
-      hidden: true,
+        'I am selling my old xiaomi band in great condition',
+      estimatedPrice: 500,
+      images: [
+        {
+          path: 'car1.jpg',
+        },
+        {
+          path: 'car1.jpg',
+        },
+      ],
+    },
+    {
+      title: 'Selling my tablet',
+      type: AdvertisementType.OFFER,
+      description:
+        'I am selling my tablet, dont know the brand.',
+      estimatedPrice: 1500,
+      images: [
+        {
+          path: 'car1.jpg',
+        },
+        {
+          path: 'car1.jpg',
+        },
+      ],
+    },
+    {
+      title: 'Selling my guitar',
+      type: AdvertisementType.OFFER,
+      description:
+        'I am selling my guitar, its electric, you can play like ac/dc',
+      estimatedPrice: 7000,
+      images: [
+        {
+          path: 'car1.jpg',
+        },
+        {
+          path: 'car1.jpg',
+        },
+      ],
+    },
+    {
+      title: 'Selling my acoustic guitar',
+      type: AdvertisementType.OFFER,
+      description:
+        'I am selling my broken guitar, really bad condition.',
+      estimatedPrice: 200,
+      images: [
+        {
+          path: 'car1.jpg',
+        },
+        {
+          path: 'car1.jpg',
+        },
+      ],
+    },
+    {
+      title: 'Selling my piano',
+      type: AdvertisementType.OFFER,
+      description:
+        'I am selling my piano, not great not terrible #3.6',
+      estimatedPrice: 2500,
+      images: [
+        {
+          path: 'car1.jpg',
+        },
+      ],
+    },
+    {
+      title: 'Looking for apple watches',
+      type: AdvertisementType.REQUEST,
+      description:
+        'I am looking for cheap apple watches',
+      estimatedPrice: 150,
+      images: [
+        {
+          path: 'car1.jpg',
+        },
+      ],
+    },
+    {
+      title: 'Selling my electric guitar',
+      type: AdvertisementType.OFFER,
+      description:
+        'great guitar buy it please',
+      estimatedPrice: 2000,
+      images: [
+        {
+          path: 'car1.jpg',
+        },
+      ],
+    },
+    {
+      title: 'Selling my broken phone',
+      type: AdvertisementType.OFFER,
+      description:
+        'It does not work sorry',
+      estimatedPrice: 2500,
+      images: [
+        {
+          path: 'car1.jpg',
+        },
+      ],
+    },
+    {
+      title: 'Selling my computer',
+      type: AdvertisementType.OFFER,
+      description:
+        'I am selling my computer, I dont want to be programmer any more',
+      estimatedPrice: 1,
       images: [
         {
           path: 'car1.jpg',
@@ -102,7 +212,22 @@ const data: {
       name: 'Computers & Tablets',
     },
     {
-      name: 'Smartphones & Wearables',
+      name: 'Wearables',
+    },
+    {
+      name: 'Guitars',
+    },
+    {
+      name: 'Electric Guitars',
+    },
+    {
+      name: 'Acoustic Guitars',
+    },
+    {
+      name: 'Pianos',
+    },
+    {
+      name: 'Music instruments',
     },
   ],
 };
