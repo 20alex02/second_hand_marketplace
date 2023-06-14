@@ -15,7 +15,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = (req: Request, res: Response, next: NextFunction) => {
-  // TODO replace 'images' in array with name attribute from form
   multer({
     storage: storage,
     limits: { fileSize: 5 * 1024 * 1024 }, // 5MB

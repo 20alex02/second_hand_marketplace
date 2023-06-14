@@ -115,11 +115,16 @@ const AdvertCreation = (props: {
   const onFinish = (values: CreateAdvertType) => {
     const formData = new FormData();
     const { images, ...other } = values;
+    console.log(values);
     mapOthers(other, formData);
-    images.fileList.forEach((file) => {
-      formData.append('file', file);
-    });
+    if (images !== undefined) {
+      images.fileList.forEach((file) => {
+        console.log(file);
+        formData.append('files', file);
+      });
+    }
     create(formData);
+    console.log({ ...formData });
   };
   return (
     <Form
@@ -170,6 +175,15 @@ const AdvertCreation = (props: {
           className="advert-creation__image"
           listType="picture"
           defaultFileList={fileList}
+          beforeUpload={(file) => {
+            return new Promise((resolve, reject) => {
+              if (file.size > 20000) {
+                reject('File size exceed');
+              } else {
+                resolve('File uploaded');
+              }
+            });
+          }}
         >
           <Button icon={<UploadOutlined rev={undefined} />}>
             Upload image

@@ -79,7 +79,10 @@ export const createAdvert = async (token: string, data: FormData) => {
     '/api/advertisement',
     data,
     {
-      headers: { authorization: `Bearer ${token}` },
+      headers: {
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
     }
   );
   return response.data;
