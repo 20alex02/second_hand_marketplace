@@ -12,9 +12,10 @@ import { CategoryIdsForAdverts } from '../../state/selector';
 import AdvertFilters from '../../components/advertsFilters/AdvertFilters';
 import { FiltersMin, FiltersMax } from '../../state/atom';
 import { ApiError } from '../../models/error';
+import { AdvertDetail } from '../../models/advertDetail';
 
 const Adverts = () => {
-  const [adverts, setAdverts] = useState<AdvertType[]>([]);
+  const [adverts, setAdverts] = useState<AdvertDetail[]>([]);
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState(0);
   const minPrice = useRecoilValue(FiltersMin);
@@ -58,7 +59,9 @@ const Adverts = () => {
       ),
     {
       onSuccess: (data) => {
-        const dataArray: AdvertType[] = Object.values(data.data.advertisements);
+        const dataArray: AdvertDetail[] = Object.values(
+          data.data.advertisements
+        );
         setAdverts(dataArray);
         setCount(data.data.advertisementCount);
       },
@@ -90,7 +93,7 @@ const Adverts = () => {
                 showIcon
               />
             ) : (
-              adverts.map((item: AdvertType) => (
+              adverts.map((item: AdvertDetail) => (
                 <Advert key={item.id} advert={item} />
               ))
             )}
