@@ -20,7 +20,7 @@
 .my-adverts {
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: auto auto;
+    grid-template-rows: 2em auto;
     row-gap: 1.5rem;
 }
 
@@ -37,7 +37,13 @@
     gap: 1.2rem;
 }
 
-@media only screen and (min-width: 600px) {
+.adverts__pages {
+    text-align: center;
+    grid-row: 4;
+    grid-column: 1;
+}
+
+@media only screen and (min-width: 800px) {
     .title-user {
         grid-row: 1;
         grid-column: 1;
@@ -55,6 +61,12 @@
 
     .title-user:has(~ * .filter-list--visible) {
         visibility: hidden;
+    }
+
+    .adverts__pages {
+        text-align: center;
+        grid-row: 3;
+        grid-column: 2;
     }
 }
 
