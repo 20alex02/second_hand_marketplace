@@ -7,7 +7,7 @@ import { ExtensionError } from '../errors/middlewareErrors';
 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    cb(null, './src/images');
+    cb(null, '../images');
   },
   filename: (_req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
