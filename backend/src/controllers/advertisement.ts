@@ -8,7 +8,7 @@ const create = async (req: Request, res: Response, secret?: string) => {
     const result = await advertisementService.create(
       req.body,
       req.headers,
-      req.files as Express.Multer.File[],
+      // req.files as Express.Multer.File[],
       secret
     );
     return handleOkResp(

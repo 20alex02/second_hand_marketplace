@@ -16,13 +16,15 @@ import userService from './userService';
 const create = async (
   body: Request['body'],
   headers: Request['headers'],
-  files: Express.Multer.File[],
+  // files: Express.Multer.File[],
   secret?: string
 ) => {
   const creatorId = getUserId(headers.authorization, secret);
-  const images: { path: string }[] = files.map((file: Express.Multer.File) => ({
-    path: file.path,
-  }));
+  const images: { path: string }[] = body.files.map(
+    (file: Express.Multer.File) => ({
+      path: file.path,
+    })
+  );
 
   const validatedData = advertisementModel.createSchema.parse({
     creatorId,
