@@ -61,7 +61,7 @@ export const getAllMeAdmin = async (
   categoryIds: string[] | undefined
 ) => {
   const response = await axiosInstance.get<AxiosResponse>(
-    `/api/advertisement/${id}`,
+    `/api/advertisement/admin/${id}`,
     {
       headers: { authorization: `Bearer ${token}` },
       params: {
