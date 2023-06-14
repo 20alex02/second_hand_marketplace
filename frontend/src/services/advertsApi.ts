@@ -1,3 +1,4 @@
+import { CreateAdvertBodyType, CreateAdvertType } from '../models/advertDetail';
 import axiosInstance from './base';
 import { AxiosResponse } from 'axios';
 
