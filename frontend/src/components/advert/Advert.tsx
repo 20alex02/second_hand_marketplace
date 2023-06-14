@@ -12,7 +12,7 @@ const NONE_MODIFIER = ' advert-stats--none';
 const ParticipantState = (props: { count: number }) => {
   return (
     <div className="advert-stats__count">
-      <UserOutlined rev />
+      <UserOutlined rev={undefined} />
       {props.count}
     </div>
   );
@@ -21,7 +21,11 @@ const ParticipantState = (props: { count: number }) => {
 const AdvertState = (props: { hidden: boolean }) => {
   return (
     <div className="advert-stats__status">
-      {props.hidden ? <CheckOutlined rev /> : <StopOutlined rotate={270} rev />}
+      {props.hidden ? (
+        <CheckOutlined rev={undefined} />
+      ) : (
+        <StopOutlined rotate={270} rev={undefined} />
+      )}
     </div>
   );
 };
@@ -31,7 +35,10 @@ const Advert = (props: { advert?: AdvertDetail; state?: string }) => {
     return <></>;
   }
 
-  const stats = getStatsModifier(props.advert.participants.length, props.state);
+  const stats = getStatsModifier(
+    props.state ? props.advert.participants.length : 0,
+    props.state
+  );
   const imageCount = props.advert.images.length;
 
   let index = 0;
