@@ -7,7 +7,8 @@ import {
   Select,
   Radio,
   RadioChangeEvent,
-  Input, Form,
+  Input,
+  Form,
 } from 'antd';
 import { FileAddOutlined, FormOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
@@ -17,21 +18,63 @@ import stringUtil from '../../utils/stringUtil';
 import { useRecoilValue } from 'recoil';
 import { AuthToken, UserRole } from '../../state/atom';
 
-const FloatButtons = (props: { isAdmin: boolean }) => {
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const CategoryForm = () => {
   const [radioValue, setRadioValue] = useState<string>('Delete');
 
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
     setRadioValue(value);
   };
 
+  return (
+    <Form className="category-form">
+      <Form.Item
+        className="category-form__select"
+        name="category-select"
+        label="Categories"
+        rules={[{ required: true }]}
+      >
+        <Select>
+          {categoriesPlaceholder.map((option, index) => (
+            <Option key={option.id} value={index.toString()}>
+              {stringUtil.capitalizeWord(option.name)}
+            </Option>
+          ))}
+        </Select>
+      </Form.Item>
+      <Radio.Group
+        className="category-form__radio"
+        options={[
+          { label: 'Delete', value: 'Delete' },
+          { label: 'Add', value: 'Add' },
+        ]}
+        onChange={onChange}
+        value={radioValue}
+        optionType="button"
+        buttonStyle="solid"
+      />
+      <Form.Item
+        className="category-form__input"
+        name="Category name"
+        rules={[{ required: radioValue === 'Add' }]}
+      >
+        <Input
+          className="category-form__input"
+          placeholder="Category name"
+          disabled={radioValue === 'Delete'}
+        />
+      </Form.Item>
+    </Form>
+  );
+};
+
+const FloatButtons = (props: { isAdmin: boolean }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const showModal = () => {
     setIsModalOpen(true);
   };
 
   const handleOk = () => {
-    console.log(selectedIndex);
     setIsModalOpen(false);
   };
 
@@ -66,36 +109,7 @@ const FloatButtons = (props: { isAdmin: boolean }) => {
         onCancel={handleCancel}
         closable={false}
       >
-        <Form>
-
-        <Select
-          className="manage-category__select"
-          placeholder="Categories"
-          onChange={setSelectedIndex}
-        >
-          {categoriesPlaceholder.map((option, index) => (
-            <Option key={option.id} value={index.toString()}>
-              {stringUtil.capitalizeWord(option.name)}
-            </Option>
-          ))}
-        </Select>
-        <Radio.Group
-          className="manage-category__radio"
-          options={[
-            { label: 'Delete', value: 'Delete' },
-            { label: 'Add', value: 'Add' },
-          ]}
-          onChange={onChange}
-          value={radioValue}
-          optionType="button"
-          buttonStyle="solid"
-        />
-        <Input
-          className="manage-category__input"
-          placeholder="Category name"
-          disabled={radioValue === 'Delete'}
-        />
-        </Form>
+        <CategoryForm />
       </Modal>
     </FloatButton.Group>
   );
