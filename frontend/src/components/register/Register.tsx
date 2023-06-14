@@ -33,7 +33,7 @@ function Register() {
     }, secondsToGo * 1000);
   };
 
-  const { mutate: loginUser } = useMutation(
+  const { mutate: register } = useMutation(
     (data: RegisterData) => registerUserFn(data),
     {
       onSuccess: () => {
@@ -49,7 +49,7 @@ function Register() {
   );
 
   const onFinish = (values: RegisterData) => {
-    loginUser(values);
+    register(values);
   };
 
   return (

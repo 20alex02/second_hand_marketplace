@@ -27,3 +27,23 @@ export type Category = {
   name: string;
   parentId: string | null;
 };
+
+export type CreateAdvertType = {
+  type: string;
+  title: string;
+  description: string;
+  price: number;
+  categoryIndex: string;
+  images: {
+    fileList: File[];
+  };
+};
+
+export type CreateAdvertBodyType = {
+  type: string;
+  title: string;
+  description: string;
+  price: number;
+  categoryIndex: string;
+  files: File[];
+};
