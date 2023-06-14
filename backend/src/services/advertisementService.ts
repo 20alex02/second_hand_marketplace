@@ -4,6 +4,13 @@ import { getUserId } from './authService';
 import user from '../repositories/user';
 import { Role } from '@prisma/client';
 import { InvalidAccessRights } from '../errors/controllersErrors';
+import type { Request } from 'express';
+import { deleteUndefined } from '../controllers/common';
+import type {
+  AdvertisementCreateData,
+  AdvertisementReadAllData,
+  AdvertisementUpdateData,
+} from '../repositories/types/data';
 
 const create = async (
   data: any,
@@ -21,7 +28,10 @@ const create = async (
     ...data,
     images,
   });
-  const result = await advertisement.create(validatedData);
+  deleteUndefined(validatedData);
+  const result = await advertisement.create(
+    validatedData as AdvertisementCreateData
+  );
   if (result.isErr) {
     throw result.error;
   }
@@ -30,11 +40,16 @@ const create = async (
 
 const getAll = async (query: any) => {
   const validatedData = advertisementModel.getAllSchema.parse(query);
-  const result = await advertisement.read.all(validatedData);
+  deleteUndefined(validatedData);
+  const result = await advertisement.read.all(
+    validatedData as AdvertisementReadAllData
+  );
   if (result.isErr) {
     throw result.error;
   }
-  const adCount = await advertisement.read.allWithoutFilters();
+  const adCount = await advertisement.read.allWithoutFilters(
+    validatedData as AdvertisementReadAllData
+  );
   if (adCount.isErr) {
     throw adCount.error;
   }
@@ -105,7 +120,11 @@ const update = async (
   ) {
     throw new InvalidAccessRights();
   }
-  const result = await advertisement.update({ id, ...validatedData });
+  const updateData = { id, ...validatedData };
+  deleteUndefined(updateData);
+  const result = await advertisement.update(
+    updateData as AdvertisementUpdateData
+  );
   if (result.isErr) {
     throw result.error;
   }

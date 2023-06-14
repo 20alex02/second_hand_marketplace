@@ -1,5 +1,8 @@
 import { Result } from '@badrap/result';
-import type { AdvertisementReadOneData } from '../types/data';
+import type {
+  AdvertisementReadOneData,
+  AdvertisementReadAllData,
+} from '../types/data';
 import type {
   AdvertisementReadOneResult,
   AdvertisementReadAllResult,
@@ -10,7 +13,6 @@ import {
   DeletedRecordError,
   NonexistentRecordError,
 } from '../../errors/repositoryErrors';
-import type { readAllAd } from '../../models/advertisementModels';
 
 const readOneAdvertisement = async (
   data: AdvertisementReadOneData
@@ -52,16 +54,87 @@ const readOneAdvertisement = async (
 };
 
 const readAllAdvertisement = async (
-  data: readAllAd
+  data: AdvertisementReadAllData
 ): AdvertisementReadAllResult => {
   const {
-    categories,
-    // estimatedPrice,
-    // created,
     pageNum,
     perPage,
-    orderBy,
-    // ...filterData
+    categories,
+    estimatedPriceFrom,
+    estimatedPriceTo,
+    // createdFrom,
+    // createdTo,
+    orderByPrice,
+    orderByTitle,
+    ...filterData
+  } = data;
+  const orderBy =
+    orderByPrice || orderByTitle
+      ? {
+          ...(orderByPrice ? { estimatedPrice: orderByPrice } : {}),
+          ...(orderByTitle ? { title: orderByTitle } : {}),
+        }
+      : {};
+  const categoryFilter = categories
+    ? {
+        categories: {
+          some: {
+            id: {
+              in: categories,
+            },
+          },
+        },
+      }
+    : {};
+
+  const estimatedPrice =
+    estimatedPriceFrom || estimatedPriceTo
+      ? {
+          ...(estimatedPriceFrom ? { gte: estimatedPriceFrom } : {}),
+          ...(estimatedPriceTo ? { lte: estimatedPriceTo } : {}),
+        }
+      : {};
+  // const createdAt =
+  //   createdFrom || createdTo
+  //     ? {
+  //         ...(createdFrom ? { gte: createdFrom } : {}),
+  //         ...(createdTo ? { lte: createdTo } : {}),
+  //       }
+  //     : {};
+  try {
+    const users = await client.advertisement.findMany({
+      where: {
+        ...filterData,
+        deletedAt: null,
+        ...categoryFilter,
+        estimatedPrice,
+        // createdAt,
+      },
+      orderBy,
+      take: perPage,
+      skip: (pageNum - 1) * perPage,
+      include: {
+        images: true,
+      },
+    });
+    return Result.ok(users);
+  } catch (e) {
+    return genericError;
+  }
+};
+
+const allWithoutFilters = async (
+  data: AdvertisementReadAllData
+): DbResult<number> => {
+  const {
+    pageNum,
+    perPage,
+    categories,
+    estimatedPriceFrom,
+    estimatedPriceTo,
+    orderByPrice,
+    orderByTitle,
+    ...filterData
   } = data;
   const categoryFilter = categories
     ? {
@@ -75,48 +148,21 @@ const readAllAdvertisement = async (
       }
     : {};
 
-  // const estimatedPriceFilter = estimatedPrice
-  //   ? {
-  //       estimatedPrice: {
-  //         ...(estimatedPrice.from ? { gte: estimatedPrice.from } : {}),
-  //         ...(estimatedPrice.to ? { lte: estimatedPrice.to } : {}),
-  //       },
-  //     }
-  //   : {};
-  // const createdFilter = created
-  //   ? {
-  //       createdAt: {
-  //         ...(created.from ? { gte: created.from } : {}),
-  //         ...(created.to ? { lte: created.to } : {}),
-  //       },
-  //     }
-  //   : {};
+  const estimatedPrice =
+    estimatedPriceFrom || estimatedPriceTo
+      ? {
+          ...(estimatedPriceFrom ? { gte: estimatedPriceFrom } : {}),
+          ...(estimatedPriceTo ? { lte: estimatedPriceTo } : {}),
+        }
+      : {};
   try {
     const users = await client.advertisement.findMany({
       where: {
-        // ...filterData,
+        ...filterData,
         deletedAt: null,
         ...categoryFilter,
-        // ...estimatedPriceFilter,
-        // ...createdFilter,
+        estimatedPrice,
       },
-      orderBy: orderBy ?? {},
-      skip: (pageNum - 1) * perPage,
-      take: perPage,
-      include: {
-        images: true,
-      },
-    });
-    return Result.ok(users);
-  } catch (e) {
-    return genericError;
-  }
-};
-
-const allWithoutFilters = async (): DbResult<number> => {
-  try {
-    const users = await client.advertisement.findMany({
-      where: {},
     });
     return Result.ok(users.length);
   } catch (e) {

@@ -78,9 +78,12 @@ export type AdvertisementReadAllData = {
   hidden?: boolean;
   creatorId?: string;
   categories?: string[];
-  estimatedPrice?: { from: number | undefined; to: number | undefined };
-  created?: { from: Date | undefined; to: Date | undefined };
-  orderBy?: { title: 'asc' | 'desc' } | { estimatedPrice: 'asc' | 'desc' };
+  estimatedPriceFrom?: number;
+  estimatedPriceTo?: number;
+  // createdFrom?: Date;
+  // createdTo?: Date;
+  orderByTitle?: 'asc' | 'desc';
+  orderByPrice?: 'asc' | 'desc';
 };
 
 export type AdvertisementUpdateData = {

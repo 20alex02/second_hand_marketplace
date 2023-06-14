@@ -4,6 +4,9 @@ import userModel from '../models/userModels';
 import { getUserId } from './authService';
 import { Role } from '@prisma/client';
 import { InvalidAccessRights } from '../errors/controllersErrors';
+import type { Request } from 'express';
+import { deleteUndefined } from '../controllers/common';
+import type { UserUpdateData } from '../repositories/types/data';
 
 async function isAdmin(id: string) {
   const userResult = await user.read.one({ id: id });
@@ -37,7 +40,9 @@ async function update(headers: any, query: any, secret?: string) {
   if (role && !(await isAdmin(id))) {
     throw new InvalidAccessRights();
   }
-  const result = await user.update({ ...validatedData, ...hashedPassword });
+  const updateData = { ...validatedData, ...hashedPassword };
+  deleteUndefined(updateData);
+  const result = await user.update(updateData as UserUpdateData);
   if (result.isErr) {
     throw result.error;
   }
