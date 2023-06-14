@@ -70,9 +70,7 @@ app.get(
 
 app.get('/api/advertisement/:id', controllers.advertisement.getOne);
 
-app.get('/api/advertisement', controllers.advertisement.getAll, (req, res) => {
-  return controllers.advertisement.getAll(req, res);
-});
+app.get('/api/advertisement', controllers.advertisement.getAll);
 
 app.post('/api/advertisement', authenticateToken, upload, (req, res) => {
   return controllers.advertisement.create(req, res, secretKey);

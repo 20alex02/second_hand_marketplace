@@ -24,7 +24,7 @@ const createAdvertisement = async (
       if (creatorCheck.deletedAt !== null) {
         return Result.err(new DeletedRecordError('Advertisement'));
       }
-      const { creatorId, categories, images, ...createData } = data;
+      const { creatorId, category, images, ...createData } = data;
       const advertisement = await tx.advertisement.create({
         data: {
           ...createData,
@@ -34,7 +34,7 @@ const createAdvertisement = async (
             },
           },
           categories: {
-            connect: categories,
+            connect: { id: category },
           },
           images: {
             createMany: {

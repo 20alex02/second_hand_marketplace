@@ -7,7 +7,7 @@ const createSchema = z.object({
   description: z.string(),
   creatorId: z.string().uuid(),
   images: z.array(z.object({ path: z.string() })),
-  categories: z.array(z.object({ id: z.string().uuid() })),
+  category: z.string().uuid(),
   estimatedPrice: z
     .string()
     .regex(/^\d+$/)
@@ -16,13 +16,7 @@ const createSchema = z.object({
       message: 'estimatedPrice must be greater than 0',
       path: ['estimatedPrice'],
     }),
-  hidden: z.boolean().optional(),
 });
-
-const orderBySchema = z.union([
-  z.object({ title: z.literal('asc' || 'desc') }),
-  z.object({ estimatedPrice: z.literal('asc' || 'desc') }),
-]);
 
 const getAllSchema = z
   .object({
@@ -43,9 +37,19 @@ const getAllSchema = z
         path: ['perPage'],
       }),
     categories: z.array(z.string().uuid()).optional(),
-    hidden: z.boolean().optional(),
     type: z.nativeEnum(AdvertisementType).optional(),
-    orderBy: orderBySchema.optional(),
+    orderByTitle: z
+      .string()
+      .refine(
+        (orderByTitle) => orderByTitle === 'asc' || orderByTitle === 'desc'
+      )
+      .optional(),
+    orderByPrice: z
+      .string()
+      .refine(
+        (orderByPrice) => orderByPrice === 'asc' || orderByPrice === 'desc'
+      )
+      .optional(),
     createdFrom: z
       .string()
       // .regex(/\d{1,2}\/\d{1,2}\/\d{2,4}/)
@@ -127,6 +131,31 @@ const getAllForCreatorSchema = z.object({
   creatorId: z.string().uuid(),
 });
 
+const getAllAdminSchema = z.object({
+  pageNum: z
+    .string()
+    .regex(/^\d+$/)
+    .transform(Number)
+    .refine((pageNum) => pageNum > 0, {
+      message: 'pageNum must be greater than 0',
+      path: ['pageNum'],
+    }),
+  perPage: z
+    .string()
+    .regex(/^\d+$/)
+    .transform(Number)
+    .refine((perPage) => perPage > 0, {
+      message: 'perPage must be greater than 0',
+      path: ['perPage'],
+    }),
+  creatorId: z.string().uuid(),
+  hidden: z
+    .string()
+    .refine((hidden) => hidden === 'true' || hidden === 'false')
+    .transform((hidden) => hidden === 'true')
+    .optional(),
+});
+
 const deleteSchema = z.object({
   id: z.string().uuid(),
 });
@@ -156,7 +185,11 @@ const updateSchema = z.object({
         path: ['estimatedPrice'],
       }
     ),
-  hidden: z.boolean().optional(),
+  hidden: z
+    .string()
+    .refine((hidden) => hidden === 'true' || hidden === 'false')
+    .transform((hidden) => hidden === 'true')
+    .optional(),
 });
 
 export default {
@@ -165,5 +198,6 @@ export default {
   getAllForCreatorSchema,
   getOneSchema,
   deleteSchema,
+  getAllAdminSchema,
   updateSchema,
 };

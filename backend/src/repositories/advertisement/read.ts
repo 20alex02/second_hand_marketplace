@@ -62,12 +62,14 @@ const readAllAdvertisement = async (
     categories,
     estimatedPriceFrom,
     estimatedPriceTo,
+    hidden,
     // createdFrom,
     // createdTo,
     orderByPrice,
     orderByTitle,
     ...filterData
   } = data;
+  const hiddenFilter = hidden === undefined ? false : true;
   const orderBy =
     orderByPrice || orderByTitle
       ? {
@@ -106,6 +108,7 @@ const readAllAdvertisement = async (
       where: {
         ...filterData,
         deletedAt: null,
+        hidden: hiddenFilter,
         ...categoryFilter,
         estimatedPrice,
         // createdAt,
@@ -133,10 +136,12 @@ const readAllCount = async (
     categories,
     estimatedPriceFrom,
     estimatedPriceTo,
+    hidden,
     orderByPrice,
     orderByTitle,
     ...filterData
   } = data;
+  const hiddenFilter = hidden === undefined ? false : true;
   const categoryFilter = categories
     ? {
         categories: {
@@ -162,6 +167,7 @@ const readAllCount = async (
         ...filterData,
         deletedAt: null,
         ...categoryFilter,
+        hidden: hiddenFilter,
         estimatedPrice,
       },
     });

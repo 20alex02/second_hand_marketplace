@@ -64,7 +64,7 @@ export type AdvertisementCreateData = {
   hidden?: boolean;
   creatorId: string;
   images: { path: string }[];
-  categories: { id: string }[];
+  category: string;
 };
 
 export type AdvertisementReadOneData = {
