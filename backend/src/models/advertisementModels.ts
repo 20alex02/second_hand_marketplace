@@ -18,11 +18,6 @@ const createSchema = z.object({
     }),
 });
 
-const orderBySchema = z.union([
-  z.object({ title: z.literal('asc' || 'desc') }),
-  z.object({ estimatedPrice: z.literal('asc' || 'desc') }),
-]);
-
 const getAllSchema = z
   .object({
     pageNum: z
@@ -43,7 +38,18 @@ const getAllSchema = z
       }),
     categories: z.array(z.string().uuid()).optional(),
     type: z.nativeEnum(AdvertisementType).optional(),
-    orderBy: orderBySchema.optional(),
+    orderByTitle: z
+      .string()
+      .refine(
+        (orderByTitle) => orderByTitle === 'asc' || orderByTitle === 'desc'
+      )
+      .optional(),
+    orderByPrice: z
+      .string()
+      .refine(
+        (orderByPrice) => orderByPrice === 'asc' || orderByPrice === 'desc'
+      )
+      .optional(),
     createdFrom: z
       .string()
       // .regex(/\d{1,2}\/\d{1,2}\/\d{2,4}/)
@@ -143,7 +149,11 @@ const getAllAdminSchema = z.object({
       path: ['perPage'],
     }),
   creatorId: z.string().uuid(),
-  hidden: z.boolean().optional(),
+  hidden: z
+    .string()
+    .refine((hidden) => hidden === 'true' || hidden === 'false')
+    .transform((hidden) => hidden === 'true')
+    .optional(),
 });
 
 const deleteSchema = z.object({
@@ -175,7 +185,11 @@ const updateSchema = z.object({
         path: ['estimatedPrice'],
       }
     ),
-  hidden: z.boolean().optional(),
+  hidden: z
+    .string()
+    .refine((hidden) => hidden === 'true' || hidden === 'false')
+    .transform((hidden) => hidden === 'true')
+    .optional(),
 });
 
 export default {
