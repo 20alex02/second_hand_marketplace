@@ -9,16 +9,22 @@ import { getAdverts } from '../../services/advertsApi';
 import { useEffect, useRef, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { CategoryIdsForAdverts } from '../../state/selector';
+import AdvertFilters from '../../components/advertsFilters/AdvertFilters';
+import { FiltersMin, FiltersMax } from '../../state/atom';
 import { ApiError } from '../../models/error';
 
 const Adverts = () => {
   const [adverts, setAdverts] = useState<AdvertType[]>([]);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState(0);
+  const minPrice = useRecoilValue(FiltersMin);
+  const maxPrice = useRecoilValue(FiltersMax);
   const categories = useRecoilValue(CategoryIdsForAdverts);
   const client = useQueryClient();
   const categoriesRef = useRef(categories);
   const pageRef = useRef(page);
+  const minRef = useRef(minPrice);
+  const maxRef = useRef(maxPrice);
   const [err, setErr] = useState('');
 
   useEffect(() => {
@@ -26,16 +32,30 @@ const Adverts = () => {
   }, [page]);
 
   useEffect(() => {
+    minRef.current = minPrice;
+  }, [minPrice]);
+
+  useEffect(() => {
+    maxRef.current = maxPrice;
+  }, [maxPrice]);
+
+  useEffect(() => {
     categoriesRef.current = categories;
   }, [categories]);
 
   useEffect(() => {
-    client.invalidateQueries(['adverts', categories]);
-  }, [categories, page]);
+    client.invalidateQueries(['adverts']);
+  }, [categories, page, minPrice, maxPrice]);
 
   const { isLoading } = useQuery(
-    ['adverts', categories],
-    () => getAdverts(pageRef.current, categoriesRef.current),
+    ['adverts'],
+    () =>
+      getAdverts(
+        pageRef.current,
+        categoriesRef.current,
+        minRef.current,
+        maxRef.current
+      ),
     {
       onSuccess: (data) => {
         const dataArray: AdvertType[] = Object.values(data.data.advertisements);
@@ -51,6 +71,9 @@ const Adverts = () => {
       <aside className="filters-bar">
         <Filters />
       </aside>
+      <div className="adverts-filters">
+        <AdvertFilters />
+      </div>
       <main className="adverts">
         {isLoading ? (
           <div className="filters__loading">
@@ -77,9 +100,9 @@ const Adverts = () => {
       <div className="adverts__pages">
         <Pagination
           total={count}
-          pageSize={1}
+          pageSize={9}
           current={page}
-          onChange={(page) => setPage(page)}
+          onChange={(page: number) => setPage(page)}
         />
       </div>
     </div>

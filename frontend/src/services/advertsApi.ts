@@ -8,14 +8,29 @@ export const getCategories = async () => {
 
 export const getAdverts = async (
   pageNum: number,
-  categoryIds: string[] | undefined
+  categoryIds: string[] | undefined,
+  minPrice: number | undefined,
+  maxPrice: number | undefined
 ) => {
-  const response = await axiosInstance.get<AxiosResponse>('api/advertisement', {
-    params: {
+  let params;
+  if (minPrice === undefined || maxPrice === undefined) {
+    params = {
       pageNum: pageNum,
-      perPage: 1,
+      perPage: 9,
       categories: categoryIds,
-    },
+    };
+  } else {
+    params = {
+      pageNum: pageNum,
+      perPage: 9,
+      categories: categoryIds,
+      estimatedPriceFrom: minPrice,
+      estimatedPriceTo: maxPrice,
+    };
+  }
+
+  const response = await axiosInstance.get<AxiosResponse>('api/advertisement', {
+    params: params,
   });
   return response.data;
 };
