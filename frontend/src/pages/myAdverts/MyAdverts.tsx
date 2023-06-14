@@ -9,10 +9,10 @@ import { COUNT, STATUS } from '../../components/advert/states';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, Pagination, Segmented, Spin } from 'antd';
 import { useRecoilValue } from 'recoil';
-import { FiltersMax, FiltersMin, UserRole } from '../../state/atom';
+import { AuthToken, UserRole } from '../../state/atom';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { ApiError } from '../../models/error';
-import { getAdverts } from '../../services/advertsApi';
+import { getAllMe, getAllMeAdmin } from '../../services/advertsApi';
 import { CategoryIdsForAdverts } from '../../state/selector';
 import { useParams } from 'react-router-dom';
 import { AdvertDetail } from '../../models/advertDetail';
@@ -25,60 +25,68 @@ const MyAdverts = () => {
   const [adverts, setAdverts] = useState<AdvertDetail[]>([]);
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState(0);
-  const minPrice = useRecoilValue(FiltersMin);
-  const maxPrice = useRecoilValue(FiltersMax);
   const categories = useRecoilValue(CategoryIdsForAdverts);
   const client = useQueryClient();
   const categoriesRef = useRef(categories);
   const pageRef = useRef(page);
-  const minRef = useRef(minPrice);
-  const maxRef = useRef(maxPrice);
   const [err, setErr] = useState('');
   const Role = useRecoilValue(UserRole);
+  const Token = useRecoilValue(AuthToken);
+  const [isLoading, SetIsLoading] = useState(true);
   const hidden = Role !== 'ADMIN';
 
   const { id, name } = useParams();
-
   useEffect(() => {
     pageRef.current = page;
   }, [page]);
-
-  useEffect(() => {
-    minRef.current = minPrice;
-  }, [minPrice]);
-
-  useEffect(() => {
-    maxRef.current = maxPrice;
-  }, [maxPrice]);
 
   useEffect(() => {
     categoriesRef.current = categories;
   }, [categories]);
 
   useEffect(() => {
-    client.invalidateQueries(['adverts']);
-  }, [categories, page, minPrice, maxPrice]);
+    client.invalidateQueries(['myAdverts']);
+  }, [categories, page]);
 
-  const { isLoading } = useQuery(
-    ['adverts'],
-    () =>
-      getAdverts(
-        pageRef.current,
-        categoriesRef.current,
-        minRef.current,
-        maxRef.current
-      ),
-    {
-      onSuccess: (data) => {
-        const dataArray: AdvertDetail[] = Object.values(
-          data.data.advertisements
-        );
-        setAdverts(dataArray);
-        setCount(data.data.advertisementCount);
-      },
-      onError: (error: ApiError) => setErr(error.response.data.message),
-    }
-  );
+  if (hidden || !id) {
+    useQuery(
+      ['myAdverts'],
+      () => getAllMe(Token, pageRef.current, categoriesRef.current),
+      {
+        onSuccess: (data) => {
+          const dataArray: AdvertDetail[] = Object.values(
+            data.data.advertisements
+          );
+          setAdverts(dataArray);
+          setCount(data.data.advertisementCount);
+          SetIsLoading(false);
+        },
+        onError: (error: ApiError) => {
+          SetIsLoading(false);
+          setErr(error.response.data.message);
+        },
+      }
+    );
+  } else {
+    useQuery(
+      ['myAdverts'],
+      () => getAllMeAdmin(Token, id, pageRef.current, categoriesRef.current),
+      {
+        onSuccess: (data) => {
+          const dataArray: AdvertDetail[] = Object.values(
+            data.data.advertisements
+          );
+          setAdverts(dataArray);
+          setCount(data.data.advertisementCount);
+          SetIsLoading(false);
+        },
+        onError: (error: ApiError) => {
+          SetIsLoading(false);
+          setErr(error.response.data.message);
+        },
+      }
+    );
+  }
 
   return (
     <div className="my-container">

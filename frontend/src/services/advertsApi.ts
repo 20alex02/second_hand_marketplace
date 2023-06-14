@@ -34,3 +34,42 @@ export const getAdverts = async (
   });
   return response.data;
 };
+
+export const getAllMe = async (
+  token: string,
+  pageNum: number,
+  categoryIds: string[] | undefined
+) => {
+  const response = await axiosInstance.get<AxiosResponse>(
+    '/api/advertisement/me',
+    {
+      headers: { authorization: `Bearer ${token}` },
+      params: {
+        pageNum: pageNum,
+        perPage: 9,
+        categories: categoryIds,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const getAllMeAdmin = async (
+  token: string,
+  id: string,
+  pageNum: number,
+  categoryIds: string[] | undefined
+) => {
+  const response = await axiosInstance.get<AxiosResponse>(
+    `/api/advertisement/${id}`,
+    {
+      headers: { authorization: `Bearer ${token}` },
+      params: {
+        pageNum: pageNum,
+        perPage: 9,
+        categories: categoryIds,
+      },
+    }
+  );
+  return response.data;
+};
