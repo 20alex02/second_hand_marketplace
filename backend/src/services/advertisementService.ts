@@ -21,7 +21,7 @@ const create = async (
 ) => {
   const creatorId = getUserId(headers.authorization, secret);
   const images: { path: string }[] = files.map((file: Express.Multer.File) => ({
-    path: file.path,
+    path: file.filename,
   }));
   const validatedData = advertisementModel.createSchema.parse({
     creatorId,
