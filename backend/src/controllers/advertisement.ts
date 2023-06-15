@@ -2,6 +2,7 @@ import type { Request, Response } from 'express';
 import { handleOkResp, handleError } from './common';
 import { AdvertisementType } from '@prisma/client';
 import advertisementService from '../services/advertisementService';
+import fs from 'fs';
 
 const create = async (req: Request, res: Response, secret?: string) => {
   console.log(req.file);
@@ -21,6 +22,15 @@ const create = async (req: Request, res: Response, secret?: string) => {
       'Advertisement created successfully'
     );
   } catch (error) {
+    (req.files as Express.Multer.File[]).forEach(
+      (file: Express.Multer.File) => {
+        fs.unlink(file.path, (err) => {
+          if (err) {
+            return;
+          }
+        });
+      }
+    );
     return handleError(error as Error, res);
   }
 };
@@ -129,9 +139,18 @@ const update = async (req: Request, res: Response, secret?: string) => {
       200,
       { uuid: result },
       res,
-      'Advertisement searched successfully'
+      'Advertisement updated successfully'
     );
   } catch (error) {
+    (req.files as Express.Multer.File[]).forEach(
+      (file: Express.Multer.File) => {
+        fs.unlink(file.path, (err) => {
+          if (err) {
+            return;
+          }
+        });
+      }
+    );
     return handleError(error as Error, res);
   }
 };
