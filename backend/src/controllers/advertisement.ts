@@ -5,9 +5,6 @@ import advertisementService from '../services/advertisementService';
 import fs from 'fs';
 
 const create = async (req: Request, res: Response, secret?: string) => {
-  console.log(req.file);
-  console.log(req.files);
-  console.log(req.body);
   try {
     const result = await advertisementService.create(
       req.body,

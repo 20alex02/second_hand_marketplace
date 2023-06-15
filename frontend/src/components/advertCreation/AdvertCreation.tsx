@@ -47,6 +47,7 @@ const EditButtons = (props: {
     <div className="advert-creation__buttons edit-button">
       <Button
         className="edit-button__edit"
+        htmlType="submit"
         icon={<CheckOutlined rev={undefined} />}
         onClick={() => props.setIsEditing(true)}
       />
@@ -193,7 +194,7 @@ const AdvertCreation = (props: {
         name="type"
         label="Type"
         rules={[{ required: true }]}
-        initialValue={stringUtil.capitalizeWord(props.advert?.type)}
+        initialValue={props.advert?.type}
       >
         <Select
           options={[
@@ -219,7 +220,7 @@ const AdvertCreation = (props: {
           listType="picture"
           defaultFileList={fileList}
           multiple
-          fileList={fileList}
+          //fileList={fileList}
           beforeUpload={(file) => {
             return new Promise((resolve, reject) => {
               if (file.size > 20000) {
