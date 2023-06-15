@@ -57,12 +57,12 @@ const EditButtons = (props: {
     <div className="advert-detail__edit-buttons advert-buttons">
       <Button
         className="advert-button__edit"
-        icon={<EditOutlined rev />}
+        icon={<EditOutlined rev={undefined} />}
         onClick={() => props.setEditing(true)}
       />
       <Button
         className="advert-button__remove"
-        icon={<DeleteOutlined rev />}
+        icon={<DeleteOutlined rev={undefined} />}
         onClick={showModal}
       />
       <Modal
