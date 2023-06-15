@@ -126,7 +126,7 @@ const getOne = async (params: Request['params']) => {
     throw result.error;
   }
   const { participants, creator, ...rest } = result.value;
-  return rest;
+  return { ...rest, phoneNumber: creator.phoneNumber, email: creator.email };
 };
 
 const deleteAdvertisement = async (
