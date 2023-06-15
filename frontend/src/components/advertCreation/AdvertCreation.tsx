@@ -158,6 +158,8 @@ const AdvertCreation = (props: {
     const formdata = new FormData();
     if (estimatedPrice === undefined) {
       formdata.append('estimatedPrice', '0');
+    } else {
+      formdata.append('estimatedPrice', estimatedPrice.toString());
     }
     mapOthers(other, formdata);
     files.forEach((element: any) => {
