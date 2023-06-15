@@ -107,3 +107,21 @@ export const deleteAdvert = async (data: { token: string; id: string }) => {
   );
   return response.data;
 };
+
+export const updateAdvert = async (
+  token: string,
+  id: string,
+  data: FormData
+) => {
+  const response = await axiosInstance.patch<AxiosResponse>(
+    `/api/advertisement/${id}`,
+    data,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
+  return response.data;
+};

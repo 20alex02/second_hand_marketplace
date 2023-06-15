@@ -42,8 +42,7 @@ const Advert = (props: { advert?: AdvertDetailType; state?: string }) => {
   const imageCount = props.advert.images.length;
 
   let index = 0;
-  const setImage = () =>
-    props.advert?.images.at(index)?.path ?? 'default image'; // TODO default image
+  const setImage = () => props.advert?.images.at(index)?.path ?? 'default.jpg';
   const [imagePath, setImagePath] = useState<string>(setImage());
 
   const intervalId: MutableRefObject<NodeJS.Timer | undefined> = useRef();

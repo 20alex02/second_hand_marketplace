@@ -29,7 +29,7 @@ import { useMutation } from '@tanstack/react-query';
 import { ApiError } from '../../models/error';
 import { useRecoilValue } from 'recoil';
 import { AuthToken, Categories } from '../../state/atom';
-import { createAdvert } from '../../services/advertsApi';
+import { createAdvert, updateAdvert } from '../../services/advertsApi';
 
 const { TextArea } = Input;
 
@@ -113,6 +113,24 @@ const AdvertCreation = (props: {
       },
     }
   );
+
+  const { mutate: update } = useMutation(
+    (data: FormData) => updateAdvert(Token, props.advert?.id ?? '', data),
+    {
+      onSuccess: () => {
+        modal.success({
+          title: 'Advert was succesfully edited',
+        });
+      },
+      onError: (error: ApiError) => {
+        modal.error({
+          title: 'Unable to edit advert',
+          content: error.response.data.message,
+        });
+      },
+    }
+  );
+
   const handleFileChange = (info: any) => {
     const fileList = [...info.fileList];
     setFileList(fileList);
@@ -126,7 +144,11 @@ const AdvertCreation = (props: {
     files.forEach((element: any) => {
       formdata.append('files', element.originFileObj);
     });
-    create(formdata);
+    if (props.setIsEditing) {
+      update(formdata);
+    } else {
+      create(formdata);
+    }
   };
   return (
     <Form
