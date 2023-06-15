@@ -30,12 +30,10 @@ const deleteCategory = async (
       if (categoryCheck.deletedAt !== null) {
         return Result.err(new DeletedRecordError('Category'));
       }
-      if (categoryCheck.subcategories.length !== 0) {
-        return Result.err(new CategoryDeletionError('subcategories'));
-      }
       if (categoryCheck.advertisements.length !== 0) {
         return Result.err(new CategoryDeletionError('advertisements'));
       }
+
       if (categoryCheck.parentId !== null) {
         await tx.category.update({
           where: {
@@ -47,6 +45,9 @@ const deleteCategory = async (
             },
           },
         });
+      }
+      if (categoryCheck.subcategories.length !== 0) {
+        return Result.err(new CategoryDeletionError('subcategories'));
       }
 
       const category = await tx.category.update({
