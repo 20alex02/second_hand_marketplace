@@ -1,3 +1,4 @@
+import { CreateAdvertBodyType } from '../models/advertDetailType';
 import axiosInstance from './base';
 import { AxiosResponse } from 'axios';
 
@@ -68,6 +69,20 @@ export const getAllMeAdmin = async (
         pageNum: pageNum,
         perPage: 9,
         categories: categoryIds,
+      },
+    }
+  );
+  return response.data;
+};
+
+export const createAdvert = async (token: string, data: FormData) => {
+  const response = await axiosInstance.post<AxiosResponse>(
+    '/api/advertisement',
+    data,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
       },
     }
   );

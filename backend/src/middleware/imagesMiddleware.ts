@@ -7,7 +7,7 @@ import { ExtensionError } from '../errors/middlewareErrors';
 
 const storage = multer.diskStorage({
   destination: (_req, _file, cb) => {
-    cb(null, '../images');
+    cb(null, './src/images');
   },
   filename: (_req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname));
@@ -15,7 +15,6 @@ const storage = multer.diskStorage({
 });
 
 const upload = (req: Request, res: Response, next: NextFunction) => {
-  // TODO replace 'images' in array with name attribute from form
   multer({
     storage: storage,
     limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
@@ -31,11 +30,12 @@ const upload = (req: Request, res: Response, next: NextFunction) => {
         return cb(new ExtensionError());
       }
     },
-  }).array('images')(req, res, (err) => {
+  }).array('files')(req, res, (err) => {
     if (err instanceof ExtensionError) {
       return handleErrorResp(400, res, err.message);
     }
     if (err) {
+      console.log(err);
       return handleErrorResp(500, res, 'File upload failed');
     }
     next();

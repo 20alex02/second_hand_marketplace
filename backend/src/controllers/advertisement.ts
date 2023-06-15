@@ -4,11 +4,14 @@ import { AdvertisementType } from '@prisma/client';
 import advertisementService from '../services/advertisementService';
 
 const create = async (req: Request, res: Response, secret?: string) => {
+  console.log(req.file);
+  console.log(req.files);
+  console.log(req.body);
   try {
     const result = await advertisementService.create(
       req.body,
       req.headers,
-      // req.files as Express.Multer.File[],
+      req.files as Express.Multer.File[],
       secret
     );
     return handleOkResp(
