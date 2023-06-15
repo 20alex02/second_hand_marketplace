@@ -1,6 +1,6 @@
 @import url('../../assets/styles/_variables.css');
 
-.filters-bar {
+.filters-bar, .my-filters-bar {
     grid-row: 1;
     width: 100%;
     position: fixed;
@@ -43,10 +43,15 @@
 
 
 @media only screen and (min-width: 800px) {
-    .filters-bar {
+    .filters-bar, .my-filters-bar {
         grid-column: 1;
-        width: var(--sidebar-width);
+        width: calc(var(--sidebar-width) + 1rem);
         height: 100%;
+        margin: 1rem;
+    }
+
+    .my-filters-bar {
+        margin-top: calc(var(--navbar-height) + 1rem);
     }
 
     .adverts__pages {

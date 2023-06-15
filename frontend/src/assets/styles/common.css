@@ -71,7 +71,7 @@
 
 @media only screen and (min-width: 800px) {
     .container, .my-container {
-        grid-template-columns: var(--sidebar-width) auto;
+        grid-template-columns: calc(var(--sidebar-width) + 1rem) auto;
         height: 100%;
     }
 
@@ -82,7 +82,6 @@
     }
 
     .my-container {
-        grid-template-columns: var(--sidebar-width) auto;
         grid-template-rows: var(--navbar-height) calc(90vh - var(--navbar-height));
     }
 

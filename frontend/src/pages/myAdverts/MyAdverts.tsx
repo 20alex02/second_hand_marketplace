@@ -88,7 +88,7 @@ const MyAdverts = () => {
   return (
     <div className="my-container">
       <div className="title-user">{hidden && id ? '' : name}</div>
-      <aside className="filters-bar">
+      <aside className="my-filters-bar">
         <Filters />
       </aside>
       <main className="my-adverts">
