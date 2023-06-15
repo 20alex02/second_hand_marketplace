@@ -2,17 +2,19 @@ export type AdvertDetailType = {
   id: string;
   createdAt: string;
   title: string;
-  type: string;
+  type: AdvertisementType;
   description: string;
   estimatedPrice?: number;
-  creator: Contact;
+  creatorId: string;
+  phoneNumber: string;
+  email: string;
   participants: Contact[];
   images: Image[];
   categories: Category[];
   hidden: boolean;
 };
 
-// export type AdvertisementType = 'OFFER' | 'REQUEST';
+export type AdvertisementType = 'OFFER' | 'REQUEST';
 
 export type Contact =
   | {

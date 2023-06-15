@@ -1,5 +1,11 @@
 @import url('../../assets/styles/_variables.css');
 
+.spinner {
+    height: calc(100vh - var(--navbar-height));
+    width: 100vw;
+    padding: 1rem;
+}
+
 .advert-detail {
     max-height: calc(100vh - var(--navbar-height) - var(--advert-detail-padding) * 2);
     max-width: var(--advert-detail-width);
