@@ -25,14 +25,7 @@ const updateAdvertisement = async (
       if (advertisementCheck.deletedAt !== null) {
         return Result.err(new DeletedRecordError('Advertisement'));
       }
-      const {
-        id,
-        connectCategories,
-        disconnectCategories,
-        createImages,
-        disconnectImages,
-        ...dataToUpdate
-      } = data;
+      const { id, category, createImages, ...dataToUpdate } = data;
       const images =
         createImages.length !== 0
           ? {
@@ -41,29 +34,25 @@ const updateAdvertisement = async (
               },
             }
           : {};
-      if (disconnectCategories.length !== 0 || disconnectImages.length !== 0) {
-        await tx.advertisement.update({
-          where: {
-            id: id,
+      await tx.advertisement.update({
+        where: {
+          id: id,
+        },
+        data: {
+          categories: {
+            set: [],
           },
-          data: {
-            categories: {
-              disconnect: disconnectCategories,
-            },
-            images: {
-              updateMany: {
-                where: {
-                  id: { in: disconnectImages.map((image) => image.id) },
-                },
-                data: {
-                  deletedAt,
-                },
+          images: {
+            updateMany: {
+              where: {},
+              data: {
+                deletedAt,
               },
-              disconnect: disconnectImages,
             },
+            set: [],
           },
-        });
-      }
+        },
+      });
 
       const advertisement = await tx.advertisement.update({
         where: {
@@ -73,7 +62,7 @@ const updateAdvertisement = async (
           ...dataToUpdate,
           images,
           categories: {
-            connect: connectCategories,
+            connect: { id: category },
           },
         },
         include: {

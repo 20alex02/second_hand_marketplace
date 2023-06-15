@@ -2,7 +2,7 @@ import advertisement from '../repositories/advertisement';
 import advertisementModel from '../models/advertisementModels';
 import { getUserId } from './authService';
 import user from '../repositories/user';
-import { Role } from '@prisma/client';
+import { AdvertisementImage, Role } from '@prisma/client';
 import { InvalidAccessRights } from '../errors/controllersErrors';
 import type { Request } from 'express';
 import { deleteUndefined } from '../controllers/common';
@@ -12,6 +12,8 @@ import type {
   AdvertisementUpdateData,
 } from '../repositories/types/data';
 import userService from './userService';
+import fs from 'fs';
+import path from 'path';
 
 const create = async (
   body: Request['body'],
@@ -188,12 +190,23 @@ const update = async (
   }
   const updateData = { id, ...validatedData };
   deleteUndefined(updateData);
+  const advert = await advertisement.read.one({ id: id });
+  if (advert.isErr) {
+    throw advert.error;
+  }
   const result = await advertisement.update(
     updateData as AdvertisementUpdateData
   );
   if (result.isErr) {
     throw result.error;
   }
+  advert.value.images.forEach((file: AdvertisementImage) => {
+    fs.unlink(path.join('/src/images', file.path), (err) => {
+      if (err) {
+        throw new Error();
+      }
+    });
+  });
   return result.value.id;
 };
 

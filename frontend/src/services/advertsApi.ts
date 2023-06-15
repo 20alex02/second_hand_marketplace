@@ -16,13 +16,13 @@ export const getAdverts = async (
   if (minPrice === undefined && maxPrice === undefined) {
     params = {
       pageNum: pageNum,
-      perPage: 9,
+      perPage: 10,
       categories: categoryIds,
     };
   } else {
     params = {
       pageNum: pageNum,
-      perPage: 9,
+      perPage: 10,
       categories: categoryIds,
       estimatedPriceFrom: minPrice ?? 0,
       estimatedPriceTo: maxPrice ?? 0,

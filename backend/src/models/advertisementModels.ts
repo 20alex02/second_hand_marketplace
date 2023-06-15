@@ -13,10 +13,13 @@ const createSchema = z.object({
     .regex(/^\d+$/)
     .optional()
     .transform(Number)
-    .refine((estimatedPrice) => estimatedPrice >= 0, {
-      message: 'estimatedPrice must be greater than 0',
-      path: ['estimatedPrice'],
-    }),
+    .refine(
+      (estimatedPrice) => estimatedPrice === undefined || estimatedPrice >= 0,
+      {
+        message: 'estimatedPrice must be greater than 0',
+        path: ['estimatedPrice'],
+      }
+    ),
 });
 
 const getAllSchema = z
@@ -168,11 +171,9 @@ const getOneSchema = z.object({
 const updateSchema = z.object({
   id: z.string().uuid(),
   createImages: z.array(z.object({ path: z.string() })),
-  disconnectImages: z.array(z.object({ id: z.string().uuid() })),
-  connectCategories: z.array(z.object({ id: z.string().uuid() })),
-  disconnectCategories: z.array(z.object({ id: z.string().uuid() })),
-  title: z.string().min(3).optional(),
-  type: z.nativeEnum(AdvertisementType).optional(),
+  category: z.string().uuid(),
+  title: z.string().min(3),
+  type: z.nativeEnum(AdvertisementType),
   description: z.string().optional(),
   estimatedPrice: z
     .string()
@@ -186,11 +187,6 @@ const updateSchema = z.object({
         path: ['estimatedPrice'],
       }
     ),
-  hidden: z
-    .string()
-    .refine((hidden) => hidden === 'true' || hidden === 'false')
-    .transform((hidden) => hidden === 'true')
-    .optional(),
 });
 
 export default {
