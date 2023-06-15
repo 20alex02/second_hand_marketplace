@@ -82,7 +82,6 @@ const CategoryForm = (props: {
   };
 
   const onFinish = (values: CategoryFormType) => {
-    console.log(values.categorySelect);
     if (radioValue === ADD) {
       mutationCreate.mutate(values);
     } else {
@@ -96,7 +95,7 @@ const CategoryForm = (props: {
       <Form.Item
         className="category-form__select"
         name="categorySelect"
-        label="Categories"
+        label={radioValue === DELETE ? 'Categories' : 'Parent category'}
         rules={[{ required: radioValue === DELETE }]}
       >
         <Select allowClear={true}>
@@ -125,7 +124,7 @@ const CategoryForm = (props: {
       >
         <Input
           className="category-form__input"
-          placeholder="Category name"
+          placeholder="New category name"
           disabled={radioValue === DELETE}
         />
       </Form.Item>
