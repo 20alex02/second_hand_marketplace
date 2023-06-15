@@ -45,17 +45,31 @@ export const getAdvert = async (advertId: string) => {
 export const getAllMe = async (
   token: string,
   pageNum: number,
-  categoryIds: string[] | undefined
+  categoryIds: string[] | undefined,
+  minPrice: number | undefined,
+  maxPrice: number | undefined
 ) => {
+  let params;
+  if (minPrice === undefined && maxPrice === undefined) {
+    params = {
+      pageNum: pageNum,
+      perPage: 10,
+      categories: categoryIds,
+    };
+  } else {
+    params = {
+      pageNum: pageNum,
+      perPage: 10,
+      categories: categoryIds,
+      estimatedPriceFrom: minPrice ?? 0,
+      estimatedPriceTo: maxPrice ?? 0,
+    };
+  }
   const response = await axiosInstance.get<AxiosResponse>(
     '/api/advertisement/me',
     {
       headers: { authorization: `Bearer ${token}` },
-      params: {
-        pageNum: pageNum,
-        perPage: 9,
-        categories: categoryIds,
-      },
+      params: params,
     }
   );
   return response.data;
@@ -65,17 +79,31 @@ export const getAllMeAdmin = async (
   token: string,
   id: string,
   pageNum: number,
-  categoryIds: string[] | undefined
+  categoryIds: string[] | undefined,
+  minPrice: number | undefined,
+  maxPrice: number | undefined
 ) => {
+  let params;
+  if (minPrice === undefined && maxPrice === undefined) {
+    params = {
+      pageNum: pageNum,
+      perPage: 10,
+      categories: categoryIds,
+    };
+  } else {
+    params = {
+      pageNum: pageNum,
+      perPage: 10,
+      categories: categoryIds,
+      estimatedPriceFrom: minPrice ?? 0,
+      estimatedPriceTo: maxPrice ?? 0,
+    };
+  }
   const response = await axiosInstance.get<AxiosResponse>(
     `/api/advertisement/admin/${id}`,
     {
       headers: { authorization: `Bearer ${token}` },
-      params: {
-        pageNum: pageNum,
-        perPage: 9,
-        categories: categoryIds,
-      },
+      params: params,
     }
   );
   return response.data;

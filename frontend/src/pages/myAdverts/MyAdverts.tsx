@@ -10,7 +10,7 @@ import { COUNT } from '../../components/advert/states';
 import { useEffect, useRef, useState } from 'react';
 import { Alert, Pagination, Spin } from 'antd';
 import { useRecoilValue } from 'recoil';
-import { AuthToken, UserRole } from '../../state/atom';
+import { AuthToken, FiltersMax, FiltersMin, UserRole } from '../../state/atom';
 import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { ApiError } from '../../models/error';
 import { getAllMe, getAllMeAdmin } from '../../services/advertsApi';
@@ -24,9 +24,13 @@ const MyAdverts = () => {
   const [page, setPage] = useState<number>(1);
   const [count, setCount] = useState(0);
   const categories = useRecoilValue(CategoryIdsForAdverts);
+  const minPrice = useRecoilValue(FiltersMin);
+  const maxPrice = useRecoilValue(FiltersMax);
   const client = useQueryClient();
   const categoriesRef = useRef(categories);
   const pageRef = useRef(page);
+  const minRef = useRef(minPrice);
+  const maxRef = useRef(maxPrice);
   const [err, setErr] = useState('');
   const Role = useRecoilValue(UserRole);
   const Token = useRecoilValue(AuthToken);
@@ -43,13 +47,28 @@ const MyAdverts = () => {
   }, [categories]);
 
   useEffect(() => {
+    minRef.current = minPrice;
+  }, [minPrice]);
+
+  useEffect(() => {
+    maxRef.current = maxPrice;
+  }, [maxPrice]);
+
+  useEffect(() => {
     client.invalidateQueries(['myAdverts']);
-  }, [categories, page]);
+  }, [categories, page, maxPrice, minPrice]);
 
   if (hidden || !id) {
     useQuery(
       ['myAdverts'],
-      () => getAllMe(Token, pageRef.current, categoriesRef.current),
+      () =>
+        getAllMe(
+          Token,
+          pageRef.current,
+          categoriesRef.current,
+          minRef.current,
+          maxRef.current
+        ),
       {
         onSuccess: (data) => {
           const dataArray: AdvertDetailType[] = Object.values(
@@ -68,7 +87,15 @@ const MyAdverts = () => {
   } else {
     useQuery(
       ['myAdverts'],
-      () => getAllMeAdmin(Token, id, pageRef.current, categoriesRef.current),
+      () =>
+        getAllMeAdmin(
+          Token,
+          id,
+          pageRef.current,
+          categoriesRef.current,
+          minRef.current,
+          maxRef.current
+        ),
       {
         onSuccess: (data) => {
           const dataArray: AdvertDetailType[] = Object.values(
