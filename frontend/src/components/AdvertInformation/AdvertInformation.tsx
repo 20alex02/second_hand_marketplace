@@ -97,25 +97,26 @@ const EditButtons = (props: {
 const AdvertInformation = (props: {
   advert: AdvertDetailType;
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
+  canEdit: boolean;
 }) => {
-  const isUsersAdvert = true; // TODO
-
   return (
     <section className="advert-detail">
-      {isUsersAdvert ? (
+      {props.canEdit ? (
         <EditButtons id={props.advert.id} setEditing={props.setIsEditing} />
       ) : (
         <></>
       )}
       <CategoryCollapse categories={props.advert.categories} />
       <h1 className="advert-detail__title">{`${props.advert.type}: ${props.advert.title}`}</h1>
-      <span className="advert-detail__date">{props.advert.createdAt}</span>
+      <span className="advert-detail__date">
+        {new Date(props.advert.createdAt).toLocaleDateString()}
+      </span>
       <Carousel className="advert-detail__images advert-image" autoplay>
         {props.advert.images.map((item: Image) => (
           <Image
             className="advert-image__photo"
             key={item.id}
-            src={item.path}
+            src={`http://localhost:3001/api/images/${item.path}`}
           />
         ))}
       </Carousel>
@@ -125,8 +126,13 @@ const AdvertInformation = (props: {
       <span className="advert-detail__price">
         {priceUtil.formatPrice(props.advert.estimatedPrice)}
       </span>
-      <Advertiser creator={props.advert.creator} />
-      {isUsersAdvert ? <ParticipantTable /> : <ContactAdvertiser />}
+      <Advertiser
+        creator={{
+          email: props.advert.email,
+          phoneNumber: props.advert.phoneNumber,
+        }}
+      />
+      {props.canEdit ? <ParticipantTable /> : <ContactAdvertiser />}
     </section>
   );
 };

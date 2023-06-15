@@ -5,6 +5,7 @@ export type EditData = {
 
 export interface MyDataResponse {
   data: {
+    id: string;
     email: string;
     phoneNumber: string;
   };
