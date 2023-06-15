@@ -31,8 +31,10 @@
 
 .adverts-filters {
     grid-row: 2;
-    margin-top: 5%;
-   }
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
 
 
 .adverts-error {

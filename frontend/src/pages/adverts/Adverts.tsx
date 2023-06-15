@@ -101,15 +101,15 @@ const Adverts = () => {
           </>
         )}
         <ManageFloatButtons />
+        <div className="adverts__pages">
+          <Pagination
+            total={count}
+            pageSize={10}
+            current={page}
+            onChange={(page: number) => setPage(page)}
+          />
+        </div>
       </main>
-      <div className="adverts__pages">
-        <Pagination
-          total={count}
-          pageSize={10}
-          current={page}
-          onChange={(page: number) => setPage(page)}
-        />
-      </div>
     </div>
   );
 };

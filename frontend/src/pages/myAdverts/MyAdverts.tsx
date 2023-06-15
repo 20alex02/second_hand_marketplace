@@ -1,4 +1,5 @@
 import '../adverts/adverts.css';
+import './myAdverts.css';
 import '../../assets/styles/common.css';
 
 import Filters from '../../components/filters/Filters';
@@ -16,6 +17,7 @@ import { ApiError } from '../../models/error';
 import { getAllMe, getAllMeAdmin } from '../../services/advertsApi';
 import { CategoryIdsForAdverts } from '../../state/selector';
 import { useParams } from 'react-router-dom';
+import AdvertFilters from '../../components/advertsFilters/AdvertFilters';
 
 const MyAdverts = () => {
   const [advertStatus, setAdvertStatus] = useState<string | undefined>(COUNT);
@@ -91,6 +93,9 @@ const MyAdverts = () => {
       <aside className="my-filters-bar">
         <Filters />
       </aside>
+      <div className="adverts-filters">
+        <AdvertFilters />
+      </div>
       <main className="my-adverts">
         <div className="my-adverts__list">
           {isLoading ? (
