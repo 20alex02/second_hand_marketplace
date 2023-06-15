@@ -8,18 +8,25 @@ const createSchema = z.object({
   category: z.string().uuid(),
   images: z.array(z.object({ path: z.string() })),
   description: z.string().optional(),
-  estimatedPrice: z
-    .string()
-    .regex(/^\d+$/)
-    .optional()
-    .transform(Number)
-    .refine(
-      (estimatedPrice) => estimatedPrice === undefined || estimatedPrice >= 0,
-      {
-        message: 'estimatedPrice must be greater than 0',
-        path: ['estimatedPrice'],
-      }
-    ),
+  estimatedPrice: z.union([
+    z.undefined(),
+    z
+      .string()
+      .transform((val) => parseInt(val))
+      .refine((val) => val >= 0),
+  ]),
+  // estimatedPrice: z
+  //   .string()
+  //   .regex(/^\d+$/)
+  //   .optional()
+  //   .transform(Number)
+  //   .refine(
+  //     (estimatedPrice) => estimatedPrice === undefined || estimatedPrice >= 0,
+  //     {
+  //       message: 'estimatedPrice must be greater than 0',
+  //       path: ['estimatedPrice'],
+  //     }
+  //   ),
 });
 
 const getAllSchema = z
