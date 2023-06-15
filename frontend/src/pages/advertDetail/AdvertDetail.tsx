@@ -32,12 +32,14 @@ const AdvertDetail = () => {
     queryFn: () => getAdvert(id),
   });
 
+  React.useEffect(() => {
+    if (token !== null && token !== '') {
+      mutate();
+    }
+  }, [token, mutate]);
+
   if (isLoadingAdvert || isLoadingUser) {
     return <Spin size="large" className="spinner" />;
-  }
-
-  if (token !== null && token !== '') {
-    mutate();
   }
 
   return isEditing ? (
