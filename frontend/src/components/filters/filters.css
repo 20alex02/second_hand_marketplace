@@ -43,7 +43,7 @@
 
 .filter-list__item {
     padding: 1rem;
-    width: 100%;
+    width: 85%;;
     text-align: center;
     border-radius: 10px;
 }
@@ -106,7 +106,7 @@
         display: flex;
         justify-content: center;
         height: 100%;
-        margin: 0rem;
+        margin: 0;
     }
 
     .filters:has(.filter-list--visible) {
@@ -121,6 +121,10 @@
     .filter-list {
         width: 100%;
         margin-top: 0;
-        padding: 1.5rem;
+        padding: 1.5rem 1.5rem 1.5rem 2.5rem;
+    }
+
+    .filter-list__item {
+        width: 100%;
     }
 }
