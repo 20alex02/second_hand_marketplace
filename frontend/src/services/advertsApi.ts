@@ -124,3 +124,15 @@ export const updateAdvert = async (
   );
   return response.data;
 };
+
+export const getParticipants = async (token: string, advertId: string) => {
+  const response = await axiosInstance.get<AxiosResponse>(
+    `/api/participant/${advertId}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};

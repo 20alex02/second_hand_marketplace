@@ -2,7 +2,12 @@ import './participantTable.css';
 import '../../assets/styles/common.css';
 
 import { ColumnsType } from 'antd/es/table';
-import { Table } from 'antd';
+import { Spin, Table } from 'antd';
+import { useQuery } from '@tanstack/react-query';
+import { getParticipants } from '../../services/advertsApi';
+import { useRecoilValue } from 'recoil';
+import { AuthToken } from '../../state/atom';
+import { Participant } from '../../models/participant';
 
 interface DataType {
   key: string;
@@ -23,25 +28,23 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const placeholderData: DataType[] = [
-  {
-    key: '1',
-    email: 'email@email.com',
-    phone: '123456789',
-  },
-  {
-    key: '2',
-    phone: '987654321',
-  },
-  {
-    key: '3',
-    email: 'maillll@gmail.com',
-  },
-];
+const ParticipantTable = (props: { advertId: string }) => {
+  const token = useRecoilValue(AuthToken);
+  const { isLoading, data } = useQuery({
+    queryKey: ['get-participants'],
+    queryFn: () => getParticipants(token, props.advertId),
+  });
 
-const ParticipantTable = () => {
-  const participantsCount = placeholderData.length; // TODO
+  if (isLoading) {
+    return <Spin className="participant-spinner" />;
+  }
 
+  const participantsCount = data?.data.length ?? 0;
+  const participants: DataType[] = data?.data.map((item: Participant) => ({
+    key: item.id,
+    email: item.email,
+    phone: item.phoneNumber,
+  }));
   return (
     <section className="participant-table">
       <h2 className="participant-table__title">Users interested in</h2>
@@ -49,7 +52,7 @@ const ParticipantTable = () => {
         <Table
           className="participant-table__data"
           columns={columns}
-          dataSource={placeholderData}
+          dataSource={participants}
         />
       ) : (
         <span className="participant-table__empty">No one</span>
