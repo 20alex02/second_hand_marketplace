@@ -4,13 +4,14 @@ import { AdvertisementType } from '@prisma/client';
 const createSchema = z.object({
   title: z.string().min(3),
   type: z.nativeEnum(AdvertisementType),
-  description: z.string(),
   creatorId: z.string().uuid(),
-  images: z.array(z.object({ path: z.string() })),
   category: z.string().uuid(),
+  images: z.array(z.object({ path: z.string() })),
+  description: z.string().optional(),
   estimatedPrice: z
     .string()
     .regex(/^\d+$/)
+    .optional()
     .transform(Number)
     .refine((estimatedPrice) => estimatedPrice >= 0, {
       message: 'estimatedPrice must be greater than 0',

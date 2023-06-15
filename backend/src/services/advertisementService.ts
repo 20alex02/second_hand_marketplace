@@ -31,6 +31,9 @@ const create = async (
     ...body,
     images,
   });
+  if (validatedData.description === undefined) {
+    validatedData.description = '';
+  }
   deleteUndefined(validatedData);
   const result = await advertisement.create(
     validatedData as AdvertisementCreateData
