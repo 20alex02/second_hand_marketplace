@@ -1,4 +1,3 @@
-import { CreateAdvertBodyType } from '../models/advertDetailType';
 import axiosInstance from './base';
 import { AxiosResponse } from 'axios';
 
@@ -120,6 +119,18 @@ export const updateAdvert = async (
       headers: {
         authorization: `Bearer ${token}`,
         'Content-Type': 'multipart/form-data',
+      },
+    }
+  );
+  return response.data;
+};
+
+export const getParticipants = async (token: string, advertId: string) => {
+  const response = await axiosInstance.get<AxiosResponse>(
+    `/api/participant/${advertId}`,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
       },
     }
   );

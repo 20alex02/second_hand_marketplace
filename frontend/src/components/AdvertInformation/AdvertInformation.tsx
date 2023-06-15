@@ -102,7 +102,11 @@ const AdvertInformation = (props: {
           phoneNumber: props.advert.phoneNumber,
         }}
       />
-      {props.canEdit ? <ParticipantTable /> : <ContactAdvertiser />}
+      {props.canEdit ? (
+        <ParticipantTable advertId={props.advert.id} />
+      ) : (
+        <ContactAdvertiser />
+      )}
     </section>
   );
 };

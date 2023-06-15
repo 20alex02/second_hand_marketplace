@@ -1,3 +1,10 @@
+.participant-spinner {
+    grid-column: 1 / span 2;
+    align-self: center;
+    justify-self: center;
+    padding: 1rem;
+}
+
 .participant-table {
     display: flex;
     flex-direction: column;
