@@ -89,8 +89,8 @@ const AdvertCreation = (props: {
     props.advert?.images.map((item: Image) => {
       return {
         uid: item.id,
-        url: item.path,
-        name: '',
+        url: `http://localhost:3001/api/images/${item.path}`,
+        name: item.path,
       };
     }) ?? [];
   const handleSelectChange = (value: string) => {
@@ -205,7 +205,7 @@ const AdvertCreation = (props: {
           listType="picture"
           defaultFileList={fileList}
           multiple
-          fileList={files}
+          fileList={fileList}
           beforeUpload={(file) => {
             return new Promise((resolve, reject) => {
               if (file.size > 20000) {
