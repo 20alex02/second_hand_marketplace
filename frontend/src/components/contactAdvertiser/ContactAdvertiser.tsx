@@ -1,7 +1,7 @@
 import './contactAdvertiser.css';
 import '../../assets/styles/common.css';
 
-import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
+import { PhoneOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import { useRecoilValue } from 'recoil';
 import { AuthToken } from '../../state/atom';
@@ -17,22 +17,6 @@ type ContatFormData = {
 const ContactHost = () => {
   return (
     <div className="contact-advertiser__info contact-info">
-      <Form.Item
-        rules={[
-          {
-            type: 'email',
-            message: 'Incorrect email format!',
-          },
-        ]}
-        name="email"
-      >
-        <Input
-          className="contact-info__email"
-          size="large"
-          placeholder="email"
-          prefix={<MailOutlined rev />}
-        />
-      </Form.Item>
       <Form.Item
         name="phoneNumber"
         rules={[
