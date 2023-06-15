@@ -30,7 +30,6 @@ import { ApiError } from '../../models/error';
 import { useRecoilValue } from 'recoil';
 import { AuthToken, Categories } from '../../state/atom';
 import { createAdvert } from '../../services/advertsApi';
-import { RcFile } from 'antd/lib/upload/interface';
 
 const { TextArea } = Input;
 
@@ -40,10 +39,6 @@ function mapOthers<T extends object>(obj: T, formdata: FormData) {
   });
 }
 
-type FileType = {
-  fileList: File[];
-  originFileObj: string;
-};
 const EditButtons = (props: {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
@@ -125,7 +120,7 @@ const AdvertCreation = (props: {
 
   const onFinish = (values: CreateAdvertType) => {
     const { images, ...other } = values;
-    console.log(values);
+    images;
     const formdata = new FormData();
     mapOthers(other, formdata);
     files.forEach((element: any) => {
