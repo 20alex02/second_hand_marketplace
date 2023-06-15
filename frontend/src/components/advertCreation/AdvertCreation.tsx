@@ -31,6 +31,7 @@ import { useRecoilValue } from 'recoil';
 import { AuthToken, Categories } from '../../state/atom';
 import { createAdvert, updateAdvert } from '../../services/advertsApi';
 import { useNavigate } from 'react-router-dom';
+import { IMAGE_URL } from '../../services/base';
 
 const { TextArea } = Input;
 
@@ -92,7 +93,7 @@ const AdvertCreation = (props: {
     props.advert?.images.map((item: Image) => {
       return {
         uid: item.id,
-        url: `http://localhost:3001/api/images/${item.path}`,
+        url: `${IMAGE_URL}${item.path}`,
         name: item.path,
       };
     }) ?? [];

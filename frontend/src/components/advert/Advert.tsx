@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import priceUtil from '../../utils/priceUtil';
 import { AdvertDetailType } from '../../models/advertDetailType';
+import { IMAGE_URL } from '../../services/base';
 
 const NONE_MODIFIER = ' advert-stats--none';
 
@@ -72,7 +73,7 @@ const Advert = (props: { advert?: AdvertDetailType; state?: string }) => {
         onMouseLeave={imageOnLeave}
         className="advert__image"
         alt="Photo of advert"
-        src={`http://localhost:3001/api/images/${imagePath}`}
+        src={`${IMAGE_URL}${imagePath}`}
       />
       <div className="advert__info">
         <span className="advert__title">{props.advert.title}</span>

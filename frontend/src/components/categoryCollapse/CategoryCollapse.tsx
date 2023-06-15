@@ -21,7 +21,6 @@ type BreadcrumbItems =
   | undefined;
 
 const getAllCategories = (categories?: Category[]) => {
-  // TODO predelat !!!
   const array: BreadcrumbItems = [];
   let category = categories?.find((item: Category) => !item.parentId);
 
@@ -48,7 +47,6 @@ const getAllCategoriesFromList = (
   categories: Category[],
   selectedCategory: Category
 ) => {
-  // TODO predelat !!!
   const array: BreadcrumbItems = [];
   let category: Category | undefined = selectedCategory;
   array.push({

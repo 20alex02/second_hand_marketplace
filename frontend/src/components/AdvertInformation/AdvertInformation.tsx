@@ -16,6 +16,7 @@ import { useRecoilValue } from 'recoil';
 import { AuthToken } from '../../state/atom';
 import { deleteAdvert } from '../../services/advertsApi';
 import { useNavigate } from 'react-router-dom';
+import { IMAGE_URL } from '../../services/base';
 
 const EditButtons = (props: {
   id: string;
@@ -94,7 +95,7 @@ const AdvertInformation = (props: {
           <Image
             className="advert-image__photo"
             key={item.id}
-            src={`http://localhost:3001/api/images/${item.path}`}
+            src={`${IMAGE_URL}${item.path}`}
           />
         ))}
       </Carousel>
