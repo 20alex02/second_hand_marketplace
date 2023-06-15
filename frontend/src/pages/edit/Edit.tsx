@@ -41,6 +41,15 @@ function Edit() {
     }
   );
 
+  const onFinish = (values: EditData) => {
+    const email = values.email === data?.data.email ? undefined : values.email;
+    const phoneNumber =
+      values.phoneNumber === data?.data.phoneNumber
+        ? undefined
+        : values.phoneNumber;
+    editMydataHandle({ email: email, phoneNumber: phoneNumber });
+  };
+
   return (
     <section className="edit-section">
       {err ? (
@@ -97,7 +106,7 @@ function Edit() {
               <Form
                 form={form}
                 initialValues={{ remember: true }}
-                onFinish={editMydataHandle}
+                onFinish={onFinish}
                 layout="vertical"
                 className="edit-form"
                 size="large"
