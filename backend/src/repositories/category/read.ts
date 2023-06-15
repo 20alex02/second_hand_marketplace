@@ -15,7 +15,8 @@ const readOneCategory = async (
   data: CategoryReadOneData
 ): CategoryReadOneResult => {
   try {
-    const category = await client.category.findUnique({
+    const categories = [];
+    let category = await client.category.findUnique({
       where: {
         id: data.id,
       },
@@ -33,7 +34,28 @@ const readOneCategory = async (
     if (category.deletedAt != null) {
       return Result.err(new DeletedRecordError('Category'));
     }
-    return Result.ok(category);
+    categories.push(category);
+    while (category?.parentId !== null) {
+      category = await client.category.findUnique({
+        where: {
+          id: category.parentId,
+        },
+        include: {
+          advertisements: {
+            where: {
+              deletedAt: null,
+            },
+          },
+        },
+      });
+      if (category == null) {
+        return Result.err(new NonexistentRecordError('Category'));
+      }
+      if (category.deletedAt != null) {
+        return Result.err(new DeletedRecordError('Category'));
+      }
+    }
+    return Result.ok(categories);
   } catch (e) {
     return genericError;
   }

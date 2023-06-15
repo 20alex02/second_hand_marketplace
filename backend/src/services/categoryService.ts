@@ -42,8 +42,8 @@ async function getOne(
   if (result.isErr) {
     throw result.error;
   }
-  const { advertisements, ...rest } = result.value;
-  return rest;
+  const withoutAds = result.value.map(({ advertisements, ...rest }) => rest);
+  return withoutAds;
 }
 
 async function update(
