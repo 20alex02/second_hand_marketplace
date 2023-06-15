@@ -6,13 +6,13 @@ export const createCategory = async (
   categoryName: string,
   categoryParent?: string
 ) => {
-  const response = await axiosInstance.post<AxiosResponse>('api/category', {
-    headers: { authorization: `Bearer ${token}` },
-    params: {
-      name: categoryName,
-      parentId: categoryParent,
-    },
-  });
+  const response = await axiosInstance.post<AxiosResponse>(
+    'api/category',
+    { name: categoryName, parentId: categoryParent },
+    {
+      headers: { authorization: `Bearer ${token}` },
+    }
+  );
 
   return response.data;
 };

@@ -105,7 +105,7 @@ const AdvertInformation = (props: {
       {props.canEdit ? (
         <ParticipantTable advertId={props.advert.id} />
       ) : (
-        <ContactAdvertiser />
+        <ContactAdvertiser id={props.advert.id} />
       )}
     </section>
   );

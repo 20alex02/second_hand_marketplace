@@ -136,3 +136,21 @@ export const getParticipants = async (token: string, advertId: string) => {
   );
   return response.data;
 };
+
+export const createParticipants = async (
+  id: string,
+  data: { phoneNumber?: string; email?: string },
+  token?: string
+) => {
+  token = undefined;
+  const response = await axiosInstance.post<AxiosResponse>(
+    `/api/participant/${id}`,
+    data,
+    {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response.data;
+};

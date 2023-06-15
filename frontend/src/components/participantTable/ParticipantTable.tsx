@@ -39,12 +39,14 @@ const ParticipantTable = (props: { advertId: string }) => {
     return <Spin className="participant-spinner" />;
   }
 
-  const participantsCount = data?.data.length ?? 0;
-  const participants: DataType[] = data?.data.map((item: Participant) => ({
+  const partic: Participant[] = Object.values(data?.data);
+  const participantsCount = partic.length;
+  const participants: DataType[] = partic.map((item: Participant) => ({
     key: item.id,
     email: item.email,
     phone: item.phoneNumber,
   }));
+
   return (
     <section className="participant-table">
       <h2 className="participant-table__title">Users interested in</h2>
