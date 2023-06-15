@@ -76,7 +76,9 @@ const Advert = (props: { advert?: AdvertDetailType; state?: string }) => {
         src={`${IMAGE_URL}${imagePath}`}
       />
       <div className="advert__info">
-        <span className="advert__title">{props.advert.title}</span>
+        <span className="advert__title">
+          {props.advert.type}: {props.advert.title}
+        </span>
         <span className="advert__price">
           {priceUtil.formatPrice(props.advert.estimatedPrice)}
         </span>
