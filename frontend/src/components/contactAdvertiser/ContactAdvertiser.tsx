@@ -2,7 +2,7 @@ import './contactAdvertiser.css';
 import '../../assets/styles/common.css';
 
 import { MailOutlined, PhoneOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, Modal } from 'antd';
+import { Button, Checkbox, Form, Input, Modal, FormInstance } from 'antd';
 import { useRecoilValue } from 'recoil';
 import { AuthToken } from '../../state/atom';
 import { useMutation } from '@tanstack/react-query';
@@ -14,7 +14,15 @@ type ContatFormData = {
   email?: string;
 };
 
-const ContactHost = () => {
+const ContactHost = (props: { form: FormInstance }) => {
+  const validateAtLeastOneFilled = () => {
+    const { phoneNumber, email } = props.form.getFieldValue();
+    if (!phoneNumber && !email) {
+      return Promise.reject(new Error('At least one input must be filled'));
+    }
+    return Promise.resolve();
+  };
+
   return (
     <div className="contact-advertiser__info contact-info">
       <Form.Item
@@ -22,6 +30,10 @@ const ContactHost = () => {
           {
             type: 'email',
             message: 'Incorrect email format!',
+          },
+          {
+            validator: validateAtLeastOneFilled,
+            message: 'Phone or email must be filled',
           },
         ]}
         name="email"
@@ -39,6 +51,10 @@ const ContactHost = () => {
           {
             pattern: new RegExp(/^(\+420\s)?[0-9]{3}\s?[0-9]{3}\s?[0-9]{3}$/),
             message: 'Invalid phone format!',
+          },
+          {
+            validator: validateAtLeastOneFilled,
+            message: 'Phone or email must be filled',
           },
         ]}
       >
@@ -70,6 +86,7 @@ const ContactAdvertiser = (props: {
   const token = useRecoilValue(AuthToken);
   const userLoggedIn = token !== null || token !== '';
   const [modal, confirmation] = Modal.useModal();
+  const [form] = Form.useForm();
 
   const { mutate: contact } = useMutation(
     (data: ContatFormData) => createParticipants(props.id, data, token),
@@ -96,9 +113,13 @@ const ContactAdvertiser = (props: {
   return (
     <section className="contact-advertiser">
       <h2 className="contact-advertiser__title">Contact advertiser</h2>
-      <Form onFinish={onFinish}>
+      <Form onFinish={onFinish} form={form}>
         {/* upravit aby se rozlisovalo */}
-        {userLoggedIn && !userLoggedIn ? <ContactLoggedIn /> : <ContactHost />}
+        {userLoggedIn && !userLoggedIn ? (
+          <ContactLoggedIn />
+        ) : (
+          <ContactHost form={form} />
+        )}
         <Button
           className="contact-advertiser__button"
           type="primary"
