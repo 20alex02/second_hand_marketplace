@@ -49,7 +49,6 @@ const EditButtons = (props: {
   );
 
   const handleCancel = () => {
-    deleteAdv({ token: Token, id: props.id });
     setIsModalOpen(false);
   };
 
@@ -75,7 +74,7 @@ const EditButtons = (props: {
           <Button
             className="remove-modal__delete"
             key="delete"
-            onClick={handleCancel}
+            onClick={() => deleteAdv({ token: Token, id: props.id })}
           >
             Delete
           </Button>,
