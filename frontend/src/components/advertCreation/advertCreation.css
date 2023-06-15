@@ -10,6 +10,10 @@
     overflow-x: hidden;
 }
 
+.advert-creation__categories {
+    max-width: var(--advert-detail-width);
+}
+
 .advert-creation__buttons {
     align-self: flex-end;
     margin-bottom: 0.5rem;
@@ -42,8 +46,6 @@
 }
 
 .advert-creation__price {
-    text-align: end;
-    align-self: flex-end;
     font-size: 1.3rem;
 }
 
@@ -63,7 +65,7 @@
             "type date"
             "title x"
             "description description"
-            "advertiser price" / 30vw 30vw;
+            "price advertiser " / 30vw 30vw;
         justify-content: center;
     }
 
@@ -72,7 +74,8 @@
         justify-self: end;
     }
 
-    .category-collapse {
+
+    .advert-creation__category {
         grid-area: category;
     }
 
