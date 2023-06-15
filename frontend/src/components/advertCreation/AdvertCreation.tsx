@@ -30,6 +30,7 @@ import { ApiError } from '../../models/error';
 import { useRecoilValue } from 'recoil';
 import { AuthToken, Categories } from '../../state/atom';
 import { createAdvert } from '../../services/advertsApi';
+import { RcFile } from 'antd/lib/upload/interface';
 
 const { TextArea } = Input;
 
@@ -39,6 +40,10 @@ function mapOthers<T extends object>(obj: T, formdata: FormData) {
   });
 }
 
+type FileType = {
+  fileList: File[];
+  originFileObj: string;
+};
 const EditButtons = (props: {
   setIsEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
@@ -82,6 +87,7 @@ const AdvertCreation = (props: {
 }) => {
   const [form] = Form.useForm();
   const [modal, confirmation] = Modal.useModal();
+  const [files, setFileList] = React.useState<any>([]);
   const categories = useRecoilValue(Categories);
   const Token = useRecoilValue(AuthToken);
   const fileList: UploadFile[] =
@@ -112,19 +118,20 @@ const AdvertCreation = (props: {
       },
     }
   );
+  const handleFileChange = (info: any) => {
+    const fileList = [...info.fileList];
+    setFileList(fileList);
+  };
+
   const onFinish = (values: CreateAdvertType) => {
-    const formData = new FormData();
     const { images, ...other } = values;
     console.log(values);
-    mapOthers(other, formData);
-    if (images !== undefined) {
-      images.fileList.forEach((file) => {
-        console.log(file);
-        formData.append('files', file);
-      });
-    }
-    create(formData);
-    console.log({ ...formData });
+    const formdata = new FormData();
+    mapOthers(other, formdata);
+    files.forEach((element: any) => {
+      formdata.append('files', element.originFileObj);
+    });
+    create(formdata);
   };
   return (
     <Form
@@ -170,11 +177,14 @@ const AdvertCreation = (props: {
         <Input />
       </Form.Item>
       <span className="advert-creation__date">{`${new Date().toLocaleDateString()}`}</span>
-      <Form.Item name="images">
+      <Form.Item name="images" required>
         <Upload
+          onChange={handleFileChange}
           className="advert-creation__image"
           listType="picture"
           defaultFileList={fileList}
+          multiple
+          fileList={files}
           beforeUpload={(file) => {
             return new Promise((resolve, reject) => {
               if (file.size > 20000) {
@@ -200,7 +210,7 @@ const AdvertCreation = (props: {
       </Form.Item>
       <Form.Item
         className="advert-creation__price"
-        name="price"
+        name="estimatedPrice"
         label="Price"
         initialValue={props.advert?.estimatedPrice}
       >

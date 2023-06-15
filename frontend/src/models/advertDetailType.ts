@@ -16,9 +16,9 @@ export type AdvertDetailType = {
 
 export type Contact =
   | {
-      email: string;
-      phoneNumber: string;
-    }
+    email: string;
+    phoneNumber: string;
+  }
   | { email: string }
   | { phoneNumber: string };
 
@@ -35,6 +35,7 @@ export type CreateAdvertType = {
   price: number;
   categoryIndex: string;
   images: {
+    file: File;
     fileList: File[];
   };
 };
