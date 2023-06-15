@@ -6,7 +6,7 @@ import { AuthToken } from '../../state/atom';
 import { CheckOutlined, CloseOutlined, EditOutlined } from '@ant-design/icons';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { editMyData, getMyData } from '../../services/userApi';
-import { EditData, MyDataResponse } from '../../models/edit';
+import { EditData } from '../../models/edit';
 import { ApiError } from '../../models/error';
 
 function Edit() {
