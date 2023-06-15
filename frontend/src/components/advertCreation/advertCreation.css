@@ -56,7 +56,6 @@
 
 @media only screen and (min-width: 600px) {
     .advert-creation {
-        min-width: 100vw;
         display: grid;
         grid-template:
             "buttons buttons"
