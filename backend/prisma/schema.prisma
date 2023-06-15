@@ -27,8 +27,7 @@ enum Role {
 
 model Participant {
   id  String @id @default(uuid())
-  phoneNumber String?
-  email String?
+  phoneNumber String
   createdAt DateTime @default(now())
   deletedAt DateTime?
   userId String?
