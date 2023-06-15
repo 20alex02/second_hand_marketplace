@@ -5,8 +5,8 @@ import Advertiser from '../advertiser/Advertiser';
 import ParticipantTable from '../participantTable/ParticipantTable';
 import ContactAdvertiser from '../contactAdvertiser/ContactAdvertiser';
 import CategoryCollapse from '../categoryCollapse/CategoryCollapse';
-import React, { useState } from 'react';
-import { Button, Carousel, Image, Modal } from 'antd';
+import React from 'react';
+import { Button, Carousel, Image, Modal, Popconfirm } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import priceUtil from '../../utils/priceUtil';
 import { AdvertDetailType } from '../../models/advertDetailType';
@@ -20,16 +20,8 @@ const EditButtons = (props: {
   id: string;
   setEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [modal, confirmation] = Modal.useModal();
   const Token = useRecoilValue(AuthToken);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleOk = () => {
-    setIsModalOpen(false);
-  };
 
   const { mutate: deleteAdv } = useMutation(
     (data: { token: string; id: string }) => deleteAdvert(data),
@@ -48,10 +40,6 @@ const EditButtons = (props: {
     }
   );
 
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-
   return (
     <div className="advert-detail__edit-buttons advert-buttons">
       <Button
@@ -59,35 +47,18 @@ const EditButtons = (props: {
         icon={<EditOutlined rev={undefined} />}
         onClick={() => props.setEditing(true)}
       />
-      <Button
-        className="advert-button__remove"
-        icon={<DeleteOutlined rev={undefined} />}
-        onClick={showModal}
-      />
-      <Modal
-        className="advert-button__remove-modal remove-modal"
-        title="Remove advert"
-        open={isModalOpen}
-        onOk={handleOk}
-        onCancel={handleCancel}
-        footer={[
-          <Button
-            className="remove-modal__delete"
-            key="delete"
-            onClick={() => deleteAdv({ token: Token, id: props.id })}
-          >
-            Delete
-          </Button>,
-          // <Button
-          //   className="remove-modal__finished"
-          //   key="finished"
-          //   type="primary"
-          //   onClick={handleOk}
-          // >
-          //   Mark as finished
-          // </Button>,
-        ]}
-      />
+      <Popconfirm
+        title="Delete advert"
+        description="Are you sure to delete this advert?"
+        okText="Yes"
+        cancelText="No"
+        onConfirm={() => deleteAdv({ token: Token, id: props.id })}
+      >
+        <Button
+          className="advert-button__remove"
+          icon={<DeleteOutlined rev={undefined} />}
+        />
+      </Popconfirm>
       {confirmation}
     </div>
   );
