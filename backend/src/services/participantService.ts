@@ -6,6 +6,7 @@ import { Role } from '@prisma/client';
 import { InvalidAccessRights } from '../errors/controllersErrors';
 import type { ParticipantCreateData } from '../repositories/types/data';
 import type { Request } from 'express';
+import { deleteUndefined } from '../controllers/common';
 
 const getAll = async (
   params: Request['params'],
@@ -31,31 +32,56 @@ const getAll = async (
   return result.value;
 };
 
-const join = async (params: {
-  advertId: string;
-  userId: string | null;
-  phoneNumber: string | null;
-}) => {
-  let userPhone = params.phoneNumber;
-  if (userPhone === null) {
-    if (params.userId === null) {
-      throw new Error('UserId can not be null');
-    }
-    const userResult = await user.read.one({ id: params.userId });
-    if (userResult.isErr) {
-      throw userResult.error;
-    }
-    userPhone = userResult.value.phoneNumber;
-  }
-  const data: ParticipantCreateData = {
-    advertisementId: params.advertId,
-    phoneNumber: userPhone,
-  };
-  if (params.userId) {
-    data.userId = params.userId;
-  }
+// const join = async (params: {
+//   advertId: string;
+//   userId: string | null;
+//   phoneNumber: string | null;
+// }) => {
+//   let userPhone = params.phoneNumber;
+//   if (userPhone === null) {
+//     if (params.userId === null) {
+//       throw new Error('UserId can not be null');
+//     }
+//     const userResult = await user.read.one({ id: params.userId });
+//     if (userResult.isErr) {
+//       throw userResult.error;
+//     }
+//     userPhone = userResult.value.phoneNumber;
+//   }
+//   const data: ParticipantCreateData = {
+//     advertisementId: params.advertId,
+//     phoneNumber: userPhone,
+//   };
+//   if (params.userId) {
+//     data.userId = params.userId;
+//   }
 
-  const result = await participant.create(data);
+//   const result = await participant.create(data);
+//   if (result.isErr) {
+//     throw result.error;
+//   }
+//   return result.value.id;
+// };
+
+const join = async (
+  params: Request['params'],
+  body: Request['body'],
+  headers: Request['headers'],
+  secret?: string
+) => {
+  let userId = undefined;
+  if (headers.authorization !== undefined) {
+    userId = getUserId(headers.authorization, secret);
+  }
+  const validatedData = participantModel.createSchema.parse({
+    ...body,
+    ...params,
+    userId,
+  });
+  deleteUndefined(validatedData);
+  const result = await participant.create(
+    validatedData as ParticipantCreateData
+  );
   if (result.isErr) {
     throw result.error;
   }
