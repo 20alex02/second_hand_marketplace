@@ -13,11 +13,10 @@ const createParticipant = async (
 ): ParticipantCreateResult => {
   try {
     return await client.$transaction(async (tx) => {
-      const { advertisementId, userId, ...createData } = data;
-      if (userId !== undefined) {
+      if ('userId' in data) {
         const userCheck = await tx.user.findUnique({
           where: {
-            id: userId,
+            id: data.userId,
           },
         });
         if (userCheck === null) {
@@ -29,16 +28,16 @@ const createParticipant = async (
       }
       const participant = await tx.participant.create({
         data: {
-          ...createData,
+          phoneNumber: data.phoneNumber,
           advertisement: {
             connect: {
-              id: advertisementId,
+              id: data.advertisementId,
             },
           },
-          user: userId
+          user: data.userId
             ? {
                 connect: {
-                  id: userId,
+                  id: data.userId,
                 },
               }
             : {},
