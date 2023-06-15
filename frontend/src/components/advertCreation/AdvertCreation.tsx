@@ -153,9 +153,12 @@ const AdvertCreation = (props: {
   };
 
   const onFinish = (values: CreateAdvertType) => {
-    const { images, ...other } = values;
+    const { images, estimatedPrice, ...other } = values;
     images;
     const formdata = new FormData();
+    if (estimatedPrice === undefined) {
+      formdata.append('estimatedPrice', '0');
+    }
     mapOthers(other, formdata);
     files.forEach((element: any) => {
       formdata.append('files', element.originFileObj);

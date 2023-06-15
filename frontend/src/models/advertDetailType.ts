@@ -34,7 +34,7 @@ export type CreateAdvertType = {
   type: string;
   title: string;
   description: string;
-  price: number;
+  estimatedPrice: number;
   categoryIndex: string;
   images: {
     file: File;
