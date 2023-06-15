@@ -30,6 +30,7 @@ import { ApiError } from '../../models/error';
 import { useRecoilValue } from 'recoil';
 import { AuthToken, Categories } from '../../state/atom';
 import { createAdvert, updateAdvert } from '../../services/advertsApi';
+import { useNavigate } from 'react-router-dom';
 
 const { TextArea } = Input;
 
@@ -85,6 +86,7 @@ const AdvertCreation = (props: {
   const [files, setFileList] = React.useState<any>([]);
   const categories = useRecoilValue(Categories);
   const Token = useRecoilValue(AuthToken);
+  const navigation = useNavigate();
   const fileList: UploadFile[] =
     props.advert?.images.map((item: Image) => {
       return {
@@ -103,7 +105,13 @@ const AdvertCreation = (props: {
       onSuccess: () => {
         modal.success({
           title: 'Advert was succesfully created',
+          onOk: () => {
+            navigation(-1);
+          },
         });
+        setTimeout(() => {
+          navigation(-1);
+        }, 2000);
       },
       onError: (error: ApiError) => {
         modal.error({
@@ -119,8 +127,14 @@ const AdvertCreation = (props: {
     {
       onSuccess: () => {
         modal.success({
-          title: 'Advert was succesfully edited',
+          title: 'Advert was successfully edited',
+          onOk: () => {
+            navigation(-1);
+          },
         });
+        setTimeout(() => {
+          navigation(-1);
+        }, 2000);
       },
       onError: (error: ApiError) => {
         modal.error({
