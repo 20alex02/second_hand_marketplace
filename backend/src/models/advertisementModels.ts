@@ -115,25 +115,30 @@ const getAllSchema = z
     }
   );
 
-const getAllForCreatorSchema = z.object({
-  pageNum: z
-    .string()
-    .regex(/^\d+$/)
-    .transform(Number)
-    .refine((pageNum) => pageNum > 0, {
-      message: 'pageNum must be greater than 0',
-      path: ['pageNum'],
-    }),
-  perPage: z
-    .string()
-    .regex(/^\d+$/)
-    .transform(Number)
-    .refine((perPage) => perPage > 0, {
-      message: 'perPage must be greater than 0',
-      path: ['perPage'],
-    }),
-  creatorId: z.string().uuid(),
-});
+const getAllForCreatorSchema = z
+  .object({
+    creatorId: z.string().uuid(),
+  })
+  .and(getAllSchema);
+// z.object({
+//   pageNum: z
+//     .string()
+//     .regex(/^\d+$/)
+//     .transform(Number)
+//     .refine((pageNum) => pageNum > 0, {
+//       message: 'pageNum must be greater than 0',
+//       path: ['pageNum'],
+//     }),
+//   perPage: z
+//     .string()
+//     .regex(/^\d+$/)
+//     .transform(Number)
+//     .refine((perPage) => perPage > 0, {
+//       message: 'perPage must be greater than 0',
+//       path: ['perPage'],
+//     }),
+//   creatorId: z.string().uuid(),
+// });
 
 const getAllAdminSchema = z.object({
   pageNum: z

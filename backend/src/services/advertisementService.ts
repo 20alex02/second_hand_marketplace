@@ -115,11 +115,15 @@ const getAllMe = async (
     creatorId: id,
     ...query,
   });
-  const result = await advertisement.read.all(validatedData);
+  const result = await advertisement.read.all(
+    validatedData as AdvertisementReadAllData
+  );
   if (result.isErr) {
     throw result.error;
   }
-  const adCount = await advertisement.read.allCount(validatedData);
+  const adCount = await advertisement.read.allCount(
+    validatedData as AdvertisementReadAllData
+  );
   if (adCount.isErr) {
     throw adCount.error;
   }
