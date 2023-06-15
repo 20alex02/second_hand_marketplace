@@ -39,8 +39,8 @@ const ParticipantTable = (props: { advertId: string }) => {
     return <Spin className="participant-spinner" />;
   }
 
-  const participantsCount = data?.data.length ?? 0;
   const partic: Participant[] = Object.values(data?.data);
+  const participantsCount = partic.length;
   const participants: DataType[] = partic.map((item: Participant) => ({
     key: item.id,
     email: item.email,
