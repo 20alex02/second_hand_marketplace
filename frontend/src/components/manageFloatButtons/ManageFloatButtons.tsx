@@ -47,7 +47,8 @@ const CategoryForm = (props: {
           : undefined
       ),
     onSuccess: () => {
-      client.invalidateQueries(['categories', 'get-category']);
+      client.invalidateQueries(['get-category']);
+      client.invalidateQueries(['categories']);
     },
   });
   const client = useQueryClient();
@@ -55,7 +56,8 @@ const CategoryForm = (props: {
     mutationFn: (values: CategoryFormType) =>
       deleteCategory(token, props.categories[values.categorySelect].id),
     onSuccess: () => {
-      client.invalidateQueries(['categories', 'get-category']);
+      client.invalidateQueries(['categories']);
+      client.invalidateQueries(['get-category']);
     },
   });
 
