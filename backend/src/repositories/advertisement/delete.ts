@@ -51,6 +51,9 @@ const deleteAdvertisement = async (
               },
             },
           },
+          categories: {
+            set: [],
+          },
         },
       });
       return Result.ok(advertisement);

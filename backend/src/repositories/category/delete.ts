@@ -36,6 +36,18 @@ const deleteCategory = async (
       if (categoryCheck.advertisements.length !== 0) {
         return Result.err(new CategoryDeletionError('advertisements'));
       }
+      if (categoryCheck.parentId !== null) {
+        await tx.category.update({
+          where: {
+            id: categoryCheck.parentId,
+          },
+          data: {
+            subcategories: {
+              disconnect: { id: data.id },
+            },
+          },
+        });
+      }
 
       const category = await tx.category.update({
         where: {
