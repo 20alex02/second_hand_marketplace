@@ -36,6 +36,13 @@ export const getAdverts = async (
   return response.data;
 };
 
+export const getAdvert = async (advertId: string) => {
+  const response = await axiosInstance.get<AxiosResponse>(
+    `/api/advertisement/${advertId}`
+  );
+  return response.data;
+};
+
 export const getAllMe = async (
   token: string,
   pageNum: number,
