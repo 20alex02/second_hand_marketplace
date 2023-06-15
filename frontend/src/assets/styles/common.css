@@ -9,7 +9,7 @@
 
 .adverts {
     grid-row: 3;
-    padding: 1rem;
+    padding-bottom: 1rem;
     overflow-y: scroll;
     align-content: space-between;
 }
@@ -70,7 +70,7 @@
     .container {
         grid-column: 1;
         grid-row: 2;
-        grid-template-rows: 3em calc(80vh - var(--navbar-height)) 3em;
+        grid-template-rows: 3em calc(100vh - var(--navbar-height) - 3em);
     }
 
     .my-container {
@@ -78,7 +78,11 @@
     }
 
     .adverts {
-        grid-area: 2 / 2
+        grid-area: 2 / 2;
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
+        padding: 1rem;
     }
 
     .my-adverts {
