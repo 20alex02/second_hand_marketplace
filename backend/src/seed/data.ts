@@ -14,7 +14,7 @@ const hashedPasswords = passwords.map((password) => hashPassword(password));
 const data: {
   users: UserCreateData[];
   participants: Omit<ParticipantCreateData, 'advertisementId' | 'userId'>[];
-  advertisements: Omit<AdvertisementCreateData, 'creatorId' | 'categories'>[];
+  advertisements: Omit<AdvertisementCreateData, 'creatorId' | 'category'>[];
   rootCategory: CategoryCreateData;
   categories: Omit<CategoryCreateData, 'parentId'>[];
 } = {
@@ -57,8 +57,7 @@ const data: {
     {
       title: 'Selling my Nokia',
       type: AdvertisementType.OFFER,
-      description:
-        'I am selling my old nokia 3310',
+      description: 'I am selling my old nokia 3310',
       estimatedPrice: 1000,
       images: [
         {
@@ -86,8 +85,7 @@ const data: {
     {
       title: 'Selling my Xiaomi band',
       type: AdvertisementType.OFFER,
-      description:
-        'I am selling my old xiaomi band in great condition',
+      description: 'I am selling my old xiaomi band in great condition',
       estimatedPrice: 500,
       images: [
         {
@@ -101,8 +99,7 @@ const data: {
     {
       title: 'Selling my tablet',
       type: AdvertisementType.OFFER,
-      description:
-        'I am selling my tablet, dont know the brand.',
+      description: 'I am selling my tablet, dont know the brand.',
       estimatedPrice: 1500,
       images: [
         {
@@ -131,8 +128,7 @@ const data: {
     {
       title: 'Selling my acoustic guitar',
       type: AdvertisementType.OFFER,
-      description:
-        'I am selling my broken guitar, really bad condition.',
+      description: 'I am selling my broken guitar, really bad condition.',
       estimatedPrice: 200,
       images: [
         {
@@ -146,8 +142,7 @@ const data: {
     {
       title: 'Selling my piano',
       type: AdvertisementType.OFFER,
-      description:
-        'I am selling my piano, not great not terrible #3.6',
+      description: 'I am selling my piano, not great not terrible #3.6',
       estimatedPrice: 2500,
       images: [
         {
@@ -158,8 +153,7 @@ const data: {
     {
       title: 'Looking for apple watches',
       type: AdvertisementType.REQUEST,
-      description:
-        'I am looking for cheap apple watches',
+      description: 'I am looking for cheap apple watches',
       estimatedPrice: 150,
       images: [
         {
@@ -170,8 +164,7 @@ const data: {
     {
       title: 'Selling my electric guitar',
       type: AdvertisementType.OFFER,
-      description:
-        'great guitar buy it please',
+      description: 'great guitar buy it please',
       estimatedPrice: 2000,
       images: [
         {
@@ -182,8 +175,7 @@ const data: {
     {
       title: 'Selling my broken phone',
       type: AdvertisementType.OFFER,
-      description:
-        'It does not work sorry',
+      description: 'It does not work sorry',
       estimatedPrice: 2500,
       images: [
         {
