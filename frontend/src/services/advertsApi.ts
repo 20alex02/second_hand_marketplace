@@ -1,4 +1,3 @@
-import { CreateAdvertBodyType } from '../models/advertDetailType';
 import axiosInstance from './base';
 import { AxiosResponse } from 'axios';
 
