@@ -43,6 +43,9 @@ const deleteCategory = async (
         },
         data: {
           deletedAt,
+          parent: {
+            disconnect: true,
+          },
         },
       });
       return Result.ok(category);
