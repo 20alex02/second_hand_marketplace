@@ -25,17 +25,33 @@ const createCategory = async (
         if (categoryCheck.deletedAt !== null) {
           return Result.err(new DeletedRecordError('Parent category'));
         }
+        const nestedCategory = await tx.category.create({
+          data: {
+            name: data.name,
+            parent: {
+              connect: {
+                id: data.parentId,
+              },
+            },
+          },
+        });
+        await tx.category.update({
+          where: {
+            id: data.parentId,
+          },
+          data: {
+            subcategories: {
+              connect: {
+                id: nestedCategory.id,
+              },
+            },
+          },
+        });
+        return Result.ok(nestedCategory);
       }
       const category = await tx.category.create({
         data: {
           name: data.name,
-          parent: data.parentId
-            ? {
-                connect: {
-                  id: data.parentId,
-                },
-              }
-            : {},
         },
       });
       return Result.ok(category);
