@@ -5,18 +5,22 @@ import Advertiser from '../advertiser/Advertiser';
 import ParticipantTable from '../participantTable/ParticipantTable';
 import ContactAdvertiser from '../contactAdvertiser/ContactAdvertiser';
 import CategoryCollapse from '../categoryCollapse/CategoryCollapse';
-
 import React, { useState } from 'react';
 import { Button, Carousel, Image, Modal } from 'antd';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 import priceUtil from '../../utils/priceUtil';
 import { AdvertDetailType } from '../../models/advertDetailType';
+import { useMutation } from '@tanstack/react-query';
+import { ApiError } from '../../models/error';
+
 
 const EditButtons = (props: {
+  id: string;
   setEditing: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [modal, confirmation] = Modal.useModal();
+  const Token = useRec
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -25,7 +29,25 @@ const EditButtons = (props: {
     setIsModalOpen(false);
   };
 
+  const { mutate: deleteAdvert } = useMutation(
+    (data: { token: string; id: string }) => data,
+    {
+      onSuccess: () => {
+        modal.success({
+          title: 'Deleted',
+        });
+      },
+      onError: (error: ApiError) => {
+        modal.error({
+          title: 'Unable to delete',
+          content: error.response.data.message,
+        });
+      },
+    }
+  );
+
   const handleCancel = () => {
+    deleteAdvert({token: id: id});
     setIsModalOpen(false);
   };
 
@@ -55,14 +77,14 @@ const EditButtons = (props: {
           >
             Delete
           </Button>,
-          <Button
-            className="remove-modal__finished"
-            key="finished"
-            type="primary"
-            onClick={handleOk}
-          >
-            Mark as finished
-          </Button>,
+          // <Button
+          //   className="remove-modal__finished"
+          //   key="finished"
+          //   type="primary"
+          //   onClick={handleOk}
+          // >
+          //   Mark as finished
+          // </Button>,
         ]}
       />
     </div>
