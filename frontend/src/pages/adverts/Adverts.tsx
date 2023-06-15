@@ -79,37 +79,39 @@ const Adverts = () => {
         <AdvertFilters />
       </div>
       <main className="adverts">
-        {isLoading ? (
-          <div className="filters__loading">
-            <Spin size="large" />
-          </div>
-        ) : (
-          <>
-            {err ? (
-              <Alert
-                className="adverts-error"
-                message="Error"
-                description={err}
-                type="error"
-                showIcon
-              />
-            ) : (
-              adverts.map((item: AdvertDetailType) => (
-                <Advert key={item.id} advert={item} />
-              ))
-            )}
-          </>
-        )}
+        <div className="adverts__list">
+          {isLoading ? (
+            <div className="filters__loading">
+              <Spin size="large" />
+            </div>
+          ) : (
+            <>
+              {err ? (
+                <Alert
+                  className="adverts-error"
+                  message="Error"
+                  description={err}
+                  type="error"
+                  showIcon
+                />
+              ) : (
+                adverts.map((item: AdvertDetailType) => (
+                  <Advert key={item.id} advert={item} />
+                ))
+              )}
+            </>
+          )}
+        </div>
+        <div className="adverts__pages">
+          <Pagination
+            total={count}
+            pageSize={10}
+            current={page}
+            onChange={(page: number) => setPage(page)}
+          />
+        </div>
         <ManageFloatButtons />
       </main>
-      <div className="adverts__pages">
-        <Pagination
-          total={count}
-          pageSize={10}
-          current={page}
-          onChange={(page: number) => setPage(page)}
-        />
-      </div>
     </div>
   );
 };

@@ -1,17 +1,22 @@
 @import url('../../assets/styles/_variables.css');
 
-.filters-bar {
+.filters-bar, .my-filters-bar {
     grid-row: 1;
     width: 100%;
     position: fixed;
     z-index: 2;
 }
 
-.adverts {
+.adverts, .adverts__list {
     display: flex;
     flex-flow: wrap;
     justify-content: center;
     gap: 1.2rem;
+    width: 100%;
+}
+
+.adverts__list {
+    padding: 1rem;
 }
 
 .breadCrumbs {
@@ -20,7 +25,6 @@
 }
 .adverts-section {
     background-color: var(--white);
-
 }
 
 .adverts__pages {
@@ -31,8 +35,10 @@
 
 .adverts-filters {
     grid-row: 2;
-    margin-top: 5%;
-   }
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
 
 
 .adverts-error {
@@ -43,20 +49,32 @@
 
 
 @media only screen and (min-width: 800px) {
-    .filters-bar {
+    .filters-bar, .my-filters-bar {
         grid-column: 1;
-        width: var(--sidebar-width);
+        width: calc(var(--sidebar-width) + 1rem);
         height: 100%;
+        margin: 1rem;
+    }
+
+    .my-filters-bar {
+        margin-top: calc(var(--navbar-height) + 1rem);
+    }
+
+    .adverts {
+        flex-flow: nowrap;
+        flex-direction: column;
+    }
+
+    .adverts, .adverts__list {
+        width: auto;
     }
 
     .adverts__pages {
         text-align: center;
-        grid-row: 3;
-        grid-column: 2;
     }
 
     .adverts-filters {
         grid-area: 1/2;
         margin-top: 0;
-       }
+    }
 }

@@ -1,25 +1,20 @@
-.my-container {
+.container, .my-container {
     grid-row: 1 / span 2;
     grid-column: 1;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: var(--navbar-height) var(--content-height);
-    height: 100vh;
-}
-
-.container {
-    grid-row: 1 / span 2;
-    grid-column: 1;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: var(--navbar-height) 5em var(--content-height);
+    grid-template-rows: var(--navbar-height) 3rem var(--content-height);
     height: 100vh;
 }
 
 .adverts {
     grid-row: 3;
-    padding: 1rem;
+    padding-bottom: 1rem;
     overflow-y: scroll;
+    align-content: space-between;
+    /*justify-content: space-between;*/
+    /*flex-direction: column;*/
+    /*align-content: center;*/
 }
 
 .my-adverts {
@@ -71,23 +66,27 @@
 
 @media only screen and (min-width: 800px) {
     .container, .my-container {
-        grid-template-columns: var(--sidebar-width) auto;
+        grid-template-columns: calc(var(--sidebar-width) + 1rem) auto;
         height: 100%;
     }
 
     .container {
         grid-column: 1;
         grid-row: 2;
-        grid-template-rows: 3em calc(80vh - var(--navbar-height)) 3em;
+        grid-template-rows: 3em calc(100vh - var(--navbar-height) - 3em);
     }
 
     .my-container {
-        grid-template-columns: var(--sidebar-width) auto;
         grid-template-rows: var(--navbar-height) calc(90vh - var(--navbar-height));
     }
 
     .adverts {
-        grid-area: 2 / 2
+        grid-area: 2 / 2;
+        display: grid;
+        grid-template-columns: auto;
+        grid-template-rows: auto auto;
+        padding: 1rem;
+        align-content: space-between;
     }
 
     .my-adverts {

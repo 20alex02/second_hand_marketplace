@@ -16,6 +16,7 @@ import { ApiError } from '../../models/error';
 import { getAllMe, getAllMeAdmin } from '../../services/advertsApi';
 import { CategoryIdsForAdverts } from '../../state/selector';
 import { useParams } from 'react-router-dom';
+import AdvertFilters from '../../components/advertsFilters/AdvertFilters';
 
 const MyAdverts = () => {
   const [advertStatus, setAdvertStatus] = useState<string | undefined>(COUNT);
@@ -86,13 +87,15 @@ const MyAdverts = () => {
   }
 
   return (
-    <div className="my-container">
-      <div className="title-user">{hidden && id ? '' : name}</div>
+    <div className="container">
       <aside className="filters-bar">
         <Filters />
       </aside>
-      <main className="my-adverts">
-        <div className="my-adverts__list">
+      <div className="adverts-filters">
+        <AdvertFilters />
+      </div>
+      <main className="adverts">
+        <div className="adverts__list">
           {isLoading ? (
             <div className="filters__loading">
               <Spin size="large" />
@@ -115,16 +118,16 @@ const MyAdverts = () => {
             </>
           )}
         </div>
+        <div className="adverts__pages">
+          <Pagination
+            total={count}
+            pageSize={10}
+            current={page}
+            onChange={(page: number) => setPage(page)}
+          />
+        </div>
         <ManageFloatButtons />
       </main>
-      <div className="adverts__pages">
-        <Pagination
-          total={count}
-          pageSize={9}
-          current={page}
-          onChange={(page: number) => setPage(page)}
-        />
-      </div>
     </div>
   );
 };
