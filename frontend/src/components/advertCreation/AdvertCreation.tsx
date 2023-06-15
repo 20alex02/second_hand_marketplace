@@ -108,11 +108,11 @@ const AdvertCreation = (props: {
         modal.success({
           title: 'Advert was succesfully created',
           onOk: () => {
-            navigation(-1);
+            navigation('/');
           },
         });
         setTimeout(() => {
-          navigation(-1);
+          navigation('/');
         }, 2000);
       },
       onError: (error: ApiError) => {
@@ -131,11 +131,11 @@ const AdvertCreation = (props: {
         modal.success({
           title: 'Advert was successfully edited',
           onOk: () => {
-            navigation(-1);
+            navigation('/');
           },
         });
         setTimeout(() => {
-          navigation(-1);
+          navigation('/');
         }, 2000);
       },
       onError: (error: ApiError) => {
