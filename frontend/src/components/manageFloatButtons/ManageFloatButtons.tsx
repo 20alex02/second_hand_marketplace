@@ -21,6 +21,8 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getCategories } from '../../services/advertsApi';
 import { Category } from '../../models/advertDetailType';
 import { createCategory, deleteCategory } from '../../services/categoriesApi';
+import useModal from 'antd/es/modal/useModal';
+import { ApiError } from '../../models/error';
 
 const ADD = 'Add';
 const DELETE = 'Delete';
@@ -35,6 +37,7 @@ const CategoryForm = (props: {
   categories: Category[];
   setIsModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
+  const [modal, confirmation] = useModal();
   const [radioValue, setRadioValue] = useState<string>(DELETE);
   const token = useRecoilValue(AuthToken);
   const mutationCreate = useMutation({
@@ -50,7 +53,14 @@ const CategoryForm = (props: {
       client.invalidateQueries(['get-category']);
       client.invalidateQueries(['categories']);
     },
+    onError: (error: ApiError) => {
+      modal.error({
+        title: 'Error occured during creation',
+        content: error.response.data.message,
+      });
+    },
   });
+
   const client = useQueryClient();
   const mutationDelete = useMutation({
     mutationFn: (values: CategoryFormType) =>
@@ -58,6 +68,12 @@ const CategoryForm = (props: {
     onSuccess: () => {
       client.invalidateQueries(['categories']);
       client.invalidateQueries(['get-category']);
+    },
+    onError: (error: ApiError) => {
+      modal.error({
+        title: 'Error occured during deletion',
+        content: error.response.data.message,
+      });
     },
   });
 
@@ -113,6 +129,7 @@ const CategoryForm = (props: {
           disabled={radioValue === DELETE}
         />
       </Form.Item>
+      {confirmation}
     </Form>
   );
 };
