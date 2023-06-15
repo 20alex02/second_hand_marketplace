@@ -219,10 +219,9 @@ const AdvertCreation = (props: {
         <Input />
       </Form.Item>
       <span className="advert-creation__date">{`${new Date().toLocaleDateString()}`}</span>
-      <Form.Item name="images" required>
+      <Form.Item name="images" className="advert-creation__image" required>
         <Upload
           onChange={handleFileChange}
-          className="advert-creation__image"
           listType="picture"
           defaultFileList={fileList}
           multiple

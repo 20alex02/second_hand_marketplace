@@ -3,7 +3,7 @@
     grid-column: 1;
     display: grid;
     grid-template-columns: auto;
-    grid-template-rows: var(--navbar-height) 3rem var(--content-height);
+    grid-template-rows: var(--navbar-height) auto var(--content-height);
     height: 100vh;
 }
 
