@@ -17,7 +17,7 @@ import React, { useState } from 'react';
 import stringUtil from '../../utils/stringUtil';
 import { useRecoilValue } from 'recoil';
 import { AuthToken, UserRole } from '../../state/atom';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { getCategories } from '../../services/advertsApi';
 import { Category } from '../../models/advertDetailType';
 import { createCategory, deleteCategory } from '../../services/categoriesApi';
@@ -46,10 +46,17 @@ const CategoryForm = (props: {
           ? props.categories[values.categorySelect].id
           : undefined
       ),
+    onSuccess: () => {
+      client.invalidateQueries(['categories']);
+    },
   });
+  const client = useQueryClient();
   const mutationDelete = useMutation({
     mutationFn: (values: CategoryFormType) =>
       deleteCategory(token, props.categories[values.categorySelect].id),
+    onSuccess: () => {
+      client.invalidateQueries(['categories']);
+    },
   });
 
   const onChange = ({ target: { value } }: RadioChangeEvent) => {
