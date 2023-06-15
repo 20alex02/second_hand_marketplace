@@ -1,5 +1,4 @@
 import '../adverts/adverts.css';
-import './myAdverts.css';
 import '../../assets/styles/common.css';
 
 import Filters from '../../components/filters/Filters';
@@ -88,16 +87,15 @@ const MyAdverts = () => {
   }
 
   return (
-    <div className="my-container">
-      <div className="title-user">{hidden && id ? '' : name}</div>
-      <aside className="my-filters-bar">
+    <div className="container">
+      <aside className="filters-bar">
         <Filters />
       </aside>
       <div className="adverts-filters">
         <AdvertFilters />
       </div>
-      <main className="my-adverts">
-        <div className="my-adverts__list">
+      <main className="adverts">
+        <div className="adverts__list">
           {isLoading ? (
             <div className="filters__loading">
               <Spin size="large" />
@@ -120,16 +118,16 @@ const MyAdverts = () => {
             </>
           )}
         </div>
+        <div className="adverts__pages">
+          <Pagination
+            total={count}
+            pageSize={10}
+            current={page}
+            onChange={(page: number) => setPage(page)}
+          />
+        </div>
         <ManageFloatButtons />
       </main>
-      <div className="adverts__pages">
-        <Pagination
-          total={count}
-          pageSize={9}
-          current={page}
-          onChange={(page: number) => setPage(page)}
-        />
-      </div>
     </div>
   );
 };

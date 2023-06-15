@@ -12,6 +12,7 @@
     flex-flow: wrap;
     justify-content: center;
     gap: 1.2rem;
+    width: 100%;
 }
 
 .adverts__list {
@@ -24,7 +25,6 @@
 }
 .adverts-section {
     background-color: var(--white);
-
 }
 
 .adverts__pages {
@@ -63,6 +63,10 @@
     .adverts {
         flex-flow: nowrap;
         flex-direction: column;
+    }
+
+    .adverts, .adverts__list {
+        width: auto;
     }
 
     .adverts__pages {
