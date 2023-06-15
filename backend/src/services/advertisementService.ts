@@ -2,7 +2,7 @@ import advertisement from '../repositories/advertisement';
 import advertisementModel from '../models/advertisementModels';
 import { getUserId } from './authService';
 import user from '../repositories/user';
-import { AdvertisementImage, Role } from '@prisma/client';
+import { AdvertisementImage, Category, Role } from '@prisma/client';
 import { InvalidAccessRights } from '../errors/controllersErrors';
 import type { Request } from 'express';
 import { deleteUndefined } from '../controllers/common';
@@ -14,6 +14,8 @@ import type {
 import userService from './userService';
 import fs from 'fs';
 import path from 'path';
+import category from '../repositories/category';
+import { CategoryError } from '../errors/repositoryErrors';
 
 const create = async (
   body: Request['body'],
@@ -130,8 +132,23 @@ const getOne = async (params: Request['params']) => {
   if (result.isErr) {
     throw result.error;
   }
-  const { participants, creator, ...rest } = result.value;
-  return { ...rest, phoneNumber: creator.phoneNumber, email: creator.email };
+  // const categories = await category.read.one({ id: result.value.categories });
+  const { participants, creator, categories, ...rest } = result.value;
+  if (categories[0] === undefined) {
+    throw new CategoryError();
+  }
+  const categoryTree = await category.read.one({
+    id: categories[0].id,
+  });
+  if (categoryTree.isErr) {
+    throw categoryTree.error;
+  }
+  return {
+    ...rest,
+    phoneNumber: creator.phoneNumber,
+    email: creator.email,
+    categories: categoryTree.value,
+  };
 };
 
 const deleteAdvertisement = async (

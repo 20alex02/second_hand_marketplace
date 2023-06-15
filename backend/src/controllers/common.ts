@@ -9,6 +9,7 @@ import {
   DeletedRecordError,
   ConflictingRecordError,
   CategoryDeletionError,
+  CategoryError,
 } from '../errors/repositoryErrors';
 import { InvalidToken, WrongPassword } from '../errors/controllersErrors';
 
@@ -95,6 +96,9 @@ export const handleError = (error: Error, res: Response) => {
   }
   if (error instanceof InvalidAccessRights) {
     return handleErrorResp(401, res, error.message);
+  }
+  if (error instanceof CategoryError) {
+    return handleErrorResp(500, res, error.message);
   }
   return handleErrorResp(500, res, 'Unknown error');
 };

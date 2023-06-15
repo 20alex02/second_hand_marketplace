@@ -96,7 +96,7 @@ type Advertisements = {
 
 export type CategoryCreateResult = DbResult<Category>;
 
-export type CategoryReadOneResult = DbResult<(Category & Advertisements)[]>;
+export type CategoryReadOneResult = DbResult<Category[]>;
 
 export type CategoryReadAllResult = DbResult<Category[]>;
 

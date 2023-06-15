@@ -25,3 +25,10 @@ export class CategoryDeletionError extends Error {
     this.name = 'CategoryDeletionError';
   }
 }
+
+export class CategoryError extends Error {
+  constructor() {
+    super('Advertisement does not belong to any category');
+    this.name = 'CategoryError';
+  }
+}

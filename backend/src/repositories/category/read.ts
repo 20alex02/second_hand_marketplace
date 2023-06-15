@@ -21,9 +21,6 @@ const readOneCategory = async (
     while (getNextCategory) {
       const category = await client.category.findUnique({
         where: { id },
-        include: {
-          advertisements: true,
-        },
       });
       if (category == null) {
         return Result.err(new NonexistentRecordError('Category'));
