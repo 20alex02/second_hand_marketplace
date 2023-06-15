@@ -2,7 +2,7 @@ import advertisement from '../repositories/advertisement';
 import advertisementModel from '../models/advertisementModels';
 import { getUserId } from './authService';
 import user from '../repositories/user';
-import { AdvertisementImage, Category, Role } from '@prisma/client';
+import { AdvertisementImage, Role } from '@prisma/client';
 import { InvalidAccessRights } from '../errors/controllersErrors';
 import type { Request } from 'express';
 import { deleteUndefined } from '../controllers/common';
