@@ -88,3 +88,15 @@ export const createAdvert = async (token: string, data: FormData) => {
   );
   return response.data;
 };
+
+export const deleteAdvert = async (data: { token: string; id: string }) => {
+  const response = await axiosInstance.delete<AxiosResponse>(
+    `/api/advertisement/${data.id}`,
+    {
+      headers: {
+        authorization: `Bearer ${data.token}`,
+      },
+    }
+  );
+  return response.data;
+};

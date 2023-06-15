@@ -12,7 +12,9 @@ import priceUtil from '../../utils/priceUtil';
 import { AdvertDetailType } from '../../models/advertDetailType';
 import { useMutation } from '@tanstack/react-query';
 import { ApiError } from '../../models/error';
-
+import { useRecoilValue } from 'recoil';
+import { AuthToken } from '../../state/atom';
+import { deleteAdvert } from '../../services/advertsApi';
 
 const EditButtons = (props: {
   id: string;
@@ -20,7 +22,7 @@ const EditButtons = (props: {
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modal, confirmation] = Modal.useModal();
-  const Token = useRec
+  const Token = useRecoilValue(AuthToken);
   const showModal = () => {
     setIsModalOpen(true);
   };
@@ -29,8 +31,8 @@ const EditButtons = (props: {
     setIsModalOpen(false);
   };
 
-  const { mutate: deleteAdvert } = useMutation(
-    (data: { token: string; id: string }) => data,
+  const { mutate: deleteAdv } = useMutation(
+    (data: { token: string; id: string }) => deleteAdvert(data),
     {
       onSuccess: () => {
         modal.success({
@@ -47,7 +49,7 @@ const EditButtons = (props: {
   );
 
   const handleCancel = () => {
-    deleteAdvert({token: id: id});
+    deleteAdv({ token: Token, id: props.id });
     setIsModalOpen(false);
   };
 
@@ -87,6 +89,7 @@ const EditButtons = (props: {
           // </Button>,
         ]}
       />
+      {confirmation}
     </div>
   );
 };
@@ -99,7 +102,11 @@ const AdvertInformation = (props: {
 
   return (
     <section className="advert-detail">
-      {isUsersAdvert ? <EditButtons setEditing={props.setIsEditing} /> : <></>}
+      {isUsersAdvert ? (
+        <EditButtons id={props.advert.id} setEditing={props.setIsEditing} />
+      ) : (
+        <></>
+      )}
       <CategoryCollapse categories={props.advert.categories} />
       <h1 className="advert-detail__title">{`${props.advert.type}: ${props.advert.title}`}</h1>
       <span className="advert-detail__date">{props.advert.createdAt}</span>
