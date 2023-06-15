@@ -20,8 +20,11 @@
     padding: 0.5rem;
 }
 
-.participant-table__data td.ant-table-cell:first-child {
-    word-wrap: break-word;
-    word-break: break-all;
-    white-space: normal;
+.participant-table__data {
+    width: 60%;
+    align-self: center;
+}
+
+.participant-table__data .ant-table-row {
+    text-align: center;
 }

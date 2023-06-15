@@ -122,6 +122,10 @@
         justify-self: center;
     }
 
+    .participant-spinner {
+        grid-area: contact;
+    }
+
     .participant-table {
         min-width: 40vw;
         max-width: 40vw;

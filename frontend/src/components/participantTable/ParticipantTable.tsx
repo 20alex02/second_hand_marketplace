@@ -11,16 +11,10 @@ import { Participant } from '../../models/participant';
 
 interface DataType {
   key: string;
-  email?: string;
   phone?: string;
 }
 
 const columns: ColumnsType<DataType> = [
-  {
-    title: 'Email',
-    dataIndex: 'email',
-    key: 'email',
-  },
   {
     title: 'Phone',
     dataIndex: 'phone',
@@ -39,13 +33,16 @@ const ParticipantTable = (props: { advertId: string }) => {
     return <Spin className="participant-spinner" />;
   }
 
-  const partic: Participant[] = Object.values(data?.data);
-  const participantsCount = partic.length;
-  const participants: DataType[] = partic.map((item: Participant) => ({
-    key: item.id,
-    email: item.email,
-    phone: item.phoneNumber,
-  }));
+  let participantsCount = 0;
+  let participants: DataType[] = [];
+  if (data) {
+    const partic: Participant[] = Object.values(data.data);
+    participantsCount = partic.length;
+    participants = partic.map((item: Participant) => ({
+      key: item.id,
+      phone: item.phoneNumber,
+    }));
+  }
 
   return (
     <section className="participant-table">
