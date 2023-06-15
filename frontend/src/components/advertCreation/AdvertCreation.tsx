@@ -162,7 +162,11 @@ const AdvertCreation = (props: {
       ) : (
         <CreateButtons form={form} />
       )}
-      <Form.Item name="category" className="advert-creation__category">
+      <Form.Item
+        name="category"
+        className="advert-creation__category"
+        rules={[{ required: true }]}
+      >
         <CategoryCollapse
           categories={props.advert?.categories}
           edit
