@@ -33,9 +33,10 @@ export type UserDeleteData = {
 
 /* PARTICIPANT */
 export type ParticipantCreateData = {
-  phoneNumber: string;
-  userId?: string;
   advertisementId: string;
+  phoneNumber?: string;
+  email?: string;
+  userId?: string;
 };
 
 export type ParticipantReadOneData = {
