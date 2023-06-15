@@ -94,9 +94,7 @@ export type AdvertisementUpdateData = {
   estimatedPrice?: number;
   hidden?: boolean;
   createImages: { path: string }[];
-  disconnectImages: { id: string }[];
-  connectCategories: { id: string }[];
-  disconnectCategories: { id: string }[];
+  category: string;
 };
 
 export type AdvertisementDeleteData = {
