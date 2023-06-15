@@ -15,6 +15,7 @@ import { ApiError } from '../../models/error';
 import { useRecoilValue } from 'recoil';
 import { AuthToken } from '../../state/atom';
 import { deleteAdvert } from '../../services/advertsApi';
+import { useNavigate } from 'react-router-dom';
 
 const EditButtons = (props: {
   id: string;
@@ -22,6 +23,7 @@ const EditButtons = (props: {
 }) => {
   const [modal, confirmation] = Modal.useModal();
   const Token = useRecoilValue(AuthToken);
+  const navigation = useNavigate();
 
   const { mutate: deleteAdv } = useMutation(
     (data: { token: string; id: string }) => deleteAdvert(data),
@@ -29,7 +31,13 @@ const EditButtons = (props: {
       onSuccess: () => {
         modal.success({
           title: 'Deleted',
+          onOk: () => {
+            navigation(-1);
+          },
         });
+        setTimeout(() => {
+          navigation(-1);
+        }, 2000);
       },
       onError: (error: ApiError) => {
         modal.error({
