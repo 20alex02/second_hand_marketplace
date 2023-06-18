@@ -1,6 +1,11 @@
 # Bazos
 
+## Authors
 
+- [Alex Popovič] - backend
+- [Radim Kaděra] - organization, backend
+- [Romana Gažová] - frontend
+- [Jan Rašovský] - frontend
 
 ## Getting started
 
